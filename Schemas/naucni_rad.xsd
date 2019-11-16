@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="naucni_rad" xmlns:nr="naucni_rad">
+    <xs:element name="NaucniRad">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="NaslovnaStrana">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Naslov" type="xs:string"/>
+                            <xs:element maxOccurs="unbounded" name="Autori"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Abstrakt">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:whiteSpace value="preserve"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="KljucneReci">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="6" minOccurs="4" name="KljucnaRec"
+                                type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Poglavlja">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Poglavlje" type="nr:CTPoglavlje"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Reference"/>
+            </xs:sequence>
+            <xs:attribute name="ID"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="CTPoglavlje">
+        <xs:sequence>
+            <xs:element name="Naslov" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="1" name="Pasus" type="nr:CTPasus"/>
+            <xs:element maxOccurs="1" minOccurs="0" name="Poglavlje" type="nr:CTPoglavlje"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CTPasus">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="Slika">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Sadrzaj" type="xs:base64Binary"/>
+                        <xs:element name="Naziv" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Tabela">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="Red">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element maxOccurs="unbounded" name="Celija" type="xs:string"
+                                    />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Lista">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Stavka" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute default="neuredjena" name="Vrsta">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="uredjena"/>
+                                <xs:enumeration value="neuredjena"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Tekst">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="Jezik" type="xs:string"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="CTAutor">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="Ime" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" name="Prezime" type="xs:string"/>
+            <xs:element name="EMail">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value=".+@.+\..+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="BrojTelefona" type="xs:string"/>
+            <xs:element name="ORCID" nillable="true">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="\d{4}-d{4}-d{4}-d{4}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Ustanova" type="nr:CTNaucnaUstanova"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CTNaucnaUstanova">
+        <xs:sequence>
+            <xs:element name="Naziv" nillable="false" type="xs:string"/>
+            <xs:element name="Adresa" type="nr:CTAdresa"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CTAdresa">
+        <xs:sequence>
+            <xs:element name="Ulica" type="xs:string"/>
+            <xs:element name="Broj" type="xs:string"/>
+            <xs:element name="Grad" type="xs:string"/>
+            <xs:element name="Drzava" type="xs:string"/>
+            <xs:element name="PostanskiBroj" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
