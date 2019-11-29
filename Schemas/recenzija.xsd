@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="recenzija" xmlns:re="recenzija">
+    <xs:element name="Komentari">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="Komentar" type="re:CTKomentar"/>
+            </xs:sequence>
+            <xs:attribute name="IDRad" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="CTKomentar">
+        <xs:sequence>
+            <xs:element name="Preporuka">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="PRIHVATI"/>
+                        <xs:enumeration value="ODBIJ"/>
+                        <xs:enumeration value="MANJE_REVIZIJE"/>
+                        <xs:enumeration value="VECE_REVIZIJE"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="KomentariAutor" type="xs:string"/>
+            <xs:element name="KomentariUrednik" type="xs:string"/>
+            <xs:element name="ReferenciraniElement" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

@@ -36,7 +36,7 @@
                 </xs:element>
                 <xs:element name="Reference"/>
             </xs:sequence>
-            <xs:attribute name="ID"/>
+            <xs:attribute name="ID" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="CTPoglavlje">
@@ -95,6 +95,7 @@
                 </xs:complexType>
             </xs:element>
         </xs:choice>
+        <xs:attribute ref="nr:id"/>
     </xs:complexType>
     <xs:complexType name="CTAutor">
         <xs:sequence>
@@ -133,4 +134,13 @@
             <xs:element name="PostanskiBroj" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:attribute name="id">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:pattern
+                    value="&quot;(([a-zA-Z][0-9a-zA-Z+\\-\\.]*:)?/{0,2}[0-9a-zA-Z;/?:@&amp;amp;=+$\\.\\-_!~*'()%]+)?( #[0-9a-zA-Z;/?:@&amp;amp;=+$\\.\\-_!~*'()%]+)?&quot;"
+                />
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:attribute>
 </xs:schema>
