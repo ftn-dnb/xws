@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.xwsservice.dto.PasswordChanger;
-import rs.ac.uns.ftn.xwsservice.dto.UserDTO;
 import rs.ac.uns.ftn.xwsservice.model.UserTokenState;
 import rs.ac.uns.ftn.xwsservice.security.TokenUtils;
 import rs.ac.uns.ftn.xwsservice.security.auth.JwtAuthenticationRequest;
@@ -30,8 +29,10 @@ public class AuthenticationController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> login(@RequestBody JwtAuthenticationRequest authenticationRequest) {
-        return new ResponseEntity<>(userDetailsService.login(authenticationRequest), HttpStatus.OK);
+//    public ResponseEntity<UserDTO> login(@RequestBody JwtAuthenticationRequest authenticationRequest) {
+    public ResponseEntity<String> login(@RequestBody JwtAuthenticationRequest authenticationRequest) {
+//        return new ResponseEntity<>(userDetailsService.login(authenticationRequest), HttpStatus.OK);
+        return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 
     @PostMapping("/refresh")

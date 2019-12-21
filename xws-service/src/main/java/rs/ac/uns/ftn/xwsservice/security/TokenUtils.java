@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.mobile.device.Device;
 import rs.ac.uns.ftn.xwsservice.common.TimeProvider;
-import rs.ac.uns.ftn.xwsservice.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -99,13 +98,15 @@ public class TokenUtils {
 
     // Functions for validating JWT token data
 
+    // TODO: Vrati ovo kasnije kada se doda korisnik
     public Boolean validateToken(String token, UserDetails userDetails) {
-        User user = (User) userDetails;
-        final String username = getUsernameFromToken(token);
-        final Date created = getIssuedAtDateFromToken(token);
-
-        return (username != null && username.equals(userDetails.getUsername())
-                && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
+//        User user = (User) userDetails;
+//        final String username = getUsernameFromToken(token);
+//        final Date created = getIssuedAtDateFromToken(token);
+//
+//        return (username != null && username.equals(userDetails.getUsername())
+//                && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
+        return true;
     }
 
     private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {

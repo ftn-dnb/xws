@@ -13,11 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import rs.ac.uns.ftn.xwsservice.dto.UserDTO;
 import rs.ac.uns.ftn.xwsservice.exception.ApiRequestException;
-import rs.ac.uns.ftn.xwsservice.model.User;
 import rs.ac.uns.ftn.xwsservice.model.UserTokenState;
-import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
+//import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
 import rs.ac.uns.ftn.xwsservice.security.TokenUtils;
 import rs.ac.uns.ftn.xwsservice.security.auth.JwtAuthenticationRequest;
 
@@ -28,8 +26,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     protected final Log LOGGER = LogFactory.getLog(getClass());
 
-    @Autowired
-    private UserRepository userRepository;
+//    @Autowired
+//    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,12 +42,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     /* Return User from database */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+//        User user = userRepository.findByUsername(username);
+//        if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
-        } else {
-            return user;
-        }
+//        } else {
+//            return user;
+//        }
     }
 
     /* Change User's password */
@@ -67,12 +65,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         LOGGER.debug("Changing password for user '" + username + "'");
 
-        User user = (User) loadUserByUsername(username);
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
+//        User user = (User) loadUserByUsername(username);
+//        user.setPassword(passwordEncoder.encode(newPassword));
+//        userRepository.save(user);
     }
 
-    public UserDTO login(JwtAuthenticationRequest authenticationRequest) throws ApiRequestException {
+//    public UserDTO login(JwtAuthenticationRequest authenticationRequest) throws ApiRequestException {
+      public void login(JwtAuthenticationRequest authenticationRequest) throws ApiRequestException {
         Authentication authentication;
         try {
             authentication = authenticationManager
@@ -86,28 +85,28 @@ public class CustomUserDetailsService implements UserDetailsService {
         // Insert username and password into context
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Create token
-        User user = (User) authentication.getPrincipal();
-        String jwt = tokenUtils.generateToken(user.getUsername());
-        int expiresIn = tokenUtils.getExpiredIn();
-
-        UserDTO userDto = new UserDTO(user);
-        userDto.setToken(new UserTokenState(jwt, expiresIn));
-
-        return userDto;
+//        // Create token
+//        User user = (User) authentication.getPrincipal();
+//        String jwt = tokenUtils.generateToken(user.getUsername());
+//        int expiresIn = tokenUtils.getExpiredIn();
+//
+//        UserDTO userDto = new UserDTO(user);
+//        userDto.setToken(new UserTokenState(jwt, expiresIn));
+//
+//        return userDto;
     }
 
     public UserTokenState refreshAuthenticationToken(HttpServletRequest request) throws ApiRequestException {
-        String token = tokenUtils.getToken(request);
-        String username = tokenUtils.getUsernameFromToken(token);
-        User user = (User) loadUserByUsername(username);
-
-        if (tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
-            String refreshedToken = tokenUtils.refreshToken(token);
-            int expiresIn = tokenUtils.getExpiredIn();
-            return new UserTokenState(refreshedToken, expiresIn);
-        } else {
+//        String token = tokenUtils.getToken(request);
+//        String username = tokenUtils.getUsernameFromToken(token);
+//        User user = (User) loadUserByUsername(username);
+//
+//        if (tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
+//            String refreshedToken = tokenUtils.refreshToken(token);
+//            int expiresIn = tokenUtils.getExpiredIn();
+//            return new UserTokenState(refreshedToken, expiresIn);
+//        } else {
             throw new ApiRequestException("Token can not be refreshed.");
-        }
+//        }
     }
 }

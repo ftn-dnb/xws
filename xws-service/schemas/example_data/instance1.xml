@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PropratnoPismo xmlns="propratno_pismo"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="propratno_pismo file:/E:/dev/xws-project/Schemas/propratno_pismo.xsd">
+    <Posaljilac>
+        <Ime>Ime0</Ime>
+        <Ime>Ime1</Ime>
+        <Prezime>Prezime0</Prezime>
+        <Prezime>Prezime1</Prezime>
+        <EMail>a@a.a</EMail>
+        <BrojTelefona>BrojTelefona0</BrojTelefona>
+        <ORCID>0000-dddd-dddd-dddd</ORCID>
+        <Ustanova>
+            <Naziv>Naziv0</Naziv>
+            <Adresa>
+                <Ulica>Ulica0</Ulica>
+                <Broj>Broj0</Broj>
+                <Grad>Grad0</Grad>
+                <Drzava>Drzava0</Drzava>
+                <PostanskiBroj>PostanskiBroj0</PostanskiBroj>
+            </Adresa>
+        </Ustanova>
+    </Posaljilac>
+    <Primalac>
+        <Ime>Ime2</Ime>
+        <Ime>Ime3</Ime>
+        <Prezime>Prezime2</Prezime>
+        <Prezime>Prezime3</Prezime>
+        <EMail>a@a.a</EMail>
+        <BrojTelefona>BrojTelefona1</BrojTelefona>
+        <ORCID>0000-dddd-dddd-dddd</ORCID>
+        <Ustanova>
+            <Naziv>Naziv1</Naziv>
+            <Adresa>
+                <Ulica>Ulica1</Ulica>
+                <Broj>Broj1</Broj>
+                <Grad>Grad1</Grad>
+                <Drzava>Drzava1</Drzava>
+                <PostanskiBroj>PostanskiBroj1</PostanskiBroj>
+            </Adresa>
+        </Ustanova>
+    </Primalac>
+    <Datum>2006-05-04</Datum>
+    <SadrzajPisma>SadrzajPisma0</SadrzajPisma>
+    <Potpis>ZGVmYXVsdA==</Potpis>
+</PropratnoPismo>

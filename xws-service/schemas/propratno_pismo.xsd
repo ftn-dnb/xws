@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="propratno_pismo" xmlns:pp="propratno_pismo">
+
+    <xs:element name="PropratnoPismo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Posaljilac" type="pp:CTAutor"/>
+                <xs:element name="Primalac" type="pp:CTAutor"/>
+                <xs:element name="Datum" type="xs:date"/>
+                <xs:element name="SadrzajPisma" type="xs:string"/>
+                <xs:element name="Potpis" type="xs:base64Binary"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="CTAutor">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="Ime" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" name="Prezime" type="xs:string"/>
+            <xs:element name="EMail">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value=".+@.+\..+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="BrojTelefona" type="xs:string"/>
+            <xs:element name="ORCID" nillable="true">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="\d{4}-d{4}-d{4}-d{4}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Ustanova" type="pp:CTNaucnaUstanova"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CTNaucnaUstanova">
+        <xs:sequence>
+            <xs:element name="Naziv" nillable="false" type="xs:string"/>
+            <xs:element name="Adresa" type="pp:CTAdresa"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CTAdresa">
+        <xs:sequence>
+            <xs:element name="Ulica" type="xs:string"/>
+            <xs:element name="Broj" type="xs:string"/>
+            <xs:element name="Grad" type="xs:string"/>
+            <xs:element name="Drzava" type="xs:string"/>
+            <xs:element name="PostanskiBroj" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
