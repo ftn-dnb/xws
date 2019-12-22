@@ -13,7 +13,8 @@ public class ExceptionsHandler {
     @ExceptionHandler(value = {
             ApiRequestException.class,
             XMLDataParseException.class,
-            XMLSchemaParseException.class
+            XMLSchemaParseException.class,
+            XSLTTransformationException.class
     })
     public ResponseEntity<Object> handleApiRequestException(Exception e) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
