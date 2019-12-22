@@ -35,5 +35,4 @@ public class PublicationController {
     public ResponseEntity<List<PublicationDTO>> getMyPublications() {
         return new ResponseEntity<>(publicationService.getMyPublications(), HttpStatus.OK);
     }
-
 }

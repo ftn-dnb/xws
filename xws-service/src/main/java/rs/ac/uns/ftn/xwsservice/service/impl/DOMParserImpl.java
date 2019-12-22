@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import rs.ac.uns.ftn.xwsservice.exception.XMLDataParseException;
-import rs.ac.uns.ftn.xwsservice.exception.XMLSchemaParseException;
+import rs.ac.uns.ftn.xwsservice.exception.OperationFailedException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,7 +42,7 @@ public class DOMParserImpl {
             Document document = builder.parse(new InputSource(new StringReader(xmlData)));
             return document;
         } catch(Exception e) {
-            throw new XMLDataParseException("Error while parsing XML document against this schema: " + xmlSchemaFilePath);
+            throw new OperationFailedException("Error while parsing XML document against this schema: " + xmlSchemaFilePath);
         }
     }
 
@@ -54,7 +53,7 @@ public class DOMParserImpl {
         try {
             return schemaFactory.newSchema(new File(filePath));
         } catch (SAXException e) {
-            throw new XMLSchemaParseException("Error while parsing XML schema from path: " + filePath);
+            throw new OperationFailedException("Error while parsing XML schema from path: " + filePath);
         }
     }
 

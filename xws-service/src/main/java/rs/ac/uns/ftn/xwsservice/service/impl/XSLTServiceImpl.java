@@ -2,7 +2,7 @@ package rs.ac.uns.ftn.xwsservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import rs.ac.uns.ftn.xwsservice.exception.XSLTTransformationException;
+import rs.ac.uns.ftn.xwsservice.exception.OperationFailedException;
 import rs.ac.uns.ftn.xwsservice.service.XSLTService;
 
 import javax.xml.transform.*;
@@ -26,16 +26,22 @@ public class XSLTServiceImpl implements XSLTService {
         try {
             transformer = factory.newTransformer(xslt);
         } catch (TransformerConfigurationException e) {
-            throw new XSLTTransformationException("Error while creating XSLT transformer object.");
+            throw new OperationFailedException("Error while creating XSLT transformer object.");
         }
 
         Source text = new StreamSource(new StringReader(xmlData));
 
         try {
             String outputPath = outputFolder + outputFileName + ".html";
-            transformer.transform(text, new StreamResult(new File(outputPath)));
+            File htmlFile = new File(outputPath);
+
+            if (!htmlFile.getParentFile().exists()) {
+                htmlFile.getParentFile().mkdir();
+            }
+
+            transformer.transform(text, new StreamResult(htmlFile));
         } catch (TransformerException e) {
-            throw new XSLTTransformationException("XSLT error while transforming the document with " + xsltFilePath);
+            throw new OperationFailedException("XSLT error while transforming the document with " + xsltFilePath);
         }
     }
 }
