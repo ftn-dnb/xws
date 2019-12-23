@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.xwsservice.service.impl;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.xwsservice.exception.OperationFailedException;
 import rs.ac.uns.ftn.xwsservice.service.XSLTService;
@@ -14,11 +13,8 @@ import java.io.StringReader;
 @Service
 public class XSLTServiceImpl implements XSLTService {
 
-    @Value("${xslt.path.output-folder}")
-    private String outputFolder;
-
     @Override
-    public void transform(String xmlData, String xsltFilePath, String outputFileName) {
+    public void transform(String xmlData, String xsltFilePath, String outputFilePath) {
         TransformerFactory factory = TransformerFactory.newInstance();
         Source xslt = new StreamSource(new File(xsltFilePath));
         Transformer transformer = null;
@@ -31,9 +27,11 @@ public class XSLTServiceImpl implements XSLTService {
 
         Source text = new StreamSource(new StringReader(xmlData));
 
+        if (!outputFilePath.endsWith(".html"))
+            outputFilePath += ".html";
+
         try {
-            String outputPath = outputFolder + outputFileName + ".html";
-            File htmlFile = new File(outputPath);
+            File htmlFile = new File(outputFilePath);
 
             if (!htmlFile.getParentFile().exists()) {
                 htmlFile.getParentFile().mkdir();

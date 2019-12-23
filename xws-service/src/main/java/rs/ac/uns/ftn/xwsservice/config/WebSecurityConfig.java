@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("**/public/**").permitAll()
             .antMatchers("/auth/**").permitAll()
             .antMatchers("/html/*.html").permitAll()
-            .antMatchers("/pdf/*.pdf").permitAll()
+            .antMatchers("/static/pdf/*.pdf").permitAll()
 
             // All other requests must be authorized
             .anyRequest().authenticated().and()

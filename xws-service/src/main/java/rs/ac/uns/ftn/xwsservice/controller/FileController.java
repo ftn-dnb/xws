@@ -14,6 +14,10 @@ import rs.ac.uns.ftn.xwsservice.service.FileService;
 
 import java.io.ByteArrayInputStream;
 
+/**
+ *  Ovaj kontroler je samo primer kako se dobavljaju fajlovi sa diska
+ *  i kako se salju u HTML i PDF formatu.
+ */
 @RestController
 @RequestMapping("/api/files/")
 public class FileController {

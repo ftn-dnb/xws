@@ -4,6 +4,6 @@ import java.io.ByteArrayInputStream;
 
 public interface FileService {
 
-    ByteArrayInputStream readPdfFile(String id);
-    String readHtmlFile(String id);
+    ByteArrayInputStream readPdfFile(String path);
+    String readHtmlFile(String path);
 }

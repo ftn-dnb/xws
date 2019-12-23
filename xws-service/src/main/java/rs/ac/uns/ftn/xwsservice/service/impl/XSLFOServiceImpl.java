@@ -14,9 +14,6 @@ import java.io.*;
 @Service
 public class XSLFOServiceImpl implements XSLFOService {
 
-    @Value("${xslfo.path.output-folder}")
-    private String outputFolder;
-
     @Autowired
     private FopFactory fopFactory;
 
@@ -24,7 +21,7 @@ public class XSLFOServiceImpl implements XSLFOService {
     private TransformerFactory transformerFactory;
 
     @Override
-    public void transform(String xmlData, String xslfoFilePath, String outputFileName) throws Exception {
+    public void transform(String xmlData, String xslfoFilePath, String outputFilePath) throws Exception {
         // Point to the XSL-FO file
         File xslFile = new File(xslfoFilePath);
 
@@ -53,7 +50,8 @@ public class XSLFOServiceImpl implements XSLFOService {
         xslFoTransformer.transform(source, res);
 
         // Generate PDF file
-        String outputFilePath = outputFolder + outputFileName + ".pdf";
+        if (!outputFilePath.endsWith(".pdf"))
+            outputFilePath += ".pdf";
 
         File pdfFile = new File(outputFilePath);
         if (!pdfFile.getParentFile().exists()) {

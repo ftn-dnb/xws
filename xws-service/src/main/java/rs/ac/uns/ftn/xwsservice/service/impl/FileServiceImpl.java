@@ -1,9 +1,9 @@
 package rs.ac.uns.ftn.xwsservice.service.impl;
 
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.xwsservice.exception.OperationFailedException;
+import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.service.FileService;
 
 import java.io.ByteArrayInputStream;
@@ -14,41 +14,41 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Value("${xslfo.path.output-folder}")
-    private String pdfOutputFolder;
-
-    @Value("${xslt.path.output-folder}")
-    private String htmlOutputFolder;
-
     @Override
-    public ByteArrayInputStream readPdfFile(String id) {
-        File pdfFile = new File(this.pdfOutputFolder + id + ".pdf");
+    public ByteArrayInputStream readPdfFile(String path) {
+        if (!path.endsWith(".pdf"))
+            path += ".pdf";
+
+        File pdfFile = new File(path);
 
         if (!pdfFile.exists()) {
-            throw new OperationFailedException("PDF file with ID '" + id + "' doesn't exist.");
+            throw new ResourceNotFoundException("PDF file with ID '" + path + "' doesn't exist.");
         }
 
         try {
             return new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
         } catch (IOException e) {
             e.printStackTrace();
-            throw new OperationFailedException("Error while reading PDF file with ID '" + id + "'");
+            throw new OperationFailedException("Error while reading PDF file with ID '" + path + "'");
         }
     }
 
     @Override
-    public String readHtmlFile(String id) {
-        File htmlFile = new File(this.htmlOutputFolder + id + ".html");
+    public String readHtmlFile(String path) {
+        if (!path.endsWith(".html"))
+            path += ".html";
+
+        File htmlFile = new File(path);
 
         if (!htmlFile.exists()) {
-            throw new OperationFailedException("HTML file with ID '" + id + "' doesn't exist.");
+            throw new ResourceNotFoundException("HTML file with ID '" + path + "' doesn't exist.");
         }
 
         try {
             return FileUtils.readFileToString(htmlFile, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new OperationFailedException("Error while reading HTML file with ID '" + id + "'");
+            throw new OperationFailedException("Error while reading HTML file with ID '" + path + "'");
         }
     }
 }
