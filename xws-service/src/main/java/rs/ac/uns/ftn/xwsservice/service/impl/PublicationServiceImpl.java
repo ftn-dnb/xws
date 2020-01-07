@@ -33,6 +33,20 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
+    public String getXmlData(String id) {
+        // TODO: implementirati ovo kada se napravi repository sloj
+
+        String result = "<note>\n" +
+                "<to>Tove</to>\n" +
+                "<from>Jani</from>\n" +
+                "<heading>Reminder</heading>\n" +
+                "<body>Don't forget me this weekend!</body>\n" +
+                "</note>";
+
+        return result;
+    }
+
+    @Override
     public List<PublicationDTO> getMyPublications() {
         // TODO: Implementirati
         return new ArrayList<>();

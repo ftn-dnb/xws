@@ -36,7 +36,7 @@ public class CoverLetterController {
     }
 
     @GetMapping(path = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> getPublicationPdfFile(@PathVariable String id) {
+    public ResponseEntity<InputStreamResource> getCoverLetterPdfFile(@PathVariable String id) {
         String path = coverLetterPdfFolderPath + id;
         ByteArrayInputStream bis = fileService.readPdfFile(path);
 
@@ -51,7 +51,7 @@ public class CoverLetterController {
     }
 
     @GetMapping(path = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
-    public ResponseEntity<String> getPublicationHtmlFile(@PathVariable String id) {
+    public ResponseEntity<String> getCoverLetterHtmlFile(@PathVariable String id) {
         String path = coverLetterHtmlFolderPath + id;
         return new ResponseEntity<>(fileService.readHtmlFile(path), HttpStatus.OK);
     }
