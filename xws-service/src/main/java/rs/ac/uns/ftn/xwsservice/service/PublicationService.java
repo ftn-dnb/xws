@@ -8,4 +8,6 @@ public interface PublicationService {
 
     void addPublication(String publicationXmlData);
     List<PublicationDTO> getMyPublications();
+    String getRdfMetadata(String id);
+    String getJsonMetadata(String id);
 }

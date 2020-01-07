@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.xwsservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.xwsservice.dto.PublicationDTO;
@@ -34,5 +35,15 @@ public class PublicationController {
     @GetMapping("/myPublications")
     public ResponseEntity<List<PublicationDTO>> getMyPublications() {
         return new ResponseEntity<>(publicationService.getMyPublications(), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/metadata/rdf/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<String> getPublicationMetadataRdfFormat(@PathVariable String id) {
+        return new ResponseEntity<>(publicationService.getRdfMetadata(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/metadata/json/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getPublicationMetadataJsonFormat(@PathVariable String id) {
+        return new ResponseEntity<>(publicationService.getJsonMetadata(id), HttpStatus.OK);
     }
 }

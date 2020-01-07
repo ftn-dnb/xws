@@ -55,5 +55,4 @@ public class CoverLetterController {
         String path = coverLetterHtmlFolderPath + id;
         return new ResponseEntity<>(fileService.readHtmlFile(path), HttpStatus.OK);
     }
-
 }

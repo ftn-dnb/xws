@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import rs.ac.uns.ftn.xwsservice.dto.PublicationDTO;
+import rs.ac.uns.ftn.xwsservice.service.MetadataExtractorService;
 import rs.ac.uns.ftn.xwsservice.service.PublicationService;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ public class PublicationServiceImpl implements PublicationService {
     @Autowired
     private DOMParserImpl domParser;
 
+    @Autowired
+    private MetadataExtractorService metadataExtractorService;
+
     @Override
     public void addPublication(String publicationXmlData) {
         Document document = domParser.isXmlDataValid(publicationXmlData, publicationSchemaPath);
@@ -32,5 +36,19 @@ public class PublicationServiceImpl implements PublicationService {
     public List<PublicationDTO> getMyPublications() {
         // TODO: Implementirati
         return new ArrayList<>();
+    }
+
+    @Override
+    public String getRdfMetadata(String id) {
+        // TODO: Implementirati
+        String result = metadataExtractorService.extractMetadataToRdf("this is some xml data, change later");
+        return result;
+    }
+
+    @Override
+    public String getJsonMetadata(String id) {
+        // TODO: Implementirati
+        String result = metadataExtractorService.extractMetadataToJson("this is some xml data, change later");
+        return result;
     }
 }
