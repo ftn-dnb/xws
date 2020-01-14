@@ -14,6 +14,7 @@ import rs.ac.uns.ftn.xwsservice.service.PublicationService;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/publications")
