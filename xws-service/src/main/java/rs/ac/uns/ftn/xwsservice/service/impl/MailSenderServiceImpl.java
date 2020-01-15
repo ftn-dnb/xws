@@ -6,6 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.xwsservice.model.ConfirmationToken;
+import rs.ac.uns.ftn.xwsservice.model.User;
 import rs.ac.uns.ftn.xwsservice.service.MailSenderService;
 
 @Service
@@ -29,6 +30,19 @@ public class MailSenderServiceImpl implements MailSenderService {
         message.setTo(token.getUser().getEmail());
 
         message.setText("Go to this page to activate your account http://localhost:4200/verify?token=" + token.getToken());
+
+        mailSender.send(message);
+    }
+
+    @Override
+    public void sendAccountActivatedMail(User user) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setSubject("Account verified - XWS");
+        message.setFrom("XWS-Tim05");
+        message.setTo(user.getEmail());
+
+        message.setText("Dear, " + user.getFirstName() + " " + user.getLastName() + ", your account has been verified.");
 
         mailSender.send(message);
     }

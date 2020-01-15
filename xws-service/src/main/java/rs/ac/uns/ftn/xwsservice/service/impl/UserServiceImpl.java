@@ -93,6 +93,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             confirmationToken.setUsed(true);
             tokenRepository.save(confirmationToken);
+            mailSenderService.sendAccountActivatedMail(user);
             return true;
         } else {
             tokenRepository.delete(confirmationToken);
