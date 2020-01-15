@@ -1,16 +1,46 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <span class="title" (click)="onTitleClick()">XWS</span>
+        <span class="title" (click)="onTitleClick()">KTS-NWT</span>
+
+        <!-- REGISTERED USER -->
 
         <ng-template [ngIf]="isUserLoggedIn()" [ngIfElse]="nonRegisteredUser">
             <span class="spacer"></span>
             
+            <!-- EDITOR -->
+            <div *ngIf="isEditorLoggedIn()">
+                
+            </div>
+
+            <!-- AUTHOR -->
+            <div *ngIf="isAuthorLoggedIn()">
+                
+            </div>
+
+            <!-- REGISTERED USER -->
+            <button id="user-menu-btn" mat-button [matMenuTriggerFor]="userMenu">
+                <span class="btnText">{{ getUsername() }}</span>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
+
+            <mat-menu #userMenu="matMenu">
+                <button mat-menu-item (click)="onClickLogout()">
+                    <mat-icon>input</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
         </ng-template>
         
+        <!-- NON REGISTERED USER -->
+
         <ng-template #nonRegisteredUser>
             <span class="spacer"></span>
 
-            <button mat-raised-button class="button" (click)="onClickLogin()">
+            <button id="toolbar-registration-btn" mat-button class="button" (click)="onClickRegister()">
+                Register
+            </button>
+
+            <button id="toolbar-login-btn" mat-raised-button class="button" (click)="onClickLogin()">
                 Login
             </button>
         </ng-template>
