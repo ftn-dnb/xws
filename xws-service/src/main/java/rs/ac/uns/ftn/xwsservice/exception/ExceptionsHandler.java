@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.xwsservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,6 +19,14 @@ public class ExceptionsHandler {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         ErrorMessage apiException = new ErrorMessage(e.getMessage(), badRequest, ZonedDateTime.now());
         return new ResponseEntity<>(apiException, badRequest);
+    }
+
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+    public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        String message = e.getBindingResult().getFieldError().getDefaultMessage();
+        ErrorMessage errorMessage = new ErrorMessage(message, badRequest, ZonedDateTime.now());
+        return new ResponseEntity<>(errorMessage, badRequest);
     }
 
     @ExceptionHandler(value = {ResourceNotFoundException.class})

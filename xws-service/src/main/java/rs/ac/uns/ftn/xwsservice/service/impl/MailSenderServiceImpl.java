@@ -5,6 +5,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.xwsservice.model.ConfirmationToken;
 import rs.ac.uns.ftn.xwsservice.service.MailSenderService;
 
 @Service
@@ -13,18 +14,21 @@ public class MailSenderServiceImpl implements MailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
-    /**
-     *  Example of sending an email
-     */
     @Async
-    public void sendMail() {
+    public void sendRegistrationMail(ConfirmationToken token) {
+        if(token.getUser().getEmail() == null)
+            return;
+
+        if(token.getToken() == null)
+            return;
+
         SimpleMailMessage message = new SimpleMailMessage();
 
-        message.setSubject("Mail subject");
-        message.setFrom("From me");
-        message.setTo("user@mail.com");
+        message.setSubject("Account verification - XWS");
+        message.setFrom("XWS-Tim05");
+        message.setTo(token.getUser().getEmail());
 
-        message.setText("This is text");
+        message.setText("Go to this page to activate your account http://localhost:4200/verify?token=" + token.getToken());
 
         mailSender.send(message);
     }
