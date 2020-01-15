@@ -1,5 +1,7 @@
+import { ROLE_EDITOR, ROLE_AUTHOR } from './../../config/user-roles-keys';
+import { USER_ROLE_KEY, USERNAME_KEY } from './../../config/local-storage-keys';
 import { AuthService } from './../../services/auth.service';
-import { HOME_PATH, LOGIN_PATH } from './../../config/router-paths';
+import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -29,4 +31,26 @@ export class ToolbarComponent implements OnInit {
   onClickLogin(): void {
     this.router.navigate([LOGIN_PATH]);
   }
+
+  onClickRegister(): void {
+    this.router.navigate([REGISTRATION_PATH]);
+  }
+
+  getUsername(): string {
+    return localStorage.getItem(USERNAME_KEY);
+  }
+
+  isEditorLoggedIn(): boolean {
+    return localStorage.getItem(USER_ROLE_KEY) === ROLE_EDITOR;
+  }
+
+  isAuthorLoggedIn(): boolean {
+    return localStorage.getItem(USER_ROLE_KEY) === ROLE_AUTHOR;
+  }
+
+  onClickLogout(): void {
+    this.authService.logout();
+    this.router.navigate([HOME_PATH]);
+  }
+
 }

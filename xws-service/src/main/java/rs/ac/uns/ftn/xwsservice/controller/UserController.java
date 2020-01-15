@@ -1,21 +1,29 @@
 package rs.ac.uns.ftn.xwsservice.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.xwsservice.dto.UserRegistrationDTO;
+import rs.ac.uns.ftn.xwsservice.service.UserService;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    /**
-     *  Registracija novog korisnika
-     */
-    @PostMapping("/register")
-    public ResponseEntity registerNewUser(@RequestBody String xmlUserData) {
-        // TODO: Implementirati!
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/public/add-user")
+    public ResponseEntity addUser(@Valid @RequestBody UserRegistrationDTO userInfo) {
+        userService.addUser(userInfo);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/public/verify-account/{token}")
+    public ResponseEntity verifyUserAccount(@PathVariable String token) {
+        userService.activateAccount(token);
         return ResponseEntity.ok().build();
     }
 }
