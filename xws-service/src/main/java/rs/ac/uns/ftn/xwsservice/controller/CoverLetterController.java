@@ -35,6 +35,12 @@ public class CoverLetterController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<String> getCoverLetterById(@PathVariable String id) throws Exception {
+        String xml = coverLetterService.findCoverLetterById(id);
+        return new ResponseEntity<>(xml, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getCoverLetterPdfFile(@PathVariable String id) {
         String path = coverLetterPdfFolderPath + id;

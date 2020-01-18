@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.xwsservice.dao;
+package rs.ac.uns.ftn.xwsservice.exist;
 
 import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;

@@ -8,7 +8,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="Naslov" type="xs:string"/>
-                            <xs:element maxOccurs="unbounded" name="Autori"/>
+                            <xs:element maxOccurs="unbounded" name="Autori" type="nr:CTAutor"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -34,25 +34,32 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="Reference"/>
+                <xs:element name="Reference">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="newElement" type="nr:CTReferenca"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
             <xs:attribute name="ID" type="xs:string"/>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="CTPoglavlje">
+    <xs:complexType name="CTPoglavlje" mixed="false">
         <xs:sequence>
             <xs:element name="Naslov" type="xs:string"/>
             <xs:element maxOccurs="unbounded" minOccurs="1" name="Pasus" type="nr:CTPasus"/>
             <xs:element maxOccurs="1" minOccurs="0" name="Poglavlje" type="nr:CTPoglavlje"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="CTPasus">
-        <xs:choice maxOccurs="unbounded">
+    <xs:complexType name="CTPasus" mixed="true">
+        <xs:sequence maxOccurs="unbounded">
             <xs:element name="Slika">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="Sadrzaj" type="xs:base64Binary"/>
                         <xs:element name="Naziv" type="xs:string"/>
+                        <xs:element name="IdReference" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -87,14 +94,13 @@
             </xs:element>
             <xs:element name="Tekst">
                 <xs:complexType>
-                    <xs:simpleContent>
-                        <xs:extension base="xs:string">
-                            <xs:attribute name="Jezik" type="xs:string"/>
-                        </xs:extension>
-                    </xs:simpleContent>
+                    <xs:sequence>
+                        <xs:element name="Sadrzaj" type="xs:string"/>
+                        <xs:element name="IdReference" type="xs:string"/>
+                    </xs:sequence>
                 </xs:complexType>
             </xs:element>
-        </xs:choice>
+        </xs:sequence>
         <xs:attribute ref="nr:id"/>
     </xs:complexType>
     <xs:complexType name="CTAutor">
@@ -118,6 +124,7 @@
             </xs:element>
             <xs:element name="Ustanova" type="nr:CTNaucnaUstanova"/>
         </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
     <xs:complexType name="CTNaucnaUstanova">
         <xs:sequence>
@@ -134,13 +141,14 @@
             <xs:element name="PostanskiBroj" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:attribute name="id">
-        <xs:simpleType>
-            <xs:restriction base="xs:string">
-                <xs:pattern
-                    value="&quot;(([a-zA-Z][0-9a-zA-Z+\\-\\.]*:)?/{0,2}[0-9a-zA-Z;/?:@&amp;amp;=+$\\.\\-_!~*'()%]+)?( #[0-9a-zA-Z;/?:@&amp;amp;=+$\\.\\-_!~*'()%]+)?&quot;"
-                />
-            </xs:restriction>
-        </xs:simpleType>
-    </xs:attribute>
+    <xs:complexType name="CTReferenca">
+        <xs:sequence>
+            <xs:element name="NazivRada" type="xs:string"/>
+            <xs:element name="URLRada" type="xs:string"/>
+            <xs:sequence>
+                <xs:element name="Autor" type="xs:string"/>
+            </xs:sequence>
+        </xs:sequence>
+        <xs:attribute ref="nr:id"/>
+    </xs:complexType>
 </xs:schema>

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PropratnoPismo xmlns="propratno_pismo"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="propratno_pismo file:/E:/dev/xws-project/Schemas/propratno_pismo.xsd">
+ xsi:schemaLocation="propratno_pismo file:/E:/XML/proj/xws/Schemas/propratno_pismo.xsd">
     <Posaljilac>
         <Ime>Ime0</Ime>
-        <Ime>Ime1</Ime>
         <Prezime>Prezime0</Prezime>
-        <Prezime>Prezime1</Prezime>
         <EMail>a@a.a</EMail>
         <BrojTelefona>BrojTelefona0</BrojTelefona>
         <ORCID>0000-dddd-dddd-dddd</ORCID>
@@ -22,10 +20,8 @@
         </Ustanova>
     </Posaljilac>
     <Primalac>
-        <Ime>Ime2</Ime>
-        <Ime>Ime3</Ime>
-        <Prezime>Prezime2</Prezime>
-        <Prezime>Prezime3</Prezime>
+        <Ime>Ime1</Ime>
+        <Prezime>Prezime1</Prezime>
         <EMail>a@a.a</EMail>
         <BrojTelefona>BrojTelefona1</BrojTelefona>
         <ORCID>0000-dddd-dddd-dddd</ORCID>

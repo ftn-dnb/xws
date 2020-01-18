@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import rs.ac.uns.ftn.xwsservice.repository.CoverLetterRepo;
 import rs.ac.uns.ftn.xwsservice.service.CoverLetterService;
 import rs.ac.uns.ftn.xwsservice.service.XSLFOService;
 import rs.ac.uns.ftn.xwsservice.service.XSLTService;
+import rs.ac.uns.ftn.xwsservice.utils.CoverLetterIdUtil;
 
 import java.util.UUID;
 
@@ -37,6 +39,9 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     @Autowired
     private XSLFOService xslfoService;
 
+    @Autowired
+    private CoverLetterRepo coverLetterRepo;
+
     @Override
     public void addCoverLetter(String coverLetterXmlData) throws Exception {
         Document document = domParser.isXmlDataValid(coverLetterXmlData, this.coverLetterSchemaPath);
@@ -46,12 +51,21 @@ public class CoverLetterServiceImpl implements CoverLetterService {
 
         // TODO: Sacuvati cover letter u bazu
         String coverLetterId = UUID.randomUUID().toString();
+        String updatedXmlData = CoverLetterIdUtil.addCoverLetterId(coverLetterXmlData, coverLetterId);
+
+        String id = coverLetterRepo.save(updatedXmlData, coverLetterId);
 
         String xsltOutputPath = coverLetterXsltOutputFolder + coverLetterId;
         xsltService.transform(coverLetterXmlData, coverLetterXsltPath, xsltOutputPath);
 
         String xslfoOutputPath = coverLetterXslfoOutputFolder + coverLetterId;
         xslfoService.transform(coverLetterXmlData, coverLetterXslfoPath, xslfoOutputPath);
+    }
+
+    @Override
+    public String findCoverLetterById(String id) throws Exception {
+        String xml = coverLetterRepo.findById(id);
+        return xml;
     }
 
 }

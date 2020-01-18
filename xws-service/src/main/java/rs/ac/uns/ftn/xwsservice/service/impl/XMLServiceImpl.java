@@ -1,8 +1,8 @@
 package rs.ac.uns.ftn.xwsservice.service.impl;
 
 import org.springframework.stereotype.Service;
-import rs.ac.uns.ftn.xwsservice.dao.UnmarshallDao;
-import rs.ac.uns.ftn.xwsservice.dao.XPathDao;
+import rs.ac.uns.ftn.xwsservice.exist.UnmarshallDao;
+import rs.ac.uns.ftn.xwsservice.exist.XPathDao;
 import rs.ac.uns.ftn.xwsservice.service.XMLService;
 
 import java.util.ArrayList;
