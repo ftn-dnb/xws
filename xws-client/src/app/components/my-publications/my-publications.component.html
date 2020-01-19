@@ -1,0 +1,43 @@
+<div class="container">
+
+    <div class="header">
+        <h1 id = "title">My publications</h1>
+    </div>
+
+    <table class="table" id = "table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>XML</th>
+                <th>HTML</th>
+                <th>PDF</th>
+                <th>Cover letter</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let publication of publications">
+                <td>{{publication.title}}</td>
+                <td>
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.xmlFilePath}}">See XML</a>
+                </td>
+                <td>
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.htmlFilePath}}">See HTML</a>
+                </td>
+                <td>
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.pdfFilePath}}">See PDF</a>
+                </td>
+                <td>
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.coverLetterFilePath}}">See letter</a>
+                </td>
+
+                <td>
+                    <button mat-button (click)="onDeletePublication(publication.id)">
+                        <mat-icon>cancel</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

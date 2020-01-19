@@ -24,6 +24,11 @@
             </button>
 
             <mat-menu #userMenu="matMenu">
+                <button mat-menu-item (click)="onClickMyPublications()">
+                    <mat-icon>library_books</mat-icon>
+                    <span>My publications</span>
+                </button>
+
                 <button mat-menu-item (click)="onClickLogout()">
                     <mat-icon>input</mat-icon>
                     <span>Logout</span>
