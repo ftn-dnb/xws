@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.xwsservice.common.TimeProvider;
 import rs.ac.uns.ftn.xwsservice.common.consts.UserRole;
-import rs.ac.uns.ftn.xwsservice.dto.UserRegistrationDTO;
+import rs.ac.uns.ftn.xwsservice.dto.request.UserRegistrationDTO;
 import rs.ac.uns.ftn.xwsservice.exception.ApiRequestException;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.mappers.UserMapper;

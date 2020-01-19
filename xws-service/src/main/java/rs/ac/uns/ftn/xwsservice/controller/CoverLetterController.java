@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.xwsservice.dto.response.CoverLetterDTO;
+import rs.ac.uns.ftn.xwsservice.mappers.CoverLetterMapper;
+import rs.ac.uns.ftn.xwsservice.model.PropratnoPismo;
 import rs.ac.uns.ftn.xwsservice.service.CoverLetterService;
 import rs.ac.uns.ftn.xwsservice.service.FileService;
 
@@ -36,8 +39,14 @@ public class CoverLetterController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<String> getCoverLetterById(@PathVariable String id) throws Exception {
-        String xml = coverLetterService.findCoverLetterById(id);
+    public ResponseEntity<CoverLetterDTO> getCoverLetterById(@PathVariable String id) throws Exception {
+        PropratnoPismo letter = coverLetterService.findCoverLetterById(id);
+        return new ResponseEntity<>(CoverLetterMapper.toDto(letter), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<String> getCoverLetterXmlById(@PathVariable String id) throws Exception {
+        String xml = coverLetterService.findCoverLetterXmlById(id);
         return new ResponseEntity<>(xml, HttpStatus.OK);
     }
 

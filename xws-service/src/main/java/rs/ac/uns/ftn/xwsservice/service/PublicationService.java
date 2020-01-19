@@ -1,6 +1,6 @@
 package rs.ac.uns.ftn.xwsservice.service;
 
-import rs.ac.uns.ftn.xwsservice.dto.PublicationDTO;
+import rs.ac.uns.ftn.xwsservice.dto.response.PublicationDTO;
 
 import java.util.List;
 

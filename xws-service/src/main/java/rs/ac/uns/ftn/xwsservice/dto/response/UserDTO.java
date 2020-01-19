@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.xwsservice.dto;
+package rs.ac.uns.ftn.xwsservice.dto.response;
 
 import rs.ac.uns.ftn.xwsservice.model.Authority;
 import rs.ac.uns.ftn.xwsservice.model.User;

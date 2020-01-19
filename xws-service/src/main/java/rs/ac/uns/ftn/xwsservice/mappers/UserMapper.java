@@ -1,7 +1,7 @@
 package rs.ac.uns.ftn.xwsservice.mappers;
 
-import rs.ac.uns.ftn.xwsservice.dto.UserDTO;
-import rs.ac.uns.ftn.xwsservice.dto.UserRegistrationDTO;
+import rs.ac.uns.ftn.xwsservice.dto.response.UserDTO;
+import rs.ac.uns.ftn.xwsservice.dto.request.UserRegistrationDTO;
 import rs.ac.uns.ftn.xwsservice.model.User;
 
 import java.util.List;

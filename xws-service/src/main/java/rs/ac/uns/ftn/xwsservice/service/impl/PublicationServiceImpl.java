@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
-import rs.ac.uns.ftn.xwsservice.dto.PublicationDTO;
+import rs.ac.uns.ftn.xwsservice.dto.response.PublicationDTO;
 import rs.ac.uns.ftn.xwsservice.service.MetadataExtractorService;
 import rs.ac.uns.ftn.xwsservice.service.PublicationService;
 

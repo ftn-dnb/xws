@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.xwsservice.dto;
+package rs.ac.uns.ftn.xwsservice.dto.request;
 
 public class PasswordChanger {
 

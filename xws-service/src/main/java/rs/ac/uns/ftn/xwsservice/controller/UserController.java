@@ -3,7 +3,7 @@ package rs.ac.uns.ftn.xwsservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.uns.ftn.xwsservice.dto.UserRegistrationDTO;
+import rs.ac.uns.ftn.xwsservice.dto.request.UserRegistrationDTO;
 import rs.ac.uns.ftn.xwsservice.service.UserService;
 
 import javax.validation.Valid;
