@@ -2,14 +2,22 @@ package rs.ac.uns.ftn.xwsservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import rs.ac.uns.ftn.xwsservice.dto.response.PublicationDTO;
+import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
+import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
+import rs.ac.uns.ftn.xwsservice.model.User;
+import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
 import rs.ac.uns.ftn.xwsservice.service.MetadataExtractorService;
 import rs.ac.uns.ftn.xwsservice.service.PublicationService;
+import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
+import rs.ac.uns.ftn.xwsservice.utils.PublicationIdUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PublicationServiceImpl implements PublicationService {
@@ -18,37 +26,51 @@ public class PublicationServiceImpl implements PublicationService {
     private String publicationSchemaPath;
 
     @Autowired
+    private PublicationRepo publicationRepo;
+
+    @Autowired
     private DOMParserImpl domParser;
 
     @Autowired
     private MetadataExtractorService metadataExtractorService;
 
+    @Autowired
+    private UnmarshallerService unmarshallerService;
+
     @Override
-    public void addPublication(String publicationXmlData) {
+    public void addPublication(String publicationXmlData) throws Exception {
         Document document = domParser.isXmlDataValid(publicationXmlData, publicationSchemaPath);
 
-        // TODO: dodati naucni rad u bazu podataka
-        // isXmlDataValid ce baciti izuzetak ako parsiranje nije uspelo, tako da ovde nema potrebe vrsiti
-        // proveru da li je parsiranje uspesno
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String pubId = UUID.randomUUID().toString();
+
+        String updatedXml = PublicationIdUtil.addAuthorId(PublicationIdUtil.addPublicationId(publicationXmlData, pubId), loggedUser.getId().toString());
+
+        String id = publicationRepo.save(updatedXml, pubId);
     }
 
     @Override
-    public String getXmlData(String id) {
-        // TODO: implementirati ovo kada se napravi repository sloj
+    public String findPublicationXmlById(String id) throws Exception {
+        String xml = publicationRepo.findById(id);
 
-        String result = "<note>\n" +
-                "<to>Tove</to>\n" +
-                "<from>Jani</from>\n" +
-                "<heading>Reminder</heading>\n" +
-                "<body>Don't forget me this weekend!</body>\n" +
-                "</note>";
+        if (xml == null) {
+            throw new ResourceNotFoundException("Cover letter with ID " + id + " doesn't exist.");
+        }
 
-        return result;
+        return xml;
     }
 
     @Override
-    public List<PublicationDTO> getMyPublications() {
-        // TODO: Implementirati
+    public NaucniRad findPublicationById(String id) throws Exception {
+        String xmlData = this.findPublicationXmlById(id);
+        NaucniRad publication = (NaucniRad) unmarshallerService.unmarshal(xmlData);
+        return publication;
+    }
+
+    @Override
+    public List<NaucniRad> getPublicationsByUser() throws Exception {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String xmlData = this.publicationRepo.findByUser(loggedUser.getId().toString());
         return new ArrayList<>();
     }
 

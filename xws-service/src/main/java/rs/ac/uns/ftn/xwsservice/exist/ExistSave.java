@@ -38,7 +38,7 @@ public class ExistSave {
              *  an id is assigned to the new resource if left empty (null)
              */
             System.out.println("[INFO] Inserting the document: " + documentId);
-            res = (XMLResource) col.createResource( "coverletter_" + documentId + ".xml", XMLResource.RESOURCE_TYPE);
+            res = (XMLResource) col.createResource( documentId + ".xml", XMLResource.RESOURCE_TYPE);
             res.setContent(xmlData);
             System.out.println("[INFO] Storing the document: " + res.getId());
             col.storeResource(res);
