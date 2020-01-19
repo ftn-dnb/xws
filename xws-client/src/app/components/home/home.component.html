@@ -1,1 +1,62 @@
-<p>home works!</p>
+<div class="container">
+    <h2>XWS Publications</h2>
+
+    <div class="search">
+        <h3>Search and filter publications</h3>
+
+        <!-- TODO: DODATI FILTERE ZA NAPREDNU PRETRAGU -->
+
+        <mat-form-field appearance="outline">
+            <mat-icon matPrefix class="icon">search</mat-icon>
+            <input matInput type="text" placeholder="Search text..." />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="onSearch()">
+            <span>Search</span>
+        </button>
+    </div>
+
+    <mat-card class="card" *ngFor="let publication of publications">
+        <mat-card-header>
+            <mat-card-title>{{publication.title}}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <p>
+                <strong>Authors:</strong>
+                <span *ngFor="let author of publication.authors">
+                    {{author}};
+                </span>
+            </p>
+            <p>
+                <strong>Keywords:</strong> 
+                <span *ngFor="let keyword of publication.keywords">
+                    {{keyword}}
+                </span>
+            </p>            
+        </mat-card-content>
+
+        <mat-card-actions class="card-actions">
+            <a target="_blank" rel="noopener noreferrer" href="{{publication.xmlFilePath}}">
+                <button mat-raised-button>XML</button>
+            </a>
+
+            <a target="_blank" rel="noopener noreferrer" href="{{publication.htmlFilePath}}">
+                <button mat-raised-button>HTML</button>
+            </a>
+
+            <a target="_blank" rel="noopener noreferrer" href="{{publication.pdfFilePath}}">
+                <button mat-raised-button>PDF</button>
+            </a>
+
+            <a target="_blank" rel="noopener noreferrer" href="{{publication.metadataRdfPath}}">
+                <button mat-raised-button>Metadata RDF</button>
+            </a>
+
+            <a target="_blank" rel="noopener noreferrer" href="{{publication.metadataJsonPath}}">
+                <button mat-raised-button>Metadata JSON</button>
+            </a>
+
+        </mat-card-actions>
+    </mat-card>
+</div>

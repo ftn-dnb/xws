@@ -12,6 +12,7 @@
                 <th>HTML</th>
                 <th>PDF</th>
                 <th>Cover letter</th>
+                <th>Metadata</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -29,6 +30,11 @@
                 </td>
                 <td>
                     <a target="_blank" rel="noopener noreferrer" href="{{publication.coverLetterFilePath}}">See letter</a>
+                </td>
+
+                <td>
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.metadataJsonPath}}">JSON</a>&nbsp;
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.metadataRdfPath}}">RDF/XML</a>
                 </td>
 
                 <td>
