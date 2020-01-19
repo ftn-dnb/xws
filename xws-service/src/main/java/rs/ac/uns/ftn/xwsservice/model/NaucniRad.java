@@ -120,7 +120,7 @@ public class NaucniRad {
     protected NaucniRad.Poglavlja poglavlja;
     @XmlElement(name = "Reference", required = true)
     protected NaucniRad.Reference reference;
-    @XmlAttribute(name = "ID")
+    @XmlAttribute(name = "id")
     protected String id;
 
     /**

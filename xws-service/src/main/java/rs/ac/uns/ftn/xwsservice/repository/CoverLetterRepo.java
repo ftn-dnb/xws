@@ -16,7 +16,7 @@ public class CoverLetterRepo {
     @Value("${xml.collectionId.cover-letter}")
     private String collectionId;
 
-    @Value("${xml.namespace}")
+    @Value("${xml.namespace.cover-letter}")
     private String TARGET_NAMESPACE;
 
     public String save(String xml, String id) throws Exception {

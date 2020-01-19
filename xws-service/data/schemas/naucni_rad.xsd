@@ -49,7 +49,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="ID" type="xs:string"/>
+            <xs:attribute name="id" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="CTPoglavlje" mixed="false">

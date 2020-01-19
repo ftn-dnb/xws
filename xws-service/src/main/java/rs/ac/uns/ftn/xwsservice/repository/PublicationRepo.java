@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.xwsservice.repository;
 
 import org.exist.xmldb.EXistResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceIterator;
@@ -9,9 +10,17 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 import rs.ac.uns.ftn.xwsservice.exist.ExistRetrieve;
 import rs.ac.uns.ftn.xwsservice.exist.ExistSave;
+import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
+import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class PublicationRepo {
+
+    @Autowired
+    private UnmarshallerService unmarshallerService;
 
     @Value("${xml.collectionId.publication}")
     private String collectionId;
@@ -49,7 +58,7 @@ public class PublicationRepo {
         return retVal;
     }
 
-    public String findByUser(String userId) throws Exception {
+    public List<NaucniRad> findByUser(String userId) throws Exception {
         String xPathSelector = String.format("//NaucniRad[NaslovnaStrana/Autori/Autor[@id='%s']]", userId);
         ResourceSet resultSet = ExistRetrieve.executeXPathExpression(collectionId, xPathSelector, TARGET_NAMESPACE);
         if (resultSet == null)
@@ -57,11 +66,11 @@ public class PublicationRepo {
 
         ResourceIterator i = resultSet.getIterator();
         XMLResource res = null;
-        String retVal = null;
+        List<NaucniRad> pubs = new ArrayList<>();
 
         while (i.hasMoreResources()) {
             res = (XMLResource) i.nextResource();
-            retVal += res.getContent().toString();
+            pubs.add((NaucniRad) unmarshallerService.unmarshal(res.getContent().toString()));
         }
 
         if (res != null)
@@ -71,7 +80,7 @@ public class PublicationRepo {
                 exception.printStackTrace();
             }
 
-        return retVal;
+        return pubs;
     }
 
 }

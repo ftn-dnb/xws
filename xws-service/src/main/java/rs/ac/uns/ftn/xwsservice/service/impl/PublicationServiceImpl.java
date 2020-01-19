@@ -47,6 +47,8 @@ public class PublicationServiceImpl implements PublicationService {
         String updatedXml = PublicationIdUtil.addAuthorId(PublicationIdUtil.addPublicationId(publicationXmlData, pubId), loggedUser.getId().toString());
 
         String id = publicationRepo.save(updatedXml, pubId);
+
+        // TODO: Dodati XSLT i XSL-FO transformacije
     }
 
     @Override
@@ -54,7 +56,7 @@ public class PublicationServiceImpl implements PublicationService {
         String xml = publicationRepo.findById(id);
 
         if (xml == null) {
-            throw new ResourceNotFoundException("Cover letter with ID " + id + " doesn't exist.");
+            throw new ResourceNotFoundException("Publication with ID " + id + " doesn't exist.");
         }
 
         return xml;
@@ -70,8 +72,8 @@ public class PublicationServiceImpl implements PublicationService {
     @Override
     public List<NaucniRad> getPublicationsByUser() throws Exception {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String xmlData = this.publicationRepo.findByUser(loggedUser.getId().toString());
-        return new ArrayList<>();
+        List<NaucniRad> myPubs = this.publicationRepo.findByUser(loggedUser.getId().toString());
+        return myPubs;
     }
 
     @Override

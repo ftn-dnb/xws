@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.xwsservice.service;
 
-import rs.ac.uns.ftn.xwsservice.dto.response.PublicationDTO;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
 
 import java.util.List;

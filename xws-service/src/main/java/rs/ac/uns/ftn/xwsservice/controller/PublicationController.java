@@ -43,17 +43,13 @@ public class PublicationController {
         return ResponseEntity.ok().build();
     }
 
-    /**
-     *  Autor moze da dobije listu svojih naucnih radova, bez obzira u kom su
-     *  delu procesa objavljivanja.
-     *  TODO: Dodati PreAuthorize
-     */
-    //@GetMapping("/myPublications")
-    //public ResponseEntity<List<PublicationDTO>> getMyPublications() {
-    //    return new ResponseEntity<>(publicationService.getMyPublications(), HttpStatus.OK);
-    //}
+    @GetMapping(path = "/by-user")
+    public ResponseEntity<List<PublicationDTO>> getPublicationsByLoggedUser() throws Exception {
+        List<NaucniRad> pubs = publicationService.getPublicationsByUser();
+        return new ResponseEntity<>(PublicationMapper.toDtoList(pubs), HttpStatus.OK);
+    }
 
-    @GetMapping(path = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(path = "/public/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getPublicationPdfFile(@PathVariable String id) {
         String path = publicationPdfFolderPath + id;
         ByteArrayInputStream bis = fileService.readPdfFile(path);
@@ -68,42 +64,30 @@ public class PublicationController {
                 .body(new InputStreamResource(bis));
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/public/{id}")
     public ResponseEntity<PublicationDTO> getPublicationById(@PathVariable String id) throws Exception {
         NaucniRad publication = publicationService.findPublicationById(id);
         return new ResponseEntity<>(PublicationMapper.toDto(publication), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(path = "/public/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<String> getPublicationByIdXml(@PathVariable String id) throws Exception {
         String xml = publicationService.findPublicationXmlById(id);
         return new ResponseEntity<>(xml, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/by-user")
-    public ResponseEntity<List<PublicationDTO>> getPublicationsByLoggedUser() throws Exception {
-        List<NaucniRad> pubs = publicationService.getPublicationsByUser();
-        //return new ResponseEntity<>(PublicationMapper.toDtoList(pubs), HttpStatus.OK);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping(path = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(path = "/public/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> getPublicationHtmlFile(@PathVariable String id) {
         String path = publicationHtmlFolderPath + id;
         return new ResponseEntity<>(fileService.readHtmlFile(path), HttpStatus.OK);
     }
 
-    //@GetMapping(path = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
-    //public ResponseEntity<String> getPublicationXmlFile(@PathVariable String id) {
-    //    return new ResponseEntity<>(publicationService.getXmlData(id), HttpStatus.OK);
-    //}
-
-    @GetMapping(path = "/metadata/rdf/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(path = "/public/metadata/rdf/{id}", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<String> getPublicationMetadataRdfFormat(@PathVariable String id) {
         return new ResponseEntity<>(publicationService.getRdfMetadata(id), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/metadata/json/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/public/metadata/json/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getPublicationMetadataJsonFormat(@PathVariable String id) {
         return new ResponseEntity<>(publicationService.getJsonMetadata(id), HttpStatus.OK);
     }
