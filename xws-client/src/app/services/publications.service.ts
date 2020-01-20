@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { API_MY_PUBLICATIONS, API_SEARCH_PUBLICATIONS, API_PUBLICATION } from './../config/api-paths';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
