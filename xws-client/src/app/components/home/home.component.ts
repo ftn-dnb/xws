@@ -1,3 +1,5 @@
+import { PUBLICATION_PATH_NO_PARAM } from './../../config/router-paths';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PublicationsService } from './../../services/publications.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +14,8 @@ export class HomeComponent implements OnInit {
   publications: any[] = [];
 
   constructor(private publicationsService: PublicationsService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -25,5 +28,9 @@ export class HomeComponent implements OnInit {
     }, error => {
       this.toastr.error('There was an error while getting publications data.');
     });
+  }
+
+  onSeeDetails(id: string): void {
+    this.router.navigate([PUBLICATION_PATH_NO_PARAM, id]);
   }
 }

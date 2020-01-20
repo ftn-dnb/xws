@@ -1,0 +1,58 @@
+<div class="container">
+
+    <h2>{{publication.title}}</h2>
+
+    <p>
+        <strong>Authors:</strong> <br />
+        <span *ngFor="let author of publication.authors">
+            {{author}};
+        </span>
+    </p>
+
+    <p>
+        <strong>Abstract:</strong> <br />
+        {{publication.textAbstract}}
+    </p>
+
+    <p>
+        <strong>Keywords:</strong> <br />
+        <span *ngFor="let keyword of publication.keywords">
+            {{keyword}};
+        </span>
+    </p>
+
+    <strong>References:</strong> 
+    <ul>
+        <li *ngFor="let reference of publication.references">
+            <a target="_blank" rel="noopener noreferrer" href="{{reference.url}}">
+                {{reference.title}}, 
+                <span *ngFor="let author of reference.authors">{{author}};</span>
+            </a>
+        </li>
+    </ul>
+
+    <p>
+        <strong>See this publication in different file formats:</strong>
+    </p>
+    <div class="buttons">
+        <a target="_blank" rel="noopener noreferrer" href="{{publication.xmlFilePath}}">
+            <button mat-raised-button>XML</button>
+        </a>
+    
+        <a target="_blank" rel="noopener noreferrer" href="{{publication.htmlFilePath}}">
+            <button mat-raised-button>HTML</button>
+        </a>
+    
+        <a target="_blank" rel="noopener noreferrer" href="{{publication.pdfFilePath}}">
+            <button mat-raised-button>PDF</button>
+        </a>
+    
+        <a target="_blank" rel="noopener noreferrer" href="{{publication.metadataRdfPath}}">
+            <button mat-raised-button>Metadata RDF</button>
+        </a>
+    
+        <a target="_blank" rel="noopener noreferrer" href="{{publication.metadataJsonPath}}">
+            <button mat-raised-button>Metadata JSON</button>
+        </a>
+    </div>
+</div>

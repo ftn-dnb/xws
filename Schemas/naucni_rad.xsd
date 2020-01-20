@@ -43,7 +43,7 @@
                 </xs:element>
                 <xs:element name="Reference">
                     <xs:complexType>
-                        <xs:sequence>
+                        <xs:sequence maxOccurs="unbounded">
                             <xs:element name="Referenca" type="nr:CTReferenca"/>
                         </xs:sequence>
                     </xs:complexType>
