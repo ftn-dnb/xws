@@ -102,16 +102,26 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public String getRdfMetadata(String id) {
-        // TODO: Implementirati
-        String result = metadataExtractorService.extractMetadataToRdf("this is some xml data, change later");
+    public String getRdfMetadata(String id) throws Exception {
+        String xmlPublication = publicationRepo.findById(id);
+
+        if (xmlPublication == null) {
+            throw new ResourceNotFoundException("Publication with ID " + id + " doesn't exist.");
+        }
+
+        String result = metadataExtractorService.extractMetadataToRdf(xmlPublication);
         return result;
     }
 
     @Override
-    public String getJsonMetadata(String id) {
-        // TODO: Implementirati
-        String result = metadataExtractorService.extractMetadataToJson("this is some xml data, change later");
+    public String getJsonMetadata(String id) throws Exception {
+        String xmlPublication = publicationRepo.findById(id);
+
+        if (xmlPublication == null) {
+            throw new ResourceNotFoundException("Publication with ID " + id + " doesn't exist.");
+        }
+
+        String result = metadataExtractorService.extractMetadataToJson(xmlPublication);
         return result;
     }
 }

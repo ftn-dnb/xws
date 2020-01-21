@@ -102,12 +102,12 @@ public class PublicationController {
     }
 
     @GetMapping(path = "/public/metadata/rdf/{id}", produces = MediaType.APPLICATION_XML_VALUE)
-    public ResponseEntity<String> getPublicationMetadataRdfFormat(@PathVariable String id) {
+    public ResponseEntity<String> getPublicationMetadataRdfFormat(@PathVariable String id) throws Exception {
         return new ResponseEntity<>(publicationService.getRdfMetadata(id), HttpStatus.OK);
     }
 
     @GetMapping(path = "/public/metadata/json/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getPublicationMetadataJsonFormat(@PathVariable String id) {
+    public ResponseEntity<String> getPublicationMetadataJsonFormat(@PathVariable String id) throws Exception {
         return new ResponseEntity<>(publicationService.getJsonMetadata(id), HttpStatus.OK);
     }
 }
