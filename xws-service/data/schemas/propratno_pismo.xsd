@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/xws/tim5" xmlns="http://www.ftn.uns.ac.rs/xws/tim5">
+    <xs:include schemaLocation="types.xsd"/>
+    <xs:element name="PropratnoPismo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Posaljilac" type="CTAutor"/>
+                <xs:element name="Primalac" type="CTAutor"/>
+                <xs:element name="Datum" type="xs:date"/>
+                <xs:element name="SadrzajPisma" type="xs:string"/>
+                <xs:element name="Potpis" type="xs:base64Binary"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
