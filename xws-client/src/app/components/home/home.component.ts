@@ -2,7 +2,7 @@ import { PUBLICATION_PATH_NO_PARAM } from './../../config/router-paths';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PublicationsService } from './../../services/publications.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +13,9 @@ export class HomeComponent implements OnInit {
 
   publications: any[] = [];
 
+  @ViewChild('filterInput', {static: false})
+  filterInputElement: ElementRef;
+
   constructor(private publicationsService: PublicationsService,
               private toastr: ToastrService,
               private router: Router) {
@@ -22,7 +25,10 @@ export class HomeComponent implements OnInit {
   }
 
   onSearch(): void {
-    this.publicationsService.searchPublications().subscribe(data => {
+    const searchObject = {
+      filterText: this.filterInputElement.nativeElement.value
+    };
+    this.publicationsService.searchPublications(searchObject).subscribe(data => {
       console.log(data);
       this.publications = data;
     }, error => {

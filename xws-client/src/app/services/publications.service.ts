@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class PublicationsService {
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
   getMyPublications(): Observable<any> {
@@ -19,9 +19,7 @@ export class PublicationsService {
     return this.http.get(`${API_PUBLICATION}/${id}`);
   }
 
-  searchPublications(): Observable<any> {
-    // TODO: kasnije dodati parametar koji sadrzi sta treba filtrirati/traziti
-
-    return this.http.get(API_SEARCH_PUBLICATIONS);
+  searchPublications(searchObject: any): Observable<any> {
+    return this.http.post(API_SEARCH_PUBLICATIONS, searchObject);
   }
 }

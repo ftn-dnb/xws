@@ -8,7 +8,7 @@
 
         <mat-form-field appearance="outline">
             <mat-icon matPrefix class="icon">search</mat-icon>
-            <input matInput type="text" placeholder="Search text..." />
+            <input matInput type="text" placeholder="Search text..." #filterInput />
         </mat-form-field>
 
         <button mat-raised-button color="primary" (click)="onSearch()">
