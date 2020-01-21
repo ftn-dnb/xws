@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
-import rs.ac.uns.ftn.xwsservice.dto.response.PublicationDTO;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
 import rs.ac.uns.ftn.xwsservice.model.User;
@@ -15,7 +14,6 @@ import rs.ac.uns.ftn.xwsservice.service.PublicationService;
 import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
 import rs.ac.uns.ftn.xwsservice.utils.PublicationIdUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

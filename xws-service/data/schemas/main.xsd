@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="http://www.ftn.uns.ac.rs/xws/tim5" xmlns="http://www.ftn.uns.ac.rs/xws/tim5">
+    <xs:include schemaLocation="naucni_rad.xsd"/>
+    <xs:include schemaLocation="propratno_pismo.xsd"/>
+</xs:schema>
