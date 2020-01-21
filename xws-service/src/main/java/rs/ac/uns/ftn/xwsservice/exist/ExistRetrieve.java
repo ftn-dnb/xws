@@ -32,7 +32,7 @@ public class ExistRetrieve {
                 return null;
             }
             // get an instance of xpath query service
-            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "2.0");
             xpathService.setProperty("indent", "yes");
 
             // make the service aware of namespaces, using the default one

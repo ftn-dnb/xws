@@ -77,6 +77,12 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
+    public List<NaucniRad> filterPublicationsByText(String text) throws Exception {
+        List<NaucniRad> pubs = this.publicationRepo.filterPublications(text);
+        return pubs;
+    }
+
+    @Override
     public String getRdfMetadata(String id) {
         // TODO: Implementirati
         String result = metadataExtractorService.extractMetadataToRdf("this is some xml data, change later");

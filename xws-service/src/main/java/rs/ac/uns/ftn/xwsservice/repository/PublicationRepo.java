@@ -83,4 +83,30 @@ public class PublicationRepo {
         return pubs;
     }
 
+    public List<NaucniRad> filterPublications(String filterText) throws Exception {
+        String xPathSelector = String.format("//NaucniRad[*//*[contains(text(),'%s')]]", filterText);
+        //String xPathSelector = String.format("//NaucniRad", filterText);
+        ResourceSet resultSet = ExistRetrieve.executeXPathExpression(collectionId, xPathSelector, TARGET_NAMESPACE);
+        if (resultSet == null)
+            return null;
+
+        ResourceIterator i = resultSet.getIterator();
+        XMLResource res = null;
+        List<NaucniRad> pubs = new ArrayList<>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            pubs.add((NaucniRad) unmarshallerService.unmarshal(res.getContent().toString()));
+        }
+
+        if (res != null)
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+
+        return pubs;
+    }
+
 }

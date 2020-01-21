@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.xwsservice.dto.response.FilterPubsDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.PublicationDTO;
 import rs.ac.uns.ftn.xwsservice.mappers.PublicationMapper;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
@@ -58,6 +59,12 @@ public class PublicationController {
     @GetMapping(path = "/by-user")
     public ResponseEntity<List<PublicationDTO>> getPublicationsByLoggedUser() throws Exception {
         List<NaucniRad> pubs = publicationService.getPublicationsByUser();
+        return new ResponseEntity<>(PublicationMapper.toDtoList(pubs), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/public/filter")
+    public ResponseEntity<List<PublicationDTO>> filterPublications(@RequestBody FilterPubsDTO filter) throws Exception {
+        List<NaucniRad> pubs = this.publicationService.filterPublicationsByText(filter.getFilterText());
         return new ResponseEntity<>(PublicationMapper.toDtoList(pubs), HttpStatus.OK);
     }
 
