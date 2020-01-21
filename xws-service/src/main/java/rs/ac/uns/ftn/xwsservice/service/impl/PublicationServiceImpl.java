@@ -9,9 +9,7 @@ import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
 import rs.ac.uns.ftn.xwsservice.model.User;
 import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
-import rs.ac.uns.ftn.xwsservice.service.MetadataExtractorService;
-import rs.ac.uns.ftn.xwsservice.service.PublicationService;
-import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
+import rs.ac.uns.ftn.xwsservice.service.*;
 import rs.ac.uns.ftn.xwsservice.utils.PublicationIdUtil;
 
 import java.util.List;
@@ -22,6 +20,18 @@ public class PublicationServiceImpl implements PublicationService {
 
     @Value("${xsd.path.publication}")
     private String publicationSchemaPath;
+
+    @Value("${xslt.path.publication}")
+    private String publicationXsltFilePath;
+
+    @Value("${xslfo.path.publication}")
+    private String publicationXslfoFilePath;
+
+    @Value("${xslt.path.output-folder.publications}")
+    private String publicationXsltOutputFolderPath;
+
+    @Value("${xslfo.path.output-folder.publications}")
+    private String publicationXslfoOutputFolderPath;
 
     @Autowired
     private PublicationRepo publicationRepo;
@@ -35,6 +45,13 @@ public class PublicationServiceImpl implements PublicationService {
     @Autowired
     private UnmarshallerService unmarshallerService;
 
+    @Autowired
+    private XSLTService xsltService;
+
+    @Autowired
+    private XSLFOService xslfoService;
+
+
     @Override
     public void addPublication(String publicationXmlData) throws Exception {
         Document document = domParser.isXmlDataValid(publicationXmlData, publicationSchemaPath);
@@ -46,7 +63,11 @@ public class PublicationServiceImpl implements PublicationService {
 
         String id = publicationRepo.save(updatedXml, pubId);
 
-        // TODO: Dodati XSLT i XSL-FO transformacije
+        String xsltOutputFilePath = publicationXsltOutputFolderPath + pubId;
+        xsltService.transform(publicationXmlData, publicationXsltFilePath, xsltOutputFilePath);
+
+        String xslfoOutputFilePath = publicationXslfoOutputFolderPath + pubId;
+        xslfoService.transform(publicationXmlData, publicationXslfoFilePath, xslfoOutputFilePath);
     }
 
     @Override

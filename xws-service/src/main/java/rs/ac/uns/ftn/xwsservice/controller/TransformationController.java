@@ -22,16 +22,22 @@ public class TransformationController {
     @Autowired
     private XSLTService xsltService;
 
-    @Value("${xslfo.path.bookstore}")
+    @Value("${xslfo.path.publication}")
     private String xslfoFile;
 
-    @Value("${xslt.path.bookstore}")
-    private String xsltFile;
+    @Value("${xslt.path.publication}")
+    private String publicationXsltFilePath;
+
+    @Value("${xslt.path.output-folder.publications}")
+    private String publicationXsltOutputFolderPath;
+
+    @Value("${xslfo.path.output-folder.publications}")
+    private String xslfooutput;
 
     @PostMapping("/public")
     public ResponseEntity transformations(@RequestBody String xmlData) throws Exception {
-        xslfoService.transform(xmlData, xslfoFile, "mojaknjiga");
-        xsltService.transform(xmlData, xsltFile, "mojaknjiga");
+        xslfoService.transform(xmlData, xslfoFile, xslfooutput + "346768a7-4801-496e-a74c-c82dff327268");
+        xsltService.transform(xmlData, publicationXsltFilePath, publicationXsltOutputFolderPath + "346768a7-4801-496e-a74c-c82dff327268");
         return ResponseEntity.ok().build();
     }
 }
