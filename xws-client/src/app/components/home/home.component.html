@@ -28,12 +28,6 @@
                     {{author}};
                 </span>
             </p>
-            <p>
-                <strong>Keywords:</strong> 
-                <span *ngFor="let keyword of publication.keywords">
-                    {{keyword}}
-                </span>
-            </p>            
         </mat-card-content>
 
         <mat-card-actions class="card-actions">
@@ -57,6 +51,10 @@
                 <button mat-raised-button>Metadata JSON</button>
             </a>
 
+            <button mat-raised-button color="primary" (click)="onSeeDetails(publication.id)">
+                <span>Details</span>
+                <mat-icon>more_horiz</mat-icon>
+            </button>
         </mat-card-actions>
     </mat-card>
 </div>

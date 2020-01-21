@@ -9,6 +9,7 @@ public class PublicationDTO {
 
     private String id;
     private String title;
+    private String textAbstract;
     private List<String> keywords;
     private String xmlFilePath;
     private String htmlFilePath;
@@ -17,13 +18,15 @@ public class PublicationDTO {
     private String metadataRdfPath;
     private String metadataJsonPath;
     private List<String> authors;
+    private List<ReferenceDTO> references;
 
     public PublicationDTO() {
     }
 
     public PublicationDTO(NaucniRad pub) {
-        this.id = pub.getID();
+        this.id = pub.getId();
         this.title = pub.getNaslovnaStrana().getNaslov();
+        this.textAbstract = pub.getAbstrakt();
         this.keywords = pub.getKljucneReci().getKljucnaRec();
         this.xmlFilePath = "http://localhost:8080/api/publications/public/xml/" + id;
         this.htmlFilePath = "http://localhost:8080/api/publications/public/html/" + id;
@@ -33,6 +36,9 @@ public class PublicationDTO {
 
         this.authors = new ArrayList<>();
         pub.getNaslovnaStrana().getAutori().getAutor().forEach(author -> this.authors.add(author.getIme() + " " + author.getPrezime()));
+
+        this.references = new ArrayList<>();
+        pub.getReference().getReferenca().forEach(reference -> this.references.add(new ReferenceDTO(reference)));
 
         // TODO: dodati putanju ka cover letteru, ali treba prvo naci koji je letter za ovaj naucni rad
         // TODO: dodati da flag da se zna da li je rad obrisan ili ne
@@ -44,6 +50,14 @@ public class PublicationDTO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getTextAbstract() {
+        return textAbstract;
+    }
+
+    public void setTextAbstract(String textAbstract) {
+        this.textAbstract = textAbstract;
     }
 
     public String getId() {
@@ -116,5 +130,13 @@ public class PublicationDTO {
 
     public void setAuthors(List<String> authors) {
         this.authors = authors;
+    }
+
+    public List<ReferenceDTO> getReferences() {
+        return references;
+    }
+
+    public void setReferences(List<ReferenceDTO> references) {
+        this.references = references;
     }
 }

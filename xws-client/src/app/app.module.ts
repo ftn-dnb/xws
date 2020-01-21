@@ -15,6 +15,7 @@ import { AccountConfirmationComponent } from './components/account-confirmation/
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { MyPublicationsComponent } from './components/my-publications/my-publications.component';
+import { PublicationComponent } from './components/publication/publication.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { MyPublicationsComponent } from './components/my-publications/my-publica
     LoginComponent,
     RegistrationComponent,
     MyPublicationsComponent,
+    PublicationComponent,
   ],
   imports: [
     BrowserModule,
