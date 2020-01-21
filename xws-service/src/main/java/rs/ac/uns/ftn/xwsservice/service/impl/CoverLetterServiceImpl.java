@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
-import rs.ac.uns.ftn.xwsservice.dto.response.CoverLetterDTO;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.PropratnoPismo;
 import rs.ac.uns.ftn.xwsservice.repository.CoverLetterRepo;

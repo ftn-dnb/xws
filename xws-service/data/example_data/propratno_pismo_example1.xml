@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<PropratnoPismo xmlns="propratno_pismo"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="propratno_pismo file:/E:/XML/proj/xws/Schemas/propratno_pismo.xsd">
+<PropratnoPismo xmlns="http://www.ftn.uns.ac.rs/xws/tim5"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.ftn.uns.ac.rs/xws/tim5 file:/E:/dev/xws-project/xws-service/data/schemas/propratno_pismo.xsd">
     <Posaljilac>
         <Ime>Ime0</Ime>
+        <Ime>Ime1</Ime>
         <Prezime>Prezime0</Prezime>
+        <Prezime>Prezime1</Prezime>
         <EMail>a@a.a</EMail>
         <BrojTelefona>BrojTelefona0</BrojTelefona>
         <ORCID>0000-dddd-dddd-dddd</ORCID>
@@ -20,8 +22,10 @@
         </Ustanova>
     </Posaljilac>
     <Primalac>
-        <Ime>Ime1</Ime>
-        <Prezime>Prezime1</Prezime>
+        <Ime>Ime2</Ime>
+        <Ime>Ime3</Ime>
+        <Prezime>Prezime2</Prezime>
+        <Prezime>Prezime3</Prezime>
         <EMail>a@a.a</EMail>
         <BrojTelefona>BrojTelefona1</BrojTelefona>
         <ORCID>0000-dddd-dddd-dddd</ORCID>

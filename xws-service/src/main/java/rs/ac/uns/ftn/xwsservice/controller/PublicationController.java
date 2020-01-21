@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.uns.ftn.xwsservice.dto.response.FilterPubsDTO;
+import rs.ac.uns.ftn.xwsservice.dto.request.FilterPubsDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.PublicationDTO;
 import rs.ac.uns.ftn.xwsservice.mappers.PublicationMapper;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
