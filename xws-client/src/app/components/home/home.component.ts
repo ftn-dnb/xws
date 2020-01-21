@@ -22,6 +22,18 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    const filter = localStorage.getItem('filterParam');
+    const searchObject = {
+      filterText: filter
+    };
+    if (filter || filter === '') {
+      this.publicationsService.searchPublications(searchObject).subscribe(
+        data => this.publications = data,
+        error => {
+          this.toastr.error('There was an error while getting publications data.');
+        }
+      );
+    }
   }
 
   onSearch(): void {
@@ -31,6 +43,7 @@ export class HomeComponent implements OnInit {
     this.publicationsService.searchPublications(searchObject).subscribe(data => {
       console.log(data);
       this.publications = data;
+      localStorage.setItem('filterParam', searchObject.filterText);
     }, error => {
       this.toastr.error('There was an error while getting publications data.');
     });
