@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:pp="http://www.ftn.uns.ac.rs/xws/tim5"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format" version="2.0">
 
     <xsl:template match="/">
@@ -19,7 +20,7 @@
                     <fo:block text-indent="10px">
                         Date:
                         <fo:inline font-weight="bold">
-                            <xsl:value-of select="//Datum" />
+                            <xsl:value-of select="//pp:Datum" />
                         </fo:inline>
                     </fo:block>
 
@@ -28,31 +29,31 @@
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">First name: </fo:inline>
-                        <xsl:value-of select="//Posaljilac/Ime" />
+                        <xsl:value-of select="//pp:Posaljilac/pp:Ime" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">Last name: </fo:inline>
-                        <xsl:value-of select="//Posaljilac/Prezime" />
+                        <xsl:value-of select="//pp:Posaljilac/pp:Prezime" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">E-Mail: </fo:inline>
-                        <xsl:value-of select="//Posaljilac/EMail" />
+                        <xsl:value-of select="//pp:Posaljilac/pp:EMail" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">Phone number: </fo:inline>
-                        <xsl:value-of select="//Posaljilac/BrojTelefona" />
+                        <xsl:value-of select="//pp:Posaljilac/pp:BrojTelefona" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">ORCID: </fo:inline>
-                        <xsl:value-of select="//Posaljilac/ORCID" />
+                        <xsl:value-of select="//pp:Posaljilac/pp:ORCID" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">Address: </fo:inline>
-                        <xsl:value-of select="//Posaljilac/Ustanova/Naziv" />,
-                        <xsl:value-of select="//Posaljilac/Ustanova/Adresa/Ulica" />
-                        <xsl:value-of select="//Posaljilac/Ustanova/Adresa/Broj" />,
-                        <xsl:value-of select="//Posaljilac/Ustanova/Adresa/Grad" />,
-                        <xsl:value-of select="//Posaljilac/Ustanova/Adresa/Drzava" />
+                        <xsl:value-of select="//pp:Posaljilac/pp:Ustanova/pp:Naziv" />,
+                        <xsl:value-of select="//pp:Posaljilac/pp:Ustanova/pp:Adresa/pp:Ulica" />
+                        <xsl:value-of select="//pp:Posaljilac/pp:Ustanova/pp:Adresa/pp:Broj" />,
+                        <xsl:value-of select="//pp:Posaljilac/pp:Ustanova/pp:Adresa/pp:Grad" />,
+                        <xsl:value-of select="//pp:Posaljilac/pp:Ustanova/pp:Adresa/pp:Drzava" />
                     </fo:block>
 
                     <fo:block font-family="sans-serif" font-size="16px" font-weight="bold" padding="10px">
@@ -60,38 +61,38 @@
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">First name: </fo:inline>
-                        <xsl:value-of select="//Primalac/Ime" />
+                        <xsl:value-of select="//pp:Primalac/pp:Ime" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">Last name: </fo:inline>
-                        <xsl:value-of select="//Primalac/Prezime" />
+                        <xsl:value-of select="//pp:Primalac/pp:Prezime" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">E-Mail: </fo:inline>
-                        <xsl:value-of select="//Primalac/EMail" />
+                        <xsl:value-of select="//pp:Primalac/pp:EMail" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">Phone number: </fo:inline>
-                        <xsl:value-of select="//Primalac/BrojTelefona" />
+                        <xsl:value-of select="//pp:Primalac/pp:BrojTelefona" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">ORCID: </fo:inline>
-                        <xsl:value-of select="//Primalac/ORCID" />
+                        <xsl:value-of select="//pp:Primalac/pp:ORCID" />
                     </fo:block>
                     <fo:block text-indent="10px">
                         <fo:inline font-weight="bold">Address: </fo:inline>
-                        <xsl:value-of select="//Primalac/Ustanova/Naziv" />,
-                        <xsl:value-of select="//Primalac/Ustanova/Adresa/Ulica" />
-                        <xsl:value-of select="//Primalac/Ustanova/Adresa/Broj" />,
-                        <xsl:value-of select="//Primalac/Ustanova/Adresa/Grad" />,
-                        <xsl:value-of select="//Primalac/Ustanova/Adresa/Drzava" />
+                        <xsl:value-of select="//pp:Primalac/pp:Ustanova/pp:Naziv" />,
+                        <xsl:value-of select="//pp:Primalac/pp:Ustanova/pp:Adresa/pp:Ulica" />
+                        <xsl:value-of select="//pp:Primalac/pp:Ustanova/pp:Adresa/pp:Broj" />,
+                        <xsl:value-of select="//pp:Primalac/pp:Ustanova/pp:Adresa/pp:Grad" />,
+                        <xsl:value-of select="//pp:Primalac/pp:Ustanova/pp:Adresa/pp:Drzava" />
                     </fo:block>
 
                     <fo:block font-family="sans-serif" font-size="18px" font-weight="bold" padding="10px">
                         Content:
                     </fo:block>
                     <fo:block text-indent="10px">
-                        <xsl:value-of select="//SadrzajPisma" />
+                        <xsl:value-of select="//pp:SadrzajPisma" />
                     </fo:block>
                 </fo:flow>
             </fo:page-sequence>
