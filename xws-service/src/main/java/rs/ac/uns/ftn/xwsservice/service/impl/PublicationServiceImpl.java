@@ -51,9 +51,12 @@ public class PublicationServiceImpl implements PublicationService {
     @Autowired
     private XSLFOService xslfoService;
 
+    @Autowired
+    private BusinessProcessService businessProcessService;
+
 
     @Override
-    public void addPublication(String publicationXmlData) throws Exception {
+    public String addPublication(String publicationXmlData) throws Exception {
         Document document = domParser.isXmlDataValid(publicationXmlData, publicationSchemaPath);
 
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -63,11 +66,15 @@ public class PublicationServiceImpl implements PublicationService {
 
         String id = publicationRepo.save(updatedXml, pubId);
 
+        String processId = businessProcessService.createNewProcess(id);
+
         String xsltOutputFilePath = publicationXsltOutputFolderPath + pubId;
         xsltService.transform(publicationXmlData, publicationXsltFilePath, xsltOutputFilePath);
 
         String xslfoOutputFilePath = publicationXslfoOutputFolderPath + pubId;
         xslfoService.transform(publicationXmlData, publicationXslfoFilePath, xslfoOutputFilePath);
+
+        return processId;
     }
 
     @Override

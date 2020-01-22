@@ -4,7 +4,7 @@ import rs.ac.uns.ftn.xwsservice.model.PropratnoPismo;
 
 public interface CoverLetterService {
 
-    void addCoverLetter(String coverLetterXmlData) throws Exception;
+    String addCoverLetter(String coverLetterXmlData) throws Exception;
 
     String findCoverLetterXmlById(String id) throws Exception;
 

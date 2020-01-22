@@ -51,9 +51,9 @@ public class PublicationController {
     }
 
     @PostMapping
-    public ResponseEntity addPublication(@RequestBody String xmlPublicationData) throws Exception {
-        publicationService.addPublication(xmlPublicationData);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> addPublication(@RequestBody String xmlPublicationData) throws Exception {
+        String processId = publicationService.addPublication(xmlPublicationData);
+        return new ResponseEntity<>(processId, HttpStatus.OK);
     }
 
     @GetMapping(path = "/by-user")

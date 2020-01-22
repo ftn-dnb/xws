@@ -49,7 +49,7 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     private CoverLetterRepo coverLetterRepo;
 
     @Override
-    public void addCoverLetter(String coverLetterXmlData) throws Exception {
+    public String addCoverLetter(String coverLetterXmlData) throws Exception {
         Document document = domParser.isXmlDataValid(coverLetterXmlData, this.coverLetterSchemaPath);
 
         String coverLetterId = UUID.randomUUID().toString();
@@ -62,6 +62,8 @@ public class CoverLetterServiceImpl implements CoverLetterService {
 
         String xslfoOutputPath = coverLetterXslfoOutputFolder + coverLetterId;
         xslfoService.transform(coverLetterXmlData, coverLetterXslfoPath, xslfoOutputPath);
+
+        return id;
     }
 
     @Override

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/xws/tim5" xmlns="http://www.ftn.uns.ac.rs/xws/tim5">
+    <xs:element name="PoslovniProces">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="NaucniRadId" type="xs:string"/>
+                <xs:element name="PropratnoPismoId" type="xs:string"/>
+                <xs:element name="Faza" type="EnumFaza"/>
+                <xs:element name="StatusRada" type="EnumStatusRada"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="EnumFaza">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ZaReviziju"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EnumStatusRada">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Obrisan"/>
+            <xs:enumeration value="Prihvacen"/>
+            <xs:enumeration value="Odbijen"/>
+            <xs:enumeration value="UProcesu"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
