@@ -7,10 +7,7 @@ import org.w3c.dom.Document;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.PropratnoPismo;
 import rs.ac.uns.ftn.xwsservice.repository.CoverLetterRepo;
-import rs.ac.uns.ftn.xwsservice.service.CoverLetterService;
-import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
-import rs.ac.uns.ftn.xwsservice.service.XSLFOService;
-import rs.ac.uns.ftn.xwsservice.service.XSLTService;
+import rs.ac.uns.ftn.xwsservice.service.*;
 import rs.ac.uns.ftn.xwsservice.utils.CoverLetterIdUtil;
 
 import java.util.UUID;
@@ -48,6 +45,9 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     @Autowired
     private CoverLetterRepo coverLetterRepo;
 
+    @Autowired
+    private BusinessProcessService businessProcessService;
+
     @Override
     public String addCoverLetter(String coverLetterXmlData) throws Exception {
         Document document = domParser.isXmlDataValid(coverLetterXmlData, this.coverLetterSchemaPath);
@@ -64,6 +64,13 @@ public class CoverLetterServiceImpl implements CoverLetterService {
         xslfoService.transform(coverLetterXmlData, coverLetterXslfoPath, xslfoOutputPath);
 
         return id;
+    }
+
+    @Override
+    public String addCoverLetterForPublication(String processId, String coverLetterXmlData) throws Exception {
+        String coverLetterId = this.addCoverLetter(coverLetterXmlData);
+        businessProcessService.addCoverLetterForPublication(processId, coverLetterId);
+        return coverLetterId;
     }
 
     @Override

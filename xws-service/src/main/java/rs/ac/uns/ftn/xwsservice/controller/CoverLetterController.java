@@ -38,19 +38,26 @@ public class CoverLetterController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping(path = "/for-publication/{processId}")
+    public ResponseEntity addCoverLetterForPublication(@PathVariable String processId, @RequestBody String xmlCoverLetter) throws Exception {
+        coverLetterService.addCoverLetterForPublication(processId, xmlCoverLetter);
+        return ResponseEntity.ok().build();
+    }
+
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<CoverLetterDTO> getCoverLetterById(@PathVariable String id) throws Exception {
         PropratnoPismo letter = coverLetterService.findCoverLetterById(id);
         return new ResponseEntity<>(CoverLetterMapper.toDto(letter), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(path = "/public/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<String> getCoverLetterXmlById(@PathVariable String id) throws Exception {
         String xml = coverLetterService.findCoverLetterXmlById(id);
         return new ResponseEntity<>(xml, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(path = "/public/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getCoverLetterPdfFile(@PathVariable String id) {
         String path = coverLetterPdfFolderPath + id;
         ByteArrayInputStream bis = fileService.readPdfFile(path);
@@ -65,7 +72,7 @@ public class CoverLetterController {
                 .body(new InputStreamResource(bis));
     }
 
-    @GetMapping(path = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(path = "/public/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> getCoverLetterHtmlFile(@PathVariable String id) {
         String path = coverLetterHtmlFolderPath + id;
         return new ResponseEntity<>(fileService.readHtmlFile(path), HttpStatus.OK);

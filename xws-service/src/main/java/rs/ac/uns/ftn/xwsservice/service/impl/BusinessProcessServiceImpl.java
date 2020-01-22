@@ -8,6 +8,7 @@ import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -15,6 +16,11 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
     @Autowired
     private BusinessProcessRepository businessProcessRepository;
+
+    @Override
+    public List<PoslovniProces> getAllProcesses() throws Exception {
+        return businessProcessRepository.findAll();
+    }
 
     @Override
     public String createNewProcess(String publicationId) throws Exception {
@@ -28,5 +34,14 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
         businessProcessRepository.saveObject(process);
         return processId;
+    }
+
+    @Override
+    public void addCoverLetterForPublication(String processId, String coverLetterId) throws Exception {
+        String processXmlData = businessProcessRepository.findById(processId);
+
+        // TODO: Treba pozvati update metodu nad procitanim biznis procesom i dodati prosledjeni
+        // coverLetterId u polje 'PropratnoPismoId'
+        // Ovo se moze zavrsiti tek kada se implementira UPDATE metod nad bazom podataka.
     }
 }

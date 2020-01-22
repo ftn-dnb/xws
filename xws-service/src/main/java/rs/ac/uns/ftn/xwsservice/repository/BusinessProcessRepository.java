@@ -10,8 +10,13 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 import rs.ac.uns.ftn.xwsservice.exist.ExistRetrieve;
 import rs.ac.uns.ftn.xwsservice.exist.ExistSave;
+import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 import rs.ac.uns.ftn.xwsservice.service.MarshallerService;
+import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class BusinessProcessRepository {
@@ -25,6 +30,10 @@ public class BusinessProcessRepository {
     @Autowired
     private MarshallerService marshallerService;
 
+    @Autowired
+    private UnmarshallerService unmarshallerService;
+
+
     public String saveObject(PoslovniProces process) throws Exception {
         String xmlData = marshallerService.marshal(process);
         ExistSave.save(collectionId, process.getId(), xmlData);
@@ -37,7 +46,7 @@ public class BusinessProcessRepository {
     }
 
     public String findById(String id) throws Exception {
-        String xPathSelector = String.format("//PropratnoPismo[@id='%s']", id);
+        String xPathSelector = String.format("//PoslovniProces[@id='%s']", id);
         ResourceSet resultSet = ExistRetrieve.executeXPathExpression(collectionId, xPathSelector, TARGET_NAMESPACE);
         if (resultSet == null)
             return null;
@@ -59,5 +68,30 @@ public class BusinessProcessRepository {
             }
 
         return retVal;
+    }
+
+    public List<PoslovniProces> findAll() throws Exception {
+        String xPathSelector = "//PoslovniProces";
+        ResourceSet resultSet = ExistRetrieve.executeXPathExpression(collectionId, xPathSelector, TARGET_NAMESPACE);
+        if (resultSet == null)
+            return null;
+
+        ResourceIterator i = resultSet.getIterator();
+        XMLResource res = null;
+        List<PoslovniProces> processes = new ArrayList<>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            processes.add((PoslovniProces) unmarshallerService.unmarshal(res.getContent().toString()));
+        }
+
+        if (res != null)
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+
+        return processes;
     }
 }
