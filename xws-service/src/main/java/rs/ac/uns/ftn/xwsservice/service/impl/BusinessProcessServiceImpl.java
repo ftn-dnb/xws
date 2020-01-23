@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.xwsservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.EnumFaza;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
@@ -43,5 +44,40 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
         // TODO: Treba pozvati update metodu nad procitanim biznis procesom i dodati prosledjeni
         // coverLetterId u polje 'PropratnoPismoId'
         // Ovo se moze zavrsiti tek kada se implementira UPDATE metod nad bazom podataka.
+    }
+
+    @Override
+    public void addReviewersToProcess(String processId, List<String> users) throws Exception {
+        String processXmlData = businessProcessRepository.findById(processId);
+
+        if (processXmlData == null) {
+            throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
+        }
+
+        // TODO: U listu recenzenata treba dodati id-eve korisnika koji se nalaze u parametru 'users'
+    }
+
+    @Override
+    public void changeProcessPhase(String processId, String phase) throws Exception {
+        String processXmlData = businessProcessRepository.findById(processId);
+
+        if (processXmlData == null) {
+            throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
+        }
+
+        EnumFaza newProcessPhase = EnumFaza.valueOf(phase);
+        // TODO: Kada se uradi update metoda baze podataka ovde treba promeniti fazu koja je pristigla sa frontenda
+    }
+
+    @Override
+    public void changeProcessStatus(String processId, boolean status) throws Exception {
+        String processXmlData = businessProcessRepository.findById(processId);
+
+        if (processXmlData == null) {
+            throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
+        }
+
+        // TODO: kada se uradi update metoda, ovde promeniti status poslovnog procesa u Prihvacen ako je status=true
+        // ili u Odbijen ako je status=false
     }
 }

@@ -70,6 +70,11 @@ public class BusinessProcessRepository {
         return retVal;
     }
 
+    public PoslovniProces findObjectById(String id) throws Exception {
+        String xmlData = this.findById(id);
+        return (PoslovniProces) unmarshallerService.unmarshal(xmlData);
+    }
+
     public List<PoslovniProces> findAll() throws Exception {
         String xPathSelector = "//PoslovniProces";
         ResourceSet resultSet = ExistRetrieve.executeXPathExpression(collectionId, xPathSelector, TARGET_NAMESPACE);

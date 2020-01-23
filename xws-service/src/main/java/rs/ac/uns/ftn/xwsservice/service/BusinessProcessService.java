@@ -9,4 +9,7 @@ public interface BusinessProcessService {
     List<PoslovniProces> getAllProcesses() throws Exception;
     String createNewProcess(String publicationId) throws Exception;
     void addCoverLetterForPublication(String processId, String coverLetterId) throws Exception;
+    void addReviewersToProcess(String processId, List<String> users) throws Exception;
+    void changeProcessPhase(String processId, String phase) throws Exception;
+    void changeProcessStatus(String processId, boolean status) throws Exception;
 }
