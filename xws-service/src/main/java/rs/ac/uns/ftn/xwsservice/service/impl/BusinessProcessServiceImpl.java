@@ -45,7 +45,7 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
             throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
         }
 
-        process.setPropratnoPismoId(processId);
+        process.setPropratnoPismoId(coverLetterId);
         businessProcessRepository.saveObject(process);
     }
 

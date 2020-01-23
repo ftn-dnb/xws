@@ -1,0 +1,42 @@
+<div class="container">
+
+    <div class="header">
+        <h1 id = "title">Business processes</h1>
+    </div>
+
+    <!-- TODO -->
+    <!-- TODO -->
+    <!-- TODO: U OVU TABELU TREBA UBACITI REALNE PODATKE KADA SE SREDI DTO ZA POSLOVNI PROCES -->
+
+    <table class="table" id="table">
+        <thead>
+            <tr>
+                <th>Publication</th>
+                <th>Cover letter</th>
+                <th>Phase</th>
+                <th>Status</th>
+                <th>See more</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let process of processes">
+                <td>
+                    <a target="_blank" rel="noopener noreferrer" href="{{process.publicationPdfFilePath}}">PDF</a>&nbsp;
+                    <a target="_blank" rel="noopener noreferrer" href="{{process.publicationHtmlFilePath}}">HTML</a>
+                </td>
+                <td>
+                    <a target="_blank" rel="noopener noreferrer" href="{{process.coverLetterPdfFilePath}}">PDF</a>&nbsp;
+                    <a target="_blank" rel="noopener noreferrer" href="{{process.coverLetterHtmlFilePath}}">HTML</a>
+                </td>
+                <td>{{process.processPhase}}</td>
+                <td>{{process.publicationStatus}}</td>
+
+                <td>
+                    <button mat-button (click)="onClickSeeMore(process.id)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
