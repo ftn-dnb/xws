@@ -26,6 +26,13 @@ public class BusinessProcessController {
         return new ResponseEntity<>(BusinessProcessMapper.toListDto(processes), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/{id}")
+    @PreAuthorize("hasRole('ROLE_EDITOR')")
+    public ResponseEntity<BusinessProcessDTO> getProcess(@PathVariable String id) throws Exception {
+        PoslovniProces process = businessProcessService.getProcess(id);
+        return new ResponseEntity<>(BusinessProcessMapper.toDto(process), HttpStatus.OK);
+    }
+
     /**
      * Dodavanje recenzenata u poslovni proces za neki naucni rad.
      * Kao parametar se salje lista stringova sa ID-evima korisnika koji ce biti recenzenti za taj rad.

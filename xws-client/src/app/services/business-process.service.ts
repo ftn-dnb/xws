@@ -1,5 +1,5 @@
-import { API_BUSINESS_PROCESSES } from './../config/api-paths';
 import { Observable } from 'rxjs';
+import { API_BUSINESS_PROCESSES } from './../config/api-paths';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -13,5 +13,9 @@ export class BusinessProcessService {
 
   getAllProcesses(): Observable<any> {
     return this.http.get(API_BUSINESS_PROCESSES);
+  }
+
+  getProcess(id: string): Observable<any> {
+    return this.http.get(`${API_BUSINESS_PROCESSES}/${id}`);
   }
 }

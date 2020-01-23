@@ -1,6 +1,8 @@
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BusinessProcessService } from './../../services/business-process.service';
 import { Component, OnInit } from '@angular/core';
+import { BUSINESS_PROCESSES_PATH } from 'src/app/config/router-paths';
 
 @Component({
   selector: 'app-business-process',
@@ -12,7 +14,8 @@ export class BusinessProcessComponent implements OnInit {
   processes: any[] = [];
 
   constructor(private businessProcessService: BusinessProcessService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -28,6 +31,6 @@ export class BusinessProcessComponent implements OnInit {
   }
 
   onClickSeeMore(processId: string): void {
-    // TODO: Idi na komponentu za rad sa jednim procesom
+    this.router.navigate([BUSINESS_PROCESSES_PATH, processId]);
   }
 }

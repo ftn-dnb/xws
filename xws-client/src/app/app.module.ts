@@ -17,6 +17,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { MyPublicationsComponent } from './components/my-publications/my-publications.component';
 import { PublicationComponent } from './components/publication/publication.component';
 import { BusinessProcessComponent } from './components/business-process/business-process.component';
+import { BusinessProcessDetailsComponent } from './components/business-process-details/business-process-details.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { BusinessProcessComponent } from './components/business-process/business
     MyPublicationsComponent,
     PublicationComponent,
     BusinessProcessComponent,
+    BusinessProcessDetailsComponent,
   ],
   imports: [
     BrowserModule,

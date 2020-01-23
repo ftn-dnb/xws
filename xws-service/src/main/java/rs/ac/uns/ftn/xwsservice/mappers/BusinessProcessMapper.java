@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 public class BusinessProcessMapper {
 
+    public static BusinessProcessDTO toDto(PoslovniProces process) {
+        return new BusinessProcessDTO(process);
+    }
+
     public static List<BusinessProcessDTO> toListDto(List<PoslovniProces> processes) {
         return processes.stream().map(process -> new BusinessProcessDTO(process)).collect(Collectors.toList());
     }
