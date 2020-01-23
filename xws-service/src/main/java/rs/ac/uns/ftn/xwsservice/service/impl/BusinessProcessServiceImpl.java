@@ -39,11 +39,14 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
     @Override
     public void addCoverLetterForPublication(String processId, String coverLetterId) throws Exception {
-        String processXmlData = businessProcessRepository.findById(processId);
+        PoslovniProces process = businessProcessRepository.findObjectById(processId);
 
-        // TODO: Treba pozvati update metodu nad procitanim biznis procesom i dodati prosledjeni
-        // coverLetterId u polje 'PropratnoPismoId'
-        // Ovo se moze zavrsiti tek kada se implementira UPDATE metod nad bazom podataka.
+        if (process == null) {
+            throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
+        }
+
+        process.setPropratnoPismoId(processId);
+        businessProcessRepository.saveObject(process);
     }
 
     @Override
@@ -71,13 +74,14 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
     @Override
     public void changeProcessStatus(String processId, boolean status) throws Exception {
-        String processXmlData = businessProcessRepository.findById(processId);
+        PoslovniProces process = businessProcessRepository.findObjectById(processId);
 
-        if (processXmlData == null) {
+        if (process == null) {
             throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
         }
 
-        // TODO: kada se uradi update metoda, ovde promeniti status poslovnog procesa u Prihvacen ako je status=true
-        // ili u Odbijen ako je status=false
+        EnumStatusRada newStatus = (status) ? EnumStatusRada.PRIHVACEN : EnumStatusRada.ODBIJEN;
+        process.setStatusRada(newStatus);
+        businessProcessRepository.saveObject(process);
     }
 }
