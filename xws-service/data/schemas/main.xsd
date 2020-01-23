@@ -3,4 +3,5 @@
            targetNamespace="http://www.ftn.uns.ac.rs/xws/tim5" xmlns="http://www.ftn.uns.ac.rs/xws/tim5">
     <xs:include schemaLocation="naucni_rad.xsd"/>
     <xs:include schemaLocation="propratno_pismo.xsd"/>
+    <xs:include schemaLocation="poslovni_proces.xsd"/>
 </xs:schema>

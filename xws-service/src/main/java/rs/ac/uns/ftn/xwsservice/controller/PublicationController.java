@@ -35,25 +35,11 @@ public class PublicationController {
     @Value("${xslfo.path.output-folder.publications}")
     private String publicationPdfFolderPath;
 
-    @GetMapping(path="/public/search")
-    public ResponseEntity<List<PublicationDTO>> searchPublications() throws Exception {
-        // TODO: dodati kasnije parametar (objekat) koji sadrzi sta treba filtrirati/pretraziti
-        // Ja cu ovde zasad samo pozvati metodu koja vraca rad putem ID-a (da bih napravio homepage na frontu)
-        // to obrisati i pozvati pravu metodu koja sluzi za pretragu
-
-        NaucniRad nr1 = publicationService.findPublicationById("d56a4ab6-b322-4e2d-9339-37d72a5c58a1");
-        NaucniRad nr2 = publicationService.findPublicationById("7ac809b0-8b0a-498f-9598-3494c8c26a0c");
-        List<NaucniRad> pubs = new ArrayList<>();
-        pubs.add(nr1);
-        pubs.add(nr2);
-
-        return new ResponseEntity<>(PublicationMapper.toDtoList(pubs), HttpStatus.OK);
-    }
 
     @PostMapping
-    public ResponseEntity addPublication(@RequestBody String xmlPublicationData) throws Exception {
-        publicationService.addPublication(xmlPublicationData);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> addPublication(@RequestBody String xmlPublicationData) throws Exception {
+        String processId = publicationService.addPublication(xmlPublicationData);
+        return new ResponseEntity<>(processId, HttpStatus.OK);
     }
 
     @GetMapping(path = "/by-user")

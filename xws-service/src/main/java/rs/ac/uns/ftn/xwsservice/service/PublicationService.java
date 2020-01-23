@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PublicationService {
 
-    void addPublication(String publicationXmlData) throws Exception;
+    String addPublication(String publicationXmlData) throws Exception;
     NaucniRad findPublicationById(String id) throws Exception;
     String findPublicationXmlById(String id) throws Exception;
     List<NaucniRad> getPublicationsByUser() throws Exception;
