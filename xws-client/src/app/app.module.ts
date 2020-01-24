@@ -16,6 +16,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { MyPublicationsComponent } from './components/my-publications/my-publications.component';
 import { PublicationComponent } from './components/publication/publication.component';
+import { BusinessProcessComponent } from './components/business-process/business-process.component';
+import { BusinessProcessDetailsComponent } from './components/business-process-details/business-process-details.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { PublicationComponent } from './components/publication/publication.compo
     RegistrationComponent,
     MyPublicationsComponent,
     PublicationComponent,
+    BusinessProcessComponent,
+    BusinessProcessDetailsComponent,
   ],
   imports: [
     BrowserModule,

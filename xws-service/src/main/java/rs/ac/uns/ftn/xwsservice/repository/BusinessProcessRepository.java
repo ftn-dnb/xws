@@ -72,6 +72,11 @@ public class BusinessProcessRepository {
 
     public PoslovniProces findObjectById(String id) throws Exception {
         String xmlData = this.findById(id);
+
+        if (xmlData == null) {
+            return null;
+        }
+
         return (PoslovniProces) unmarshallerService.unmarshal(xmlData);
     }
 

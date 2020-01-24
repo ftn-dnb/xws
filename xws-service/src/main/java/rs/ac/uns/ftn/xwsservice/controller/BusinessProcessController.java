@@ -7,6 +7,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.xwsservice.dto.response.BusinessProcessDTO;
 import rs.ac.uns.ftn.xwsservice.mappers.BusinessProcessMapper;
+import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
+import rs.ac.uns.ftn.xwsservice.model.EnumStatusRecenziranja;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
 
@@ -26,6 +28,13 @@ public class BusinessProcessController {
         return new ResponseEntity<>(BusinessProcessMapper.toListDto(processes), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_EDITOR')")
+    public ResponseEntity<BusinessProcessDTO> getProcess(@PathVariable String id) throws Exception {
+        PoslovniProces process = businessProcessService.getProcess(id);
+        return new ResponseEntity<>(BusinessProcessMapper.toDto(process), HttpStatus.OK);
+    }
+
     /**
      * Dodavanje recenzenata u poslovni proces za neki naucni rad.
      * Kao parametar se salje lista stringova sa ID-evima korisnika koji ce biti recenzenti za taj rad.
@@ -37,6 +46,18 @@ public class BusinessProcessController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/accept-review-request/{processId}")
+    public ResponseEntity acceptReviewRequest(@PathVariable String processId) throws Exception {
+        businessProcessService.changeReviewRequestStatus(processId, EnumStatusRecenziranja.PRIHVACEN);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/decline-review-request/{processId}")
+    public ResponseEntity declineReviewRequest(@PathVariable String processId) throws Exception {
+        businessProcessService.changeReviewRequestStatus(processId, EnumStatusRecenziranja.ODBIJEN);
+        return ResponseEntity.ok().build();
+    }
+
     @PutMapping("/change-phase/{processId}")
     @PreAuthorize("hasRole('ROLE_EDITOR')")
     public ResponseEntity changeProcessPhase(@PathVariable String processId, @RequestBody String phase) throws Exception {
@@ -44,10 +65,17 @@ public class BusinessProcessController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/change-status/{processId}")
+    @GetMapping("/accept-publication/{processId}")
     @PreAuthorize("hasRole('ROLE_EDITOR')")
-    public ResponseEntity changeProcessStatus(@PathVariable String processId, @RequestBody Boolean status) throws Exception {
-        businessProcessService.changeProcessStatus(processId, status);
+    public ResponseEntity acceptPublication(@PathVariable String processId) throws Exception {
+        businessProcessService.changeProcessStatus(processId, EnumStatusRada.PRIHVACEN);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/decline-publication/{processId}")
+    @PreAuthorize("hasRole('ROLE_EDITOR')")
+    public ResponseEntity declinePublication(@PathVariable String processId) throws Exception {
+        businessProcessService.changeProcessStatus(processId, EnumStatusRada.ODBIJEN);
         return ResponseEntity.ok().build();
     }
 }
