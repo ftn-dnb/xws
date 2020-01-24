@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.xwsservice.dto.response.BusinessProcessDTO;
 import rs.ac.uns.ftn.xwsservice.mappers.BusinessProcessMapper;
+import rs.ac.uns.ftn.xwsservice.model.EnumStatusRecenziranja;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
 
@@ -26,7 +27,7 @@ public class BusinessProcessController {
         return new ResponseEntity<>(BusinessProcessMapper.toListDto(processes), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_EDITOR')")
     public ResponseEntity<BusinessProcessDTO> getProcess(@PathVariable String id) throws Exception {
         PoslovniProces process = businessProcessService.getProcess(id);
@@ -41,6 +42,18 @@ public class BusinessProcessController {
     @PreAuthorize("hasRole('ROLE_EDITOR')")
     public ResponseEntity addReviewers(@PathVariable String processId, @RequestBody List<String> users) throws Exception {
         businessProcessService.addReviewersToProcess(processId, users);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/accept-review-request/{processId}")
+    public ResponseEntity acceptReviewRequest(@PathVariable String processId) throws Exception {
+        businessProcessService.changeReviewRequestStatus(processId, EnumStatusRecenziranja.PRIHVACEN);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/decline-review-request/{processId}")
+    public ResponseEntity declineReviewRequest(@PathVariable String processId) throws Exception {
+        businessProcessService.changeReviewRequestStatus(processId, EnumStatusRecenziranja.ODBIJEN);
         return ResponseEntity.ok().build();
     }
 

@@ -1,7 +1,9 @@
 package rs.ac.uns.ftn.xwsservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.xwsservice.exception.ApiRequestException;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.*;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
@@ -71,6 +73,10 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
             throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
         }
 
+        if (process.getRecenzenti() == null) {
+            process.setRecenzenti(new PoslovniProces.Recenzenti());
+        }
+
         List<CTRecenzent> reviewers = process.getRecenzenti().getRecenzent();
 
         if (!checkIfAllUsersExistInDatabase(users)) {
@@ -82,7 +88,7 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
             // TODO: Poslati mejl korisniku da je prihvati/odbije recenziranje ovog rada (procesa)
             CTRecenzent reviewer = new CTRecenzent();
-            reviewer.setPrihvacenaRecenzija(EnumRecenziranje.CEKANJE);
+            reviewer.setStatus(EnumStatusRecenziranja.CEKANJE);
             reviewer.setRecenzentID(userId);
             reviewers.add(reviewer);
         }
@@ -98,6 +104,33 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
         }
 
         return true;
+    }
+
+    @Override
+    public void changeReviewRequestStatus(String processId, EnumStatusRecenziranja status) throws Exception {
+        PoslovniProces process = businessProcessRepository.findObjectById(processId);
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userId = currentUser.getId().toString();
+
+        if (process.getRecenzenti() == null) {
+            process.setRecenzenti(new PoslovniProces.Recenzenti());
+        }
+
+        List<CTRecenzent> reviewers = process.getRecenzenti().getRecenzent();
+
+        CTRecenzent reviewer = reviewers.stream()
+                .filter(r -> r.getRecenzentID().equals(userId)).findFirst().orElse(null);
+
+        if (reviewer == null) {
+            throw new ApiRequestException("You are not on this list for review.");
+        }
+
+        if (!reviewer.getStatus().equals(EnumStatusRecenziranja.CEKANJE)) {
+            throw new ApiRequestException("You already decided about this review request.");
+        }
+
+        reviewer.setStatus(status);
+        businessProcessRepository.saveObject(process);
     }
 
     @Override

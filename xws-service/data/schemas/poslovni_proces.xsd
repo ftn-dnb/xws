@@ -32,7 +32,7 @@
             <xs:enumeration value="UProcesu"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="EnumRecenziranje">
+    <xs:simpleType name="EnumStatusRecenziranja">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Prihvacen"/>
             <xs:enumeration value="Odbijen"/>
@@ -42,7 +42,7 @@
     <xs:complexType name="CTRecenzent">
         <xs:sequence>
             <xs:element name="RecenzentID" type="xs:string"/>
-            <xs:element name="PrihvacenaRecenzija" type="EnumRecenziranje"/>
+            <xs:element name="Status" type="EnumStatusRecenziranja"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
