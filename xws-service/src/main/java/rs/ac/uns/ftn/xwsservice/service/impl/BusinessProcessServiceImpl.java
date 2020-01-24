@@ -3,12 +3,12 @@ package rs.ac.uns.ftn.xwsservice.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
-import rs.ac.uns.ftn.xwsservice.model.EnumFaza;
-import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
-import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
+import rs.ac.uns.ftn.xwsservice.model.*;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
+import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +17,9 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
     @Autowired
     private BusinessProcessRepository businessProcessRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<PoslovniProces> getAllProcesses() throws Exception {
@@ -62,13 +65,39 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
     @Override
     public void addReviewersToProcess(String processId, List<String> users) throws Exception {
-        String processXmlData = businessProcessRepository.findById(processId);
+        PoslovniProces process = businessProcessRepository.findObjectById(processId);
 
-        if (processXmlData == null) {
+        if (process == null) {
             throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
         }
 
-        // TODO: U listu recenzenata treba dodati id-eve korisnika koji se nalaze u parametru 'users'
+        List<CTRecenzent> reviewers = process.getRecenzenti().getRecenzent();
+
+        if (!checkIfAllUsersExistInDatabase(users)) {
+            throw new ResourceNotFoundException("List of reviewers ID's is not valid. Some of them don't exist in database.");
+        }
+
+        for (String userId : users) {
+            User user = userRepository.findById(Long.valueOf(userId)).get();
+
+            // TODO: Poslati mejl korisniku da je prihvati/odbije recenziranje ovog rada (procesa)
+            CTRecenzent reviewer = new CTRecenzent();
+            reviewer.setPrihvacenaRecenzija(EnumRecenziranje.CEKANJE);
+            reviewer.setRecenzentID(userId);
+            reviewers.add(reviewer);
+        }
+
+        businessProcessRepository.saveObject(process);
+    }
+
+    private boolean checkIfAllUsersExistInDatabase(List<String> users) {
+        for (String userId : users) {
+            if (!userRepository.findById(Long.valueOf(userId)).isPresent()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override

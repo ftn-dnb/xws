@@ -8,6 +8,13 @@
                 <xs:element name="PropratnoPismoId" type="xs:string"/>
                 <xs:element name="Faza" type="EnumFaza"/>
                 <xs:element name="StatusRada" type="EnumStatusRada"/>
+                <xs:element name="Recenzenti">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="Recenzent" type="CTRecenzent"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
             <xs:attribute name="id" type="xs:string"/>
         </xs:complexType>
@@ -25,4 +32,17 @@
             <xs:enumeration value="UProcesu"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="EnumRecenziranje">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Prihvacen"/>
+            <xs:enumeration value="Odbijen"/>
+            <xs:enumeration value="Cekanje"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="CTRecenzent">
+        <xs:sequence>
+            <xs:element name="RecenzentID" type="xs:string"/>
+            <xs:element name="PrihvacenaRecenzija" type="EnumRecenziranje"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
