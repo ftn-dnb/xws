@@ -146,15 +146,18 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
     }
 
     @Override
-    public void changeProcessStatus(String processId, boolean status) throws Exception {
+    public void changeProcessStatus(String processId, EnumStatusRada status) throws Exception {
         PoslovniProces process = businessProcessRepository.findObjectById(processId);
 
         if (process == null) {
             throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
         }
 
-        EnumStatusRada newStatus = (status) ? EnumStatusRada.PRIHVACEN : EnumStatusRada.ODBIJEN;
-        process.setStatusRada(newStatus);
+        if (!process.getStatusRada().equals(EnumStatusRada.U_PROCESU)) {
+            throw new ApiRequestException("You can't change this publications status, it was already changed.");
+        }
+
+        process.setStatusRada(status);
         businessProcessRepository.saveObject(process);
     }
 }

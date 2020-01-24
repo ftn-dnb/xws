@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.xwsservice.service;
 
+import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRecenziranja;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 
@@ -14,5 +15,5 @@ public interface BusinessProcessService {
     void addReviewersToProcess(String processId, List<String> users) throws Exception;
     void changeReviewRequestStatus(String processId, EnumStatusRecenziranja status) throws Exception;
     void changeProcessPhase(String processId, String phase) throws Exception;
-    void changeProcessStatus(String processId, boolean status) throws Exception;
+    void changeProcessStatus(String processId, EnumStatusRada status) throws Exception;
 }

@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.xwsservice.dto.response.BusinessProcessDTO;
 import rs.ac.uns.ftn.xwsservice.mappers.BusinessProcessMapper;
+import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRecenziranja;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
@@ -64,10 +65,17 @@ public class BusinessProcessController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/change-status/{processId}")
+    @GetMapping("/accept-publication/{processId}")
     @PreAuthorize("hasRole('ROLE_EDITOR')")
-    public ResponseEntity changeProcessStatus(@PathVariable String processId, @RequestBody Boolean status) throws Exception {
-        businessProcessService.changeProcessStatus(processId, status);
+    public ResponseEntity acceptPublication(@PathVariable String processId) throws Exception {
+        businessProcessService.changeProcessStatus(processId, EnumStatusRada.PRIHVACEN);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/decline-publication/{processId}")
+    @PreAuthorize("hasRole('ROLE_EDITOR')")
+    public ResponseEntity declinePublication(@PathVariable String processId) throws Exception {
+        businessProcessService.changeProcessStatus(processId, EnumStatusRada.ODBIJEN);
         return ResponseEntity.ok().build();
     }
 }
