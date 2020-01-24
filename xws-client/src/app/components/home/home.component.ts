@@ -22,19 +22,14 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    const filter = localStorage.getItem('filterParam');
-    const searchObject = {
-      filterText: filter
-    };
-    if (filter || filter === '') {
-      this.publicationsService.searchPublications(searchObject).subscribe(
-        data => this.publications = data,
-        error => {
-          this.toastr.error('There was an error while getting publications data.');
-        }
-      );
-    }
+    this.publicationsService.getPublications().subscribe(
+      data => this.publications = data,
+      error => {
+        this.toastr.error('There was an error while getting publications.');
+      }
+    );
   }
+
 
   onSearch(): void {
     const searchObject = {

@@ -11,6 +11,8 @@ import org.xmldb.api.modules.XMLResource;
 import rs.ac.uns.ftn.xwsservice.exist.ExistRetrieve;
 import rs.ac.uns.ftn.xwsservice.exist.ExistSave;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
+import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
+import rs.ac.uns.ftn.xwsservice.service.MarshallerService;
 import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
 
 import java.util.ArrayList;
@@ -22,6 +24,9 @@ public class PublicationRepo {
     @Autowired
     private UnmarshallerService unmarshallerService;
 
+    @Autowired
+    private MarshallerService marshallerService;
+
     @Value("${xml.collectionId.publication}")
     private String collectionId;
 
@@ -31,6 +36,17 @@ public class PublicationRepo {
     public String save(String xml, String id) throws Exception {
         ExistSave.save(collectionId, id, xml);
         return id;
+    }
+
+    public String saveObject(NaucniRad publication) throws Exception {
+        String xmlData = marshallerService.marshal(publication);
+        ExistSave.save(collectionId, publication.getId(), xmlData);
+        return publication.getId();
+    }
+
+    public NaucniRad findObjectById(String id) throws Exception {
+        String xmlData = this.findById(id);
+        return (NaucniRad) unmarshallerService.unmarshal(xmlData);
     }
 
     public String findById(String id) throws Exception {

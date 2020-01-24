@@ -3,8 +3,8 @@
     targetNamespace="http://www.ftn.uns.ac.rs/xws/tim5" xmlns="http://www.ftn.uns.ac.rs/xws/tim5">
     <xs:complexType name="CTAutor">
         <xs:sequence>
-            <xs:element maxOccurs="unbounded" name="Ime" type="xs:string"/>
-            <xs:element maxOccurs="unbounded" name="Prezime" type="xs:string"/>
+            <xs:element maxOccurs="1" name="Ime" type="xs:string"/>
+            <xs:element maxOccurs="1" name="Prezime" type="xs:string" minOccurs="1"/>
             <xs:element name="EMail">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">

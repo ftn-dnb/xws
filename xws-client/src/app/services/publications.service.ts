@@ -1,4 +1,4 @@
-import { API_MY_PUBLICATIONS, API_SEARCH_PUBLICATIONS, API_PUBLICATION } from './../config/api-paths';
+import { API_MY_PUBLICATIONS, API_SEARCH_PUBLICATIONS, API_PUBLICATION, API_PUBLICATION_ALL } from './../config/api-paths';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -9,6 +9,10 @@ import { Injectable } from '@angular/core';
 export class PublicationsService {
 
   constructor(private http: HttpClient) {
+  }
+
+  getPublications(): Observable<any> {
+    return this.http.get(API_PUBLICATION_ALL);
   }
 
   getMyPublications(): Observable<any> {

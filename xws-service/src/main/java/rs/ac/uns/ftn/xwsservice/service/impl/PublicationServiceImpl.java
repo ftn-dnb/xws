@@ -6,12 +6,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
+import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
+import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 import rs.ac.uns.ftn.xwsservice.model.User;
+import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
 import rs.ac.uns.ftn.xwsservice.service.*;
 import rs.ac.uns.ftn.xwsservice.utils.PublicationIdUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,6 +58,9 @@ public class PublicationServiceImpl implements PublicationService {
     @Autowired
     private BusinessProcessService businessProcessService;
 
+    @Autowired
+    private BusinessProcessRepository businessProcessRepository;
+
 
     @Override
     public String addPublication(String publicationXmlData) throws Exception {
@@ -65,6 +72,11 @@ public class PublicationServiceImpl implements PublicationService {
         String updatedXml = PublicationIdUtil.addAuthorId(PublicationIdUtil.addPublicationId(publicationXmlData, pubId), loggedUser.getId().toString());
 
         String id = publicationRepo.save(updatedXml, pubId);
+        NaucniRad rad = publicationRepo.findObjectById(id);
+        //TODO: da li na ovaj nacin setovati i id???
+        rad.setObrisan(false);
+
+        publicationRepo.saveObject(rad);
 
         String processId = businessProcessService.createNewProcess(id);
 
@@ -75,6 +87,19 @@ public class PublicationServiceImpl implements PublicationService {
         xslfoService.transform(publicationXmlData, publicationXslfoFilePath, xslfoOutputFilePath);
 
         return processId;
+    }
+
+    @Override
+    public List<NaucniRad> getAllPublications() throws Exception {
+        ArrayList<PoslovniProces> processes = new ArrayList<>(businessProcessService.getAllProcesses());
+        ArrayList<NaucniRad> publications = new ArrayList<>();
+        for (PoslovniProces process : processes) {
+            if (process.getStatusRada() == EnumStatusRada.PRIHVACEN) {
+                NaucniRad publication = findPublicationById(process.getNaucniRadId());
+                publications.add(publication);
+            }
+        }
+        return publications;
     }
 
     @Override
@@ -106,6 +131,19 @@ public class PublicationServiceImpl implements PublicationService {
     public List<NaucniRad> filterPublicationsByText(String text) throws Exception {
         List<NaucniRad> pubs = this.publicationRepo.filterPublications(text);
         return pubs;
+    }
+
+    @Override
+    public String deletePublication(String id) throws Exception {
+        NaucniRad publication = this.publicationRepo.findObjectById(id);
+        publication.setObrisan(true);
+        this.publicationRepo.saveObject(publication);
+
+        PoslovniProces process = businessProcessService.getProcessByPublicationId(id);
+        process.setStatusRada(EnumStatusRada.OBRISAN);
+        businessProcessRepository.saveObject(process);
+
+        return id;
     }
 
     @Override

@@ -35,6 +35,11 @@ public class PublicationController {
     @Value("${xslfo.path.output-folder.publications}")
     private String publicationPdfFolderPath;
 
+    @GetMapping(value = "/public/all")
+    public ResponseEntity<List<PublicationDTO>> getAllPublications() throws Exception {
+        List<NaucniRad> pubs = publicationService.getAllPublications();
+        return new ResponseEntity<>(PublicationMapper.toDtoList(pubs), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<String> addPublication(@RequestBody String xmlPublicationData) throws Exception {
@@ -73,6 +78,12 @@ public class PublicationController {
     public ResponseEntity<PublicationDTO> getPublicationById(@PathVariable String id) throws Exception {
         NaucniRad publication = publicationService.findPublicationById(id);
         return new ResponseEntity<>(PublicationMapper.toDto(publication), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/public/{id}")
+    public ResponseEntity<String> deletePublication(@PathVariable String id) throws Exception {
+        String deletedId = publicationService.deletePublication(id);
+        return new ResponseEntity<>(deletedId, HttpStatus.OK);
     }
 
     @GetMapping(path = "/public/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)

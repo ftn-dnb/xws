@@ -51,6 +51,7 @@
                 </xs:element>
             </xs:sequence>
             <xs:attribute name="id" type="xs:string"/>
+            <xs:attribute name="obrisan" type="xs:boolean"/>
         </xs:complexType>
     </xs:element>
     <xs:complexType mixed="false" name="CTPoglavlje">

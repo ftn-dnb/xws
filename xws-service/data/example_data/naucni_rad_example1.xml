@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NaucniRad xmlns="http://www.ftn.uns.ac.rs/xws/tim5"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://www.ftn.uns.ac.rs/xws/tim5 file:/E:/dev/xws-project/xws-service/data/schemas/naucni_rad.xsd">
+           xsi:schemaLocation="http://www.ftn.uns.ac.rs/xws/tim5 file:/E:/XML/proj/xws/xws-service/data/schemas/naucni_rad.xsd">
     <NaslovnaStrana>
         <Naslov>Naslov0</Naslov>
         <Autori>
             <Autor>
                 <Ime>Ime0</Ime>
-                <Ime>Ime1</Ime>
                 <Prezime>Prezime0</Prezime>
-                <Prezime>Prezime1</Prezime>
                 <EMail>a@a.a</EMail>
                 <BrojTelefona>BrojTelefona0</BrojTelefona>
                 <ORCID>0000-dddd-dddd-dddd</ORCID>
@@ -25,10 +23,8 @@
                 </Ustanova>
             </Autor>
             <Autor>
-                <Ime>Ime2</Ime>
-                <Ime>Ime3</Ime>
-                <Prezime>Prezime2</Prezime>
-                <Prezime>Prezime3</Prezime>
+                <Ime>Ime1</Ime>
+                <Prezime>Prezime1</Prezime>
                 <EMail>a@a.a</EMail>
                 <BrojTelefona>BrojTelefona1</BrojTelefona>
                 <ORCID>0000-dddd-dddd-dddd</ORCID>

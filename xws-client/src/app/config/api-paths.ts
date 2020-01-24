@@ -4,6 +4,7 @@ export const API_LOGIN = API_BASE + '/auth/login';
 export const API_REGISTER_USER = API_BASE + '/api/users/public/add-user';
 export const API_VERIFY_ACCOUNT = API_BASE + '/api/users/public/verify-account';
 export const API_PUBLICATION = API_BASE + '/api/publications/public';
+export const API_PUBLICATION_ALL = API_BASE + '/api/publications/public/all';
 export const API_MY_PUBLICATIONS = API_BASE + '/api/publications/by-user';
 export const API_SEARCH_PUBLICATIONS = API_BASE + '/api/publications/public/filter';
 

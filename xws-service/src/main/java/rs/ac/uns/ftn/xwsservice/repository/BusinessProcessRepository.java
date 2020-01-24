@@ -99,4 +99,29 @@ public class BusinessProcessRepository {
 
         return processes;
     }
+
+    public PoslovniProces findByPublicationId(String id) throws Exception {
+        String xPathSelector = String.format("//PoslovniProces[NaucniRadId[text()='%s']]", id);
+        ResourceSet resultSet = ExistRetrieve.executeXPathExpression(collectionId, xPathSelector, TARGET_NAMESPACE);
+        if (resultSet == null)
+            return null;
+
+        ResourceIterator i = resultSet.getIterator();
+        XMLResource res = null;
+        PoslovniProces process = null;
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            process = (PoslovniProces)unmarshallerService.unmarshal(res.getContent().toString());
+        }
+
+        if (res != null)
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+
+        return process;
+    }
 }

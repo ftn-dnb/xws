@@ -24,6 +24,11 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
     }
 
     @Override
+    public PoslovniProces getProcessByPublicationId(String id) throws Exception {
+        return businessProcessRepository.findByPublicationId(id);
+    }
+
+    @Override
     public String createNewProcess(String publicationId) throws Exception {
         String processId = UUID.randomUUID().toString();
 
