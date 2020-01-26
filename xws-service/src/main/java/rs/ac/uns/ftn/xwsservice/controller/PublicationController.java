@@ -16,7 +16,6 @@ import rs.ac.uns.ftn.xwsservice.service.FileService;
 import rs.ac.uns.ftn.xwsservice.service.PublicationService;
 
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,8 +31,14 @@ public class PublicationController {
     @Value("${xslt.path.output-folder.publications}")
     private String publicationHtmlFolderPath;
 
+    @Value("${xslt.path.output-folder.publications.anonymous}")
+    private String publicationAnonymousHtmlFolderPath;
+
     @Value("${xslfo.path.output-folder.publications}")
     private String publicationPdfFolderPath;
+
+    @Value("${xslfo.path.output-folder.publications.anonymous}")
+    private String publicationAnonymousPdfFolderPath;
 
     @GetMapping(value = "/public/all")
     public ResponseEntity<List<PublicationDTO>> getAllPublications() throws Exception {
@@ -61,8 +66,16 @@ public class PublicationController {
 
     @GetMapping(path = "/public/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getPublicationPdfFile(@PathVariable String id) {
-        String path = publicationPdfFolderPath + id;
-        ByteArrayInputStream bis = fileService.readPdfFile(path);
+        return this.getPdfFile(publicationPdfFolderPath, id);
+    }
+
+    @GetMapping(path = "/public/pdf/anonymous/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> getPublicationAnonymousPdfFile(@PathVariable String id) {
+        return this.getPdfFile(publicationAnonymousPdfFolderPath, id);
+    }
+
+    private ResponseEntity<InputStreamResource> getPdfFile(String folderPath, String id) {
+        ByteArrayInputStream bis = fileService.readPdfFile(folderPath + id);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=publication-" + id + ".pdf");
@@ -95,6 +108,12 @@ public class PublicationController {
     @GetMapping(path = "/public/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> getPublicationHtmlFile(@PathVariable String id) {
         String path = publicationHtmlFolderPath + id;
+        return new ResponseEntity<>(fileService.readHtmlFile(path), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/public/anonymous/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
+    public ResponseEntity<String> getPublicationAnonymousHtmlFile(@PathVariable String id) {
+        String path = publicationAnonymousHtmlFolderPath + id;
         return new ResponseEntity<>(fileService.readHtmlFile(path), HttpStatus.OK);
     }
 

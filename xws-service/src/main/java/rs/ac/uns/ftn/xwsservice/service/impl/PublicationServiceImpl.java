@@ -86,6 +86,8 @@ public class PublicationServiceImpl implements PublicationService {
         String xslfoOutputFilePath = publicationXslfoOutputFolderPath + pubId;
         xslfoService.transform(publicationXmlData, publicationXslfoFilePath, xslfoOutputFilePath);
 
+        // TODO: Dodati i transofrmacije za anonimne verzije naucnog rada
+
         return processId;
     }
 
