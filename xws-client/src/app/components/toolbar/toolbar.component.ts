@@ -1,7 +1,7 @@
 import { ROLE_EDITOR, ROLE_AUTHOR } from './../../config/user-roles-keys';
 import { USER_ROLE_KEY, USERNAME_KEY } from './../../config/local-storage-keys';
 import { AuthService } from './../../services/auth.service';
-import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, MY_PUBLICATIONS_PATH, BUSINESS_PROCESSES_PATH } from './../../config/router-paths';
+import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, MY_PUBLICATIONS_PATH, BUSINESS_PROCESSES_PATH, REVIEW_REQUESTS_PATH } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -54,6 +54,10 @@ export class ToolbarComponent implements OnInit {
 
   onClickBusinessProcesses(): void {
     this.router.navigate([BUSINESS_PROCESSES_PATH]);
+  }
+
+  onClickMyReviewRequests(): void {
+    this.router.navigate([REVIEW_REQUESTS_PATH]);
   }
 
   onClickLogout(): void {

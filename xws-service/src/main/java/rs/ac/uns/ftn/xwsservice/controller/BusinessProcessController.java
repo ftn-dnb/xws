@@ -1,11 +1,13 @@
 package rs.ac.uns.ftn.xwsservice.controller;
 
+import org.exist.http.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.xwsservice.dto.response.BusinessProcessDTO;
+import rs.ac.uns.ftn.xwsservice.dto.response.ReviewRequestDTO;
 import rs.ac.uns.ftn.xwsservice.mappers.BusinessProcessMapper;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRecenziranja;
@@ -44,6 +46,11 @@ public class BusinessProcessController {
     public ResponseEntity addReviewers(@PathVariable String processId, @RequestBody List<String> users) throws Exception {
         businessProcessService.addReviewersToProcess(processId, users);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/my-review-requests")
+    public ResponseEntity<List<ReviewRequestDTO>> getMyReviewRequests() throws Exception {
+        return new ResponseEntity<>(businessProcessService.getMyReviewRequests(), HttpStatus.OK);
     }
 
     @GetMapping("/accept-review-request/{processId}")

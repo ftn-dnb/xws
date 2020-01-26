@@ -129,4 +129,29 @@ public class BusinessProcessRepository {
 
         return process;
     }
+
+    public List<PoslovniProces> findByReviewerId(String id) throws Exception {
+        String xPathSelector = String.format("//PoslovniProces[Recenzenti/Recenzent/RecenzentID[text()='%s']]", id);
+        ResourceSet resultSet = ExistRetrieve.executeXPathExpression(collectionId, xPathSelector, TARGET_NAMESPACE);
+        if (resultSet == null)
+            return null;
+
+        ResourceIterator i = resultSet.getIterator();
+        XMLResource res = null;
+        List<PoslovniProces> processes = new ArrayList<>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            processes.add((PoslovniProces) unmarshallerService.unmarshal(res.getContent().toString()));
+        }
+
+        if (res != null)
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+
+        return processes;
+    }
 }

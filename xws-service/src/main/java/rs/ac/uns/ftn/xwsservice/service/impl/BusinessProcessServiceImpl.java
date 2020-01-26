@@ -3,10 +3,12 @@ package rs.ac.uns.ftn.xwsservice.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.xwsservice.dto.response.ReviewRequestDTO;
 import rs.ac.uns.ftn.xwsservice.exception.ApiRequestException;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.*;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
+import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
 import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
 
@@ -19,6 +21,9 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
     @Autowired
     private BusinessProcessRepository businessProcessRepository;
+
+    @Autowired
+    private PublicationRepo publicationRepo;
 
     @Autowired
     private UserRepository userRepository;
@@ -163,5 +168,27 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
         process.setStatusRada(status);
         businessProcessRepository.saveObject(process);
+    }
+
+    @Override
+    public List<ReviewRequestDTO> getMyReviewRequests() throws Exception {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<PoslovniProces> myProcesses = businessProcessRepository.findByReviewerId(currentUser.getId().toString());
+
+        List<ReviewRequestDTO> requests = new ArrayList<>();
+
+        for (PoslovniProces process : myProcesses) {
+            NaucniRad publication = publicationRepo.findObjectById(process.getNaucniRadId());
+            EnumStatusRecenziranja status = getReviewStatusForUser(currentUser.getId().toString(), process);
+            requests.add(new ReviewRequestDTO(process, publication, status.toString()));
+        }
+
+        return requests;
+    }
+
+    private EnumStatusRecenziranja getReviewStatusForUser(String userId, PoslovniProces process) {
+        return process.getRecenzenti().getRecenzent()
+                .stream().filter(r -> r.getRecenzentID().equals(userId))
+                .findFirst().get().getStatus();
     }
 }

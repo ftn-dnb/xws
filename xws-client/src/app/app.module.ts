@@ -19,6 +19,7 @@ import { PublicationComponent } from './components/publication/publication.compo
 import { BusinessProcessComponent } from './components/business-process/business-process.component';
 import { BusinessProcessDetailsComponent } from './components/business-process-details/business-process-details.component';
 import { AddPublicationComponent } from './components/add-publication/add-publication.component';
+import { ReviewRequestsComponent } from './components/review-requests/review-requests.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AddPublicationComponent } from './components/add-publication/add-public
     BusinessProcessComponent,
     BusinessProcessDetailsComponent,
     AddPublicationComponent,
+    ReviewRequestsComponent,
   ],
   imports: [
     BrowserModule,

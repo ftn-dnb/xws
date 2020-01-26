@@ -8,6 +8,9 @@ export const API_PUBLICATION_ALL = API_BASE + '/api/publications/public/all';
 export const API_MY_PUBLICATIONS = API_BASE + '/api/publications/by-user';
 export const API_SEARCH_PUBLICATIONS = API_BASE + '/api/publications/public/filter';
 export const API_BUSINESS_PROCESSES = API_BASE + '/api/process';
+export const API_SHOW_MY_REVIEW_REQUESTS = API_BASE + '/api/process/my-review-requests';
+export const API_ACCEPT_REVIEW_REQUEST = API_BASE + '/api/process/accept-review-request';
+export const API_DECLINE_REVIEW_REQUEST = API_BASE + '/api/process/decline-review-request';
 
 export const API_SHOW_HTML_PUBLICATION = API_BASE + '/api/publications/public/html';
 export const API_SHOW_PDF_PUBLICATION = API_BASE + '/api/publications/public/pdf';

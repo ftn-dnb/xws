@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="header">
+        <h1 id = "title">My review requests</h1>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Show</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let request of requests">
+                <td>{{request.title}}</td>
+
+                <td>
+                    <a target="_blank" rel="noopener noreferrer" href="{{request.publicationHtmlFilePath}}">HTML</a>&nbsp;
+                    <a target="_blank" rel="noopener noreferrer" href="{{request.publicationPdfFilePath}}">PDF</a>
+                </td>
+
+                <td>
+                    <div *ngIf="request.reviewStatus == 'CEKANJE'">
+                        <button mat-button (click)="onClickAccept(request.processId)">
+                            <mat-icon>check_circle</mat-icon>
+                            <span>Accept</span>
+                        </button>
+
+                        <button mat-button (click)="onClickDecline(request.processId)">
+                            <mat-icon>cancel</mat-icon>
+                            <span>Decline</span>
+                        </button>
+                    </div>
+
+                    <div *ngIf="request.reviewStatus == 'PRIHVACEN'">
+                        <!-- TODO: Smisliti nacin kako ce se slati recenzije  -->
+                        Accepted -> TODO actions
+                    </div>
+
+                    <div *ngIf="request.reviewStatus == 'ODBIJEN'">
+                        Declined
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
