@@ -93,7 +93,7 @@ public class PublicationController {
         return new ResponseEntity<>(PublicationMapper.toDto(publication), HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/public/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> deletePublication(@PathVariable String id) throws Exception {
         String deletedId = publicationService.deletePublication(id);
         return new ResponseEntity<>(deletedId, HttpStatus.OK);

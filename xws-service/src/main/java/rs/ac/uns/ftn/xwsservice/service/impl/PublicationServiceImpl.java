@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import rs.ac.uns.ftn.xwsservice.exception.ApiRequestException;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
@@ -156,10 +157,26 @@ public class PublicationServiceImpl implements PublicationService {
     @Override
     public String deletePublication(String id) throws Exception {
         NaucniRad publication = this.publicationRepo.findObjectById(id);
+
+        if (publication == null) {
+            throw new ResourceNotFoundException("Publication with ID " + id + " doesn't exist");
+        }
+
+        PoslovniProces process = businessProcessService.getProcessByPublicationId(id);
+
+        // TODO: Treba dodati proveru da li je trenutni korisnik autor ovog rada, da nebi neko drugi brisao tudje radove
+
+        if (process == null) {
+            throw new ResourceNotFoundException("Business process for publication with ID " + id + "doesn't exist");
+        }
+
+        if (!process.getStatusRada().equals(EnumStatusRada.U_PROCESU)) {
+            throw new ApiRequestException("You cant cancel this publication.");
+        }
+
         publication.setObrisan(true);
         this.publicationRepo.saveObject(publication);
 
-        PoslovniProces process = businessProcessService.getProcessByPublicationId(id);
         process.setStatusRada(EnumStatusRada.OBRISAN);
         businessProcessRepository.saveObject(process);
 
