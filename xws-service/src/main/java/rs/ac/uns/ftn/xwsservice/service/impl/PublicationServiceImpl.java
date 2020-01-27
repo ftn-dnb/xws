@@ -28,14 +28,26 @@ public class PublicationServiceImpl implements PublicationService {
     @Value("${xslt.path.publication}")
     private String publicationXsltFilePath;
 
+    @Value("${xslt.path.publication.anonymous}")
+    private String publicationAnonymousXsltFilePath;
+
     @Value("${xslfo.path.publication}")
     private String publicationXslfoFilePath;
+
+    @Value("${xslfo.path.publication.anonymous}")
+    private String publicationAnonymousXslfoFilePath;
 
     @Value("${xslt.path.output-folder.publications}")
     private String publicationXsltOutputFolderPath;
 
+    @Value("${xslt.path.output-folder.publications.anonymous}")
+    private String publicationAnonymousXsltOutputFolderPath;
+
     @Value("${xslfo.path.output-folder.publications}")
     private String publicationXslfoOutputFolderPath;
+
+    @Value("${xslfo.path.output-folder.publications.anonymous}")
+    private String publicationAnonymousXslfoOutputFolderPath;
 
     @Autowired
     private PublicationRepo publicationRepo;
@@ -80,13 +92,19 @@ public class PublicationServiceImpl implements PublicationService {
 
         String processId = businessProcessService.createNewProcess(id);
 
+        // Normal transformations
         String xsltOutputFilePath = publicationXsltOutputFolderPath + pubId;
         xsltService.transform(publicationXmlData, publicationXsltFilePath, xsltOutputFilePath);
 
         String xslfoOutputFilePath = publicationXslfoOutputFolderPath + pubId;
         xslfoService.transform(publicationXmlData, publicationXslfoFilePath, xslfoOutputFilePath);
 
-        // TODO: Dodati i transofrmacije za anonimne verzije naucnog rada
+        // Anonymous transformations
+        String xsltAnonymousOutputFilePath = publicationAnonymousXsltOutputFolderPath + pubId;
+        xsltService.transform(publicationXmlData, publicationAnonymousXsltFilePath, xsltAnonymousOutputFilePath);
+
+        String xslfoAnonymousOutputFilePath = publicationAnonymousXslfoOutputFolderPath + pubId;
+        xslfoService.transform(publicationXmlData, publicationAnonymousXslfoFilePath, xslfoAnonymousOutputFilePath);
 
         return processId;
     }

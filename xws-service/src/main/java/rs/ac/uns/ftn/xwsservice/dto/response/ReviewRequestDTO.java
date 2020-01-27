@@ -22,10 +22,8 @@ public class ReviewRequestDTO {
         this.publicationStatus = process.getStatusRada().toString();
         this.publicationPhase = process.getFaza().toString();
         this.reviewStatus = reviewStatus;
-
-        // TODO: Promeniti putanje da bi se dobile anonimne verzije radova !!!
-        this.publicationPdfFilePath = "http://localhost:8080/api/publications/public/pdf/" + publication.getId();
-        this.publicationHtmlFilePath = "http://localhost:8080/api/publications/public/html/" + publication.getId();
+        this.publicationPdfFilePath = "http://localhost:8080/api/publications/public/anonymous/pdf/" + publication.getId();
+        this.publicationHtmlFilePath = "http://localhost:8080/api/publications/public/anonymous/html/" + publication.getId();
     }
 
     public String getTitle() {

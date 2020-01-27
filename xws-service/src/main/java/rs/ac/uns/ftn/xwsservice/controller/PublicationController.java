@@ -69,7 +69,7 @@ public class PublicationController {
         return this.getPdfFile(publicationPdfFolderPath, id);
     }
 
-    @GetMapping(path = "/public/pdf/anonymous/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(path = "/public/anonymous/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getPublicationAnonymousPdfFile(@PathVariable String id) {
         return this.getPdfFile(publicationAnonymousPdfFolderPath, id);
     }
