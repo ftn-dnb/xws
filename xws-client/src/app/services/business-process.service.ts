@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { API_BUSINESS_PROCESSES, API_SHOW_MY_REVIEW_REQUESTS, API_ACCEPT_REVIEW_REQUEST, API_DECLINE_REVIEW_REQUEST } from './../config/api-paths';
+import { API_BUSINESS_PROCESSES, API_SHOW_MY_REVIEW_REQUESTS, API_ACCEPT_REVIEW_REQUEST, API_DECLINE_REVIEW_REQUEST, API_ACCEPT_PUBLICATION, API_DECLINE_PUBLICATION } from './../config/api-paths';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -29,5 +29,13 @@ export class BusinessProcessService {
 
   declineReviewRequest(id: string): Observable<any> {
     return this.http.get(`${API_DECLINE_REVIEW_REQUEST}/${id}`);
+  }
+
+  acceptPublication(processId: string): Observable<any> {
+    return this.http.get(`${API_ACCEPT_PUBLICATION}/${processId}`);
+  }
+
+  declinePublication(processId: string): Observable<any> {
+    return this.http.get(`${API_DECLINE_PUBLICATION}/${processId}`);
   }
 }

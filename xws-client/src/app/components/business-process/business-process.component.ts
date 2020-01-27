@@ -33,4 +33,22 @@ export class BusinessProcessComponent implements OnInit {
   onClickSeeMore(processId: string): void {
     this.router.navigate([BUSINESS_PROCESSES_PATH, processId]);
   }
+
+  onClickAcceptPublication(processId: string): void {
+    this.businessProcessService.acceptPublication(processId).subscribe(data => {
+      this.getAllProcesses();
+      this.toastr.success('Publication has been accepted');
+    }, error => {
+      this.toastr.error('There was an error while accepting this publication');
+    });
+  }
+
+  onClickDeclinePublication(processId: string): void {
+    this.businessProcessService.declinePublication(processId).subscribe(data => {
+      this.getAllProcesses();
+      this.toastr.success('Publication has been declined');
+    }, error => {
+      this.toastr.error('There was an error while declining this publication');
+    });
+  }
 }
