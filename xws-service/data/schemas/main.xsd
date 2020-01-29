@@ -4,4 +4,5 @@
     <xs:include schemaLocation="naucni_rad.xsd"/>
     <xs:include schemaLocation="propratno_pismo.xsd"/>
     <xs:include schemaLocation="poslovni_proces.xsd"/>
+    <xs:include schemaLocation="recenzija.xsd"/>
 </xs:schema>

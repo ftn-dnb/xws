@@ -22,6 +22,7 @@
     <xs:simpleType name="EnumFaza">
         <xs:restriction base="xs:string">
             <xs:enumeration value="ZaReviziju"/>
+            <xs:enumeration value="ZaRecenziju"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="EnumStatusRada">
@@ -43,6 +44,13 @@
         <xs:sequence>
             <xs:element name="RecenzentID" type="xs:string"/>
             <xs:element name="Status" type="EnumStatusRecenziranja"/>
+            <xs:element name="Recenzije">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="RecenzijaID" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

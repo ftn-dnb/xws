@@ -70,6 +70,7 @@
                         <xs:element name="Naziv" type="xs:string"/>
                         <xs:element name="IdReference" type="xs:string"/>
                     </xs:sequence>
+                    <xs:attribute name="id" type="xs:string"/>
                 </xs:complexType>
             </xs:element>
             <xs:element name="Tabela">
@@ -84,6 +85,7 @@
                             </xs:complexType>
                         </xs:element>
                     </xs:sequence>
+                    <xs:attribute name="id" type="xs:string"/>
                 </xs:complexType>
             </xs:element>
             <xs:element name="Lista">
@@ -99,6 +101,7 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:attribute>
+                    <xs:attribute name="id" type="xs:string"/>
                 </xs:complexType>
             </xs:element>
             <xs:element name="Tekst">
@@ -107,6 +110,7 @@
                         <xs:element name="Sadrzaj" type="xs:string"/>
                         <xs:element name="IdReference" type="xs:string"/>
                     </xs:sequence>
+                    <xs:attribute name="id" type="xs:string"/>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
