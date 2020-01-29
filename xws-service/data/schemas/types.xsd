@@ -22,6 +22,7 @@
             </xs:element>
             <xs:element name="Ustanova" type="CTNaucnaUstanova"/>
         </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
     <xs:complexType name="CTNaucnaUstanova">
         <xs:sequence>
