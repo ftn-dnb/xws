@@ -4,6 +4,30 @@
     <xs:element name="NaucniRad">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="MetaPodaci">
+                    <xs:complexType>
+                        <xs:attribute name="datumPrijema" type="xs:date"/>
+                        <xs:attribute name="datumPrihvatanja" type="xs:date"/>
+                        <xs:attribute name="tipRada">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="pregledni-rad"/>
+                                    <xs:enumeration value="naucni-rad"/>
+                                    <xs:enumeration value="tehnicki-rad"/>
+                                    <xs:enumeration value="teza"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="verzijaRada">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:int">
+                                    <xs:minExclusive value="1"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="jezik" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="NaslovnaStrana">
                     <xs:complexType>
                         <xs:sequence>
