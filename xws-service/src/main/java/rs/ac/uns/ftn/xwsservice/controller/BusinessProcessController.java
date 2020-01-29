@@ -26,8 +26,8 @@ public class BusinessProcessController {
     @GetMapping
     @PreAuthorize("hasRole('ROLE_EDITOR')")
     public ResponseEntity<List<BusinessProcessDTO>> getAllProcesses() throws Exception {
-        List<PoslovniProces> processes = businessProcessService.getAllProcesses();
-        return new ResponseEntity<>(BusinessProcessMapper.toListDto(processes), HttpStatus.OK);
+        List<BusinessProcessDTO> processes = businessProcessService.getAllProcessesDTO();
+        return new ResponseEntity<>(processes, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

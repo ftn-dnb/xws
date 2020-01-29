@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.xwsservice.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.xwsservice.dto.response.BusinessProcessDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.ReviewRequestDTO;
 import rs.ac.uns.ftn.xwsservice.exception.ApiRequestException;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
@@ -34,10 +35,24 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
     }
 
     @Override
+    public List<BusinessProcessDTO> getAllProcessesDTO() throws Exception {
+        List<PoslovniProces> processes = businessProcessRepository.findAll();
+        List<BusinessProcessDTO> processesDto = new ArrayList<>();
+
+        for (PoslovniProces process : processes) {
+            NaucniRad publication = publicationRepo.findObjectById(process.getNaucniRadId());
+            processesDto.add(new BusinessProcessDTO(process, publication));
+        }
+
+        return processesDto;
+    }
+
+    @Override
     public PoslovniProces getProcessByPublicationId(String id) throws Exception {
         return businessProcessRepository.findByPublicationId(id);
     }
 
+    @Override
     public PoslovniProces getProcess(String id) throws Exception {
         PoslovniProces process = businessProcessRepository.findObjectById(id);
 

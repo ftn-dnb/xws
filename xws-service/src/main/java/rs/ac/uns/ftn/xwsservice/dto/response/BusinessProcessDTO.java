@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.xwsservice.dto.response;
 
+import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 
 public class BusinessProcessDTO {
@@ -14,6 +15,7 @@ public class BusinessProcessDTO {
     private String publicationHtmlFilePath;
     private String publicationMetadataRdfFilePath;
     private String publicationMetadataJsonFilePath;
+    private String publicationTitle;
 
     private String coverLetterId;
     private String coverLetterPdfFilePath;
@@ -35,6 +37,11 @@ public class BusinessProcessDTO {
         this.publicationMetadataRdfFilePath = "http://localhost:8080/api/publications/public/metadata/rdf/" + publicationId;
         this.coverLetterHtmlFilePath = "http://localhost:8080/api/coverLetters/public/html/" + coverLetterId;
         this.coverLetterPdfFilePath = "http://localhost:8080/api/coverLetters/public/pdf/" + coverLetterId;
+    }
+
+    public BusinessProcessDTO(PoslovniProces process, NaucniRad publication) {
+        this(process);
+        this.publicationTitle = publication.getNaslovnaStrana().getNaslov();
     }
 
     public String getId() {
@@ -131,5 +138,13 @@ public class BusinessProcessDTO {
 
     public void setCoverLetterHtmlFilePath(String coverLetterHtmlFilePath) {
         this.coverLetterHtmlFilePath = coverLetterHtmlFilePath;
+    }
+
+    public String getPublicationTitle() {
+        return publicationTitle;
+    }
+
+    public void setPublicationTitle(String publicationTitle) {
+        this.publicationTitle = publicationTitle;
     }
 }

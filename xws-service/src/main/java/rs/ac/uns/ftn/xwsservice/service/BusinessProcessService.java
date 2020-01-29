@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.xwsservice.service;
 
+import rs.ac.uns.ftn.xwsservice.dto.response.BusinessProcessDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.ReviewRequestDTO;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRecenziranja;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface BusinessProcessService {
 
     List<PoslovniProces> getAllProcesses() throws Exception;
+    List<BusinessProcessDTO> getAllProcessesDTO() throws Exception;
     PoslovniProces getProcessByPublicationId(String id) throws Exception;
     PoslovniProces getProcess(String id) throws Exception;
     String createNewProcess(String publicationId) throws Exception;
