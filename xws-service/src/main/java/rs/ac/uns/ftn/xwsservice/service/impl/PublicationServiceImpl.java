@@ -16,6 +16,8 @@ import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
 import rs.ac.uns.ftn.xwsservice.service.*;
 import rs.ac.uns.ftn.xwsservice.utils.PublicationIdUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -44,12 +46,17 @@ public class PublicationServiceImpl implements PublicationService {
     @Value("${xslt.path.output-folder.publications.anonymous}")
     private String publicationAnonymousXsltOutputFolderPath;
 
+    @Value("${xslt.path.output-folder.publications.rdf}")
+    private String publicationRDFXsltOutputFolderPath;
+
     @Value("${xslfo.path.output-folder.publications}")
     private String publicationXslfoOutputFolderPath;
 
     @Value("${xslfo.path.output-folder.publications.anonymous}")
     private String publicationAnonymousXslfoOutputFolderPath;
 
+    @Value("${xslt.path.publication.rdf}")
+    private String publicationXsltRDFFilePath;
     @Autowired
     private PublicationRepo publicationRepo;
 
@@ -74,6 +81,8 @@ public class PublicationServiceImpl implements PublicationService {
     @Autowired
     private BusinessProcessRepository businessProcessRepository;
 
+    @Autowired
+    private MetadataService metadataService;
 
     @Override
     public String addPublication(String publicationXmlData) throws Exception {
@@ -107,6 +116,14 @@ public class PublicationServiceImpl implements PublicationService {
         String xslfoAnonymousOutputFilePath = publicationAnonymousXslfoOutputFolderPath + pubId;
         xslfoService.transform(publicationXmlData, publicationAnonymousXslfoFilePath, xslfoAnonymousOutputFilePath);
 
+        //MetaDataExtraction
+        //rdf
+        String rdfTransformationOutputFilePath = publicationRDFXsltOutputFolderPath + pubId + ".rdf";
+        xsltService.transformRDF(publicationRepo.findById(pubId), publicationXsltRDFFilePath, rdfTransformationOutputFilePath);
+        //grddl
+        String resultMeta = metadataExtractorService.extractMetadataToRdf(new FileInputStream(new File(rdfTransformationOutputFilePath)));
+        //upload
+        metadataService.metadataWrite(resultMeta);
         return processId;
     }
 
@@ -183,6 +200,7 @@ public class PublicationServiceImpl implements PublicationService {
         return id;
     }
 
+    // PROVERITI SVRHU OVE F-je
     @Override
     public String getRdfMetadata(String id) throws Exception {
         String xmlPublication = publicationRepo.findById(id);
@@ -192,6 +210,7 @@ public class PublicationServiceImpl implements PublicationService {
         }
 
         String result = metadataExtractorService.extractMetadataToRdf(xmlPublication);
+        //String result = "Ne radi";
         return result;
     }
 

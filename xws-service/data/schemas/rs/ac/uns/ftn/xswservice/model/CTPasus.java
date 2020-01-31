@@ -6,7 +6,7 @@
 //
 
 
-package rs.ac.uns.ftn.xwsservice.model;
+package rs.ac.uns.ftn.xswservice.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -145,10 +145,10 @@ public class CTPasus {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link Tabela }{@code >}
-     * {@link JAXBElement }{@code <}{@link Lista }{@code >}
-     * {@link JAXBElement }{@code <}{@link Tekst }{@code >}
-     * {@link JAXBElement }{@code <}{@link Slika }{@code >}
+     * {@link JAXBElement }{@code <}{@link CTPasus.Tabela }{@code >}
+     * {@link JAXBElement }{@code <}{@link CTPasus.Lista }{@code >}
+     * {@link JAXBElement }{@code <}{@link CTPasus.Tekst }{@code >}
+     * {@link JAXBElement }{@code <}{@link CTPasus.Slika }{@code >}
      * {@link String }
      * 
      * 
@@ -478,7 +478,7 @@ public class CTPasus {
     public static class Tabela {
 
         @XmlElement(name = "Red", required = true)
-        protected List<Red> red;
+        protected List<CTPasus.Tabela.Red> red;
         @XmlAttribute(name = "id")
         protected String id;
 
@@ -500,13 +500,13 @@ public class CTPasus {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link Red }
+         * {@link CTPasus.Tabela.Red }
          * 
          * 
          */
-        public List<Red> getRed() {
+        public List<CTPasus.Tabela.Red> getRed() {
             if (red == null) {
-                red = new ArrayList<Red>();
+                red = new ArrayList<CTPasus.Tabela.Red>();
             }
             return this.red;
         }

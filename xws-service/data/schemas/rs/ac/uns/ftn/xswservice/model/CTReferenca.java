@@ -6,7 +6,7 @@
 //
 
 
-package rs.ac.uns.ftn.xwsservice.model;
+package rs.ac.uns.ftn.xswservice.model;
 
 import java.util.ArrayList;
 import java.util.List;
