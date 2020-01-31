@@ -1,6 +1,6 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:nr ="http://www.ftn.uns.ac.rs/xws/tim5"
-                xmlns:sh="https://schema.org">
+                xmlns:sh="https://schema.org/">
 
     <xsl:output method="xml" indent="yes"/>
 	
