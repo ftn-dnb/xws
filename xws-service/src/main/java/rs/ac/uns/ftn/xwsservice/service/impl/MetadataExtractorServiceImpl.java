@@ -26,6 +26,47 @@ public class MetadataExtractorServiceImpl implements MetadataExtractorService {
     private String grddlOutputFolder;
 
     @Override
+    public String extractMetadataToRdf(InputStream in) {
+        StreamSource transformSource = new StreamSource(new File(grddlXslTransformationFilePath));
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer grddlTransformer = null;
+
+        try {
+            grddlTransformer = factory.newTransformer(transformSource);
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+            throw new OperationFailedException("Failed to initialize GRDDL transformer");
+        }
+
+        grddlTransformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+        grddlTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+        String outputFilePath = this.grddlOutputFolder + UUID.randomUUID().toString() + ".xml";
+
+        //StreamSource source = new StreamSource(new ByteArrayInputStream(xmlData.getBytes(StandardCharsets.UTF_8)));
+        StreamSource source = new StreamSource(in);
+        StreamResult result = null;
+
+        try {
+            result = new StreamResult(new FileOutputStream(outputFilePath));
+        } catch (FileNotFoundException e) {
+            throw new OperationFailedException("Error while creating output file");
+        }
+
+        try {
+            grddlTransformer.transform(source, result);
+        } catch (TransformerException e) {
+            throw new OperationFailedException("Error while extracting metadata to RDF");
+        }
+
+        String rdfXmlResult = FileReader.readFromFile(outputFilePath);
+        //File outputFile = new File(outputFilePath);
+        //outputFile.delete();
+
+        return outputFilePath;
+    }
+
+    @Override
     public String extractMetadataToRdf(String xmlData) {
         StreamSource transformSource = new StreamSource(new File(grddlXslTransformationFilePath));
         TransformerFactory factory = TransformerFactory.newInstance();
@@ -44,6 +85,7 @@ public class MetadataExtractorServiceImpl implements MetadataExtractorService {
         String outputFilePath = this.grddlOutputFolder + UUID.randomUUID().toString() + ".xml";
 
         StreamSource source = new StreamSource(new ByteArrayInputStream(xmlData.getBytes(StandardCharsets.UTF_8)));
+        //StreamSource source = new StreamSource(in);
         StreamResult result = null;
 
         try {

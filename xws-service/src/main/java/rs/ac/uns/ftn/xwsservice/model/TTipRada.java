@@ -14,37 +14,37 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for EnumStatusRada.
+ * <p>Java class for TTipRada.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="EnumStatusRada">
+ * &lt;simpleType name="TTipRada">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Obrisan"/>
- *     &lt;enumeration value="Prihvacen"/>
- *     &lt;enumeration value="Odbijen"/>
- *     &lt;enumeration value="UProcesu"/>
+ *     &lt;enumeration value="naucni-rad"/>
+ *     &lt;enumeration value="tehnicki-rad"/>
+ *     &lt;enumeration value="pregledni-rad"/>
+ *     &lt;enumeration value="teza"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "EnumStatusRada")
+@XmlType(name = "TTipRada")
 @XmlEnum
-public enum EnumStatusRada {
+public enum TTipRada {
 
-    @XmlEnumValue("Obrisan")
-    OBRISAN("Obrisan"),
-    @XmlEnumValue("Prihvacen")
-    PRIHVACEN("Prihvacen"),
-    @XmlEnumValue("Odbijen")
-    ODBIJEN("Odbijen"),
-    @XmlEnumValue("UProcesu")
-    U_PROCESU("UProcesu");
+    @XmlEnumValue("naucni-rad")
+    NAUCNI_RAD("naucni-rad"),
+    @XmlEnumValue("tehnicki-rad")
+    TEHNICKI_RAD("tehnicki-rad"),
+    @XmlEnumValue("pregledni-rad")
+    PREGLEDNI_RAD("pregledni-rad"),
+    @XmlEnumValue("teza")
+    TEZA("teza");
     private final String value;
 
-    EnumStatusRada(String v) {
+    TTipRada(String v) {
         value = v;
     }
 
@@ -52,8 +52,8 @@ public enum EnumStatusRada {
         return value;
     }
 
-    public static EnumStatusRada fromValue(String v) {
-        for (EnumStatusRada c: EnumStatusRada.values()) {
+    public static TTipRada fromValue(String v) {
+        for (TTipRada c: TTipRada.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

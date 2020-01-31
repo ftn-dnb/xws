@@ -6,7 +6,7 @@
 //
 
 
-package rs.ac.uns.ftn.xwsservice.model;
+package rs.ac.uns.ftn.xswservice.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -192,17 +192,17 @@ import javax.xml.namespace.QName;
 public class NaucniRad {
 
     @XmlElement(name = "MetaPodaci", required = true)
-    protected MetaPodaci metaPodaci;
+    protected NaucniRad.MetaPodaci metaPodaci;
     @XmlElement(name = "NaslovnaStrana", required = true)
-    protected NaslovnaStrana naslovnaStrana;
+    protected NaucniRad.NaslovnaStrana naslovnaStrana;
     @XmlElement(name = "Abstrakt", required = true)
     protected String abstrakt;
     @XmlElement(name = "KljucneReci", required = true)
-    protected KljucneReci kljucneReci;
+    protected NaucniRad.KljucneReci kljucneReci;
     @XmlElement(name = "Poglavlja", required = true)
-    protected Poglavlja poglavlja;
+    protected NaucniRad.Poglavlja poglavlja;
     @XmlElement(name = "Reference", required = true)
-    protected Reference reference;
+    protected NaucniRad.Reference reference;
     @XmlAttribute(name = "id")
     protected String id;
     @XmlAttribute(name = "obrisan")
@@ -215,10 +215,10 @@ public class NaucniRad {
      * 
      * @return
      *     possible object is
-     *     {@link MetaPodaci }
+     *     {@link NaucniRad.MetaPodaci }
      *     
      */
-    public MetaPodaci getMetaPodaci() {
+    public NaucniRad.MetaPodaci getMetaPodaci() {
         return metaPodaci;
     }
 
@@ -227,10 +227,10 @@ public class NaucniRad {
      * 
      * @param value
      *     allowed object is
-     *     {@link MetaPodaci }
+     *     {@link NaucniRad.MetaPodaci }
      *     
      */
-    public void setMetaPodaci(MetaPodaci value) {
+    public void setMetaPodaci(NaucniRad.MetaPodaci value) {
         this.metaPodaci = value;
     }
 
@@ -239,10 +239,10 @@ public class NaucniRad {
      * 
      * @return
      *     possible object is
-     *     {@link NaslovnaStrana }
+     *     {@link NaucniRad.NaslovnaStrana }
      *     
      */
-    public NaslovnaStrana getNaslovnaStrana() {
+    public NaucniRad.NaslovnaStrana getNaslovnaStrana() {
         return naslovnaStrana;
     }
 
@@ -251,10 +251,10 @@ public class NaucniRad {
      * 
      * @param value
      *     allowed object is
-     *     {@link NaslovnaStrana }
+     *     {@link NaucniRad.NaslovnaStrana }
      *     
      */
-    public void setNaslovnaStrana(NaslovnaStrana value) {
+    public void setNaslovnaStrana(NaucniRad.NaslovnaStrana value) {
         this.naslovnaStrana = value;
     }
 
@@ -287,10 +287,10 @@ public class NaucniRad {
      * 
      * @return
      *     possible object is
-     *     {@link KljucneReci }
+     *     {@link NaucniRad.KljucneReci }
      *     
      */
-    public KljucneReci getKljucneReci() {
+    public NaucniRad.KljucneReci getKljucneReci() {
         return kljucneReci;
     }
 
@@ -299,10 +299,10 @@ public class NaucniRad {
      * 
      * @param value
      *     allowed object is
-     *     {@link KljucneReci }
+     *     {@link NaucniRad.KljucneReci }
      *     
      */
-    public void setKljucneReci(KljucneReci value) {
+    public void setKljucneReci(NaucniRad.KljucneReci value) {
         this.kljucneReci = value;
     }
 
@@ -311,10 +311,10 @@ public class NaucniRad {
      * 
      * @return
      *     possible object is
-     *     {@link Poglavlja }
+     *     {@link NaucniRad.Poglavlja }
      *     
      */
-    public Poglavlja getPoglavlja() {
+    public NaucniRad.Poglavlja getPoglavlja() {
         return poglavlja;
     }
 
@@ -323,10 +323,10 @@ public class NaucniRad {
      * 
      * @param value
      *     allowed object is
-     *     {@link Poglavlja }
+     *     {@link NaucniRad.Poglavlja }
      *     
      */
-    public void setPoglavlja(Poglavlja value) {
+    public void setPoglavlja(NaucniRad.Poglavlja value) {
         this.poglavlja = value;
     }
 
@@ -335,10 +335,10 @@ public class NaucniRad {
      * 
      * @return
      *     possible object is
-     *     {@link Reference }
+     *     {@link NaucniRad.Reference }
      *     
      */
-    public Reference getReference() {
+    public NaucniRad.Reference getReference() {
         return reference;
     }
 
@@ -347,10 +347,10 @@ public class NaucniRad {
      * 
      * @param value
      *     allowed object is
-     *     {@link Reference }
+     *     {@link NaucniRad.Reference }
      *     
      */
-    public void setReference(Reference value) {
+    public void setReference(NaucniRad.Reference value) {
         this.reference = value;
     }
 
@@ -455,7 +455,7 @@ public class NaucniRad {
     public static class KljucneReci {
 
         @XmlElement(name = "KljucnaRec", required = true)
-        protected List<KljucnaRec> kljucnaRec;
+        protected List<NaucniRad.KljucneReci.KljucnaRec> kljucnaRec;
         @XmlAnyAttribute
         private Map<QName, String> otherAttributes = new HashMap<QName, String>();
 
@@ -477,13 +477,13 @@ public class NaucniRad {
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link KljucnaRec }
+         * {@link NaucniRad.KljucneReci.KljucnaRec }
          * 
          * 
          */
-        public List<KljucnaRec> getKljucnaRec() {
+        public List<NaucniRad.KljucneReci.KljucnaRec> getKljucnaRec() {
             if (kljucnaRec == null) {
-                kljucnaRec = new ArrayList<KljucnaRec>();
+                kljucnaRec = new ArrayList<NaucniRad.KljucneReci.KljucnaRec>();
             }
             return this.kljucnaRec;
         }
@@ -635,25 +635,25 @@ public class NaucniRad {
     public static class MetaPodaci {
 
         @XmlElement(name = "DatumPrijema", required = true, nillable = true)
-        protected DatumPrijema datumPrijema;
+        protected NaucniRad.MetaPodaci.DatumPrijema datumPrijema;
         @XmlElement(name = "DatumPrihvatanja", required = true, nillable = true)
-        protected DatumPrihvatanja datumPrihvatanja;
+        protected NaucniRad.MetaPodaci.DatumPrihvatanja datumPrihvatanja;
         @XmlElement(name = "TipRada", required = true)
-        protected TipRada tipRada;
+        protected NaucniRad.MetaPodaci.TipRada tipRada;
         @XmlElement(name = "VerzijaRada", required = true, defaultValue = "1")
-        protected VerzijaRada verzijaRada;
+        protected NaucniRad.MetaPodaci.VerzijaRada verzijaRada;
         @XmlElement(name = "Jezik", required = true)
-        protected Jezik jezik;
+        protected NaucniRad.MetaPodaci.Jezik jezik;
 
         /**
          * Gets the value of the datumPrijema property.
          * 
          * @return
          *     possible object is
-         *     {@link DatumPrijema }
+         *     {@link NaucniRad.MetaPodaci.DatumPrijema }
          *     
          */
-        public DatumPrijema getDatumPrijema() {
+        public NaucniRad.MetaPodaci.DatumPrijema getDatumPrijema() {
             return datumPrijema;
         }
 
@@ -662,10 +662,10 @@ public class NaucniRad {
          * 
          * @param value
          *     allowed object is
-         *     {@link DatumPrijema }
+         *     {@link NaucniRad.MetaPodaci.DatumPrijema }
          *     
          */
-        public void setDatumPrijema(DatumPrijema value) {
+        public void setDatumPrijema(NaucniRad.MetaPodaci.DatumPrijema value) {
             this.datumPrijema = value;
         }
 
@@ -674,10 +674,10 @@ public class NaucniRad {
          * 
          * @return
          *     possible object is
-         *     {@link DatumPrihvatanja }
+         *     {@link NaucniRad.MetaPodaci.DatumPrihvatanja }
          *     
          */
-        public DatumPrihvatanja getDatumPrihvatanja() {
+        public NaucniRad.MetaPodaci.DatumPrihvatanja getDatumPrihvatanja() {
             return datumPrihvatanja;
         }
 
@@ -686,10 +686,10 @@ public class NaucniRad {
          * 
          * @param value
          *     allowed object is
-         *     {@link DatumPrihvatanja }
+         *     {@link NaucniRad.MetaPodaci.DatumPrihvatanja }
          *     
          */
-        public void setDatumPrihvatanja(DatumPrihvatanja value) {
+        public void setDatumPrihvatanja(NaucniRad.MetaPodaci.DatumPrihvatanja value) {
             this.datumPrihvatanja = value;
         }
 
@@ -698,10 +698,10 @@ public class NaucniRad {
          * 
          * @return
          *     possible object is
-         *     {@link TipRada }
+         *     {@link NaucniRad.MetaPodaci.TipRada }
          *     
          */
-        public TipRada getTipRada() {
+        public NaucniRad.MetaPodaci.TipRada getTipRada() {
             return tipRada;
         }
 
@@ -710,10 +710,10 @@ public class NaucniRad {
          * 
          * @param value
          *     allowed object is
-         *     {@link TipRada }
+         *     {@link NaucniRad.MetaPodaci.TipRada }
          *     
          */
-        public void setTipRada(TipRada value) {
+        public void setTipRada(NaucniRad.MetaPodaci.TipRada value) {
             this.tipRada = value;
         }
 
@@ -722,10 +722,10 @@ public class NaucniRad {
          * 
          * @return
          *     possible object is
-         *     {@link VerzijaRada }
+         *     {@link NaucniRad.MetaPodaci.VerzijaRada }
          *     
          */
-        public VerzijaRada getVerzijaRada() {
+        public NaucniRad.MetaPodaci.VerzijaRada getVerzijaRada() {
             return verzijaRada;
         }
 
@@ -734,10 +734,10 @@ public class NaucniRad {
          * 
          * @param value
          *     allowed object is
-         *     {@link VerzijaRada }
+         *     {@link NaucniRad.MetaPodaci.VerzijaRada }
          *     
          */
-        public void setVerzijaRada(VerzijaRada value) {
+        public void setVerzijaRada(NaucniRad.MetaPodaci.VerzijaRada value) {
             this.verzijaRada = value;
         }
 
@@ -746,10 +746,10 @@ public class NaucniRad {
          * 
          * @return
          *     possible object is
-         *     {@link Jezik }
+         *     {@link NaucniRad.MetaPodaci.Jezik }
          *     
          */
-        public Jezik getJezik() {
+        public NaucniRad.MetaPodaci.Jezik getJezik() {
             return jezik;
         }
 
@@ -758,10 +758,10 @@ public class NaucniRad {
          * 
          * @param value
          *     allowed object is
-         *     {@link Jezik }
+         *     {@link NaucniRad.MetaPodaci.Jezik }
          *     
          */
-        public void setJezik(Jezik value) {
+        public void setJezik(NaucniRad.MetaPodaci.Jezik value) {
             this.jezik = value;
         }
 
@@ -1173,19 +1173,19 @@ public class NaucniRad {
     public static class NaslovnaStrana {
 
         @XmlElement(name = "Naslov", required = true)
-        protected Naslov naslov;
+        protected NaucniRad.NaslovnaStrana.Naslov naslov;
         @XmlElement(name = "Autori", required = true)
-        protected Autori autori;
+        protected NaucniRad.NaslovnaStrana.Autori autori;
 
         /**
          * Gets the value of the naslov property.
          * 
          * @return
          *     possible object is
-         *     {@link Naslov }
+         *     {@link NaucniRad.NaslovnaStrana.Naslov }
          *     
          */
-        public Naslov getNaslov() {
+        public NaucniRad.NaslovnaStrana.Naslov getNaslov() {
             return naslov;
         }
 
@@ -1194,10 +1194,10 @@ public class NaucniRad {
          * 
          * @param value
          *     allowed object is
-         *     {@link Naslov }
+         *     {@link NaucniRad.NaslovnaStrana.Naslov }
          *     
          */
-        public void setNaslov(Naslov value) {
+        public void setNaslov(NaucniRad.NaslovnaStrana.Naslov value) {
             this.naslov = value;
         }
 
@@ -1206,10 +1206,10 @@ public class NaucniRad {
          * 
          * @return
          *     possible object is
-         *     {@link Autori }
+         *     {@link NaucniRad.NaslovnaStrana.Autori }
          *     
          */
-        public Autori getAutori() {
+        public NaucniRad.NaslovnaStrana.Autori getAutori() {
             return autori;
         }
 
@@ -1218,10 +1218,10 @@ public class NaucniRad {
          * 
          * @param value
          *     allowed object is
-         *     {@link Autori }
+         *     {@link NaucniRad.NaslovnaStrana.Autori }
          *     
          */
-        public void setAutori(Autori value) {
+        public void setAutori(NaucniRad.NaslovnaStrana.Autori value) {
             this.autori = value;
         }
 

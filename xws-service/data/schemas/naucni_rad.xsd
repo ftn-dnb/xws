@@ -5,10 +5,69 @@
     <xs:element name="NaucniRad">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="MetaPodaci">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="DatumPrijema" nillable="true">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:date">
+                                            <xs:anyAttribute processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="DatumPrihvatanja" nillable="true">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:date">
+                                            <xs:anyAttribute processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="TipRada" nillable="false">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="TTipRada">
+                                            <xs:anyAttribute processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element default="1" name="VerzijaRada">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="TVerzijaRada">
+                                            <xs:anyAttribute processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Jezik">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:anyAttribute processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="NaslovnaStrana">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="Naslov" type="xs:string"/>
+                            <xs:element name="Naslov">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:anyAttribute processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
                             <xs:element maxOccurs="1" name="Autori">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -30,9 +89,15 @@
                 <xs:element name="KljucneReci">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element maxOccurs="6" minOccurs="4" name="KljucnaRec"
-                                type="xs:string"/>
+                            <xs:element maxOccurs="6" minOccurs="4" name="KljucnaRec">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string"/>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
+                        <xs:anyAttribute processContents="lax"/>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="Poglavlja">
@@ -52,6 +117,7 @@
             </xs:sequence>
             <xs:attribute name="id" type="xs:string"/>
             <xs:attribute name="obrisan" type="xs:boolean"/>
+            <xs:anyAttribute processContents="lax"/>
         </xs:complexType>
     </xs:element>
     <xs:complexType mixed="false" name="CTPoglavlje">
@@ -126,4 +192,17 @@
         </xs:sequence>
         <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
+    <xs:simpleType name="TTipRada">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="naucni-rad"/>
+            <xs:enumeration value="tehnicki-rad"/>
+            <xs:enumeration value="pregledni-rad"/>
+            <xs:enumeration value="teza"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TVerzijaRada">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

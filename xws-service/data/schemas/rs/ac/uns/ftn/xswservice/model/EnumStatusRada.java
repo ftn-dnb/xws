@@ -6,7 +6,7 @@
 //
 
 
-package rs.ac.uns.ftn.xwsservice.model;
+package rs.ac.uns.ftn.xswservice.model;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;

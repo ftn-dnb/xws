@@ -41,7 +41,7 @@ public class BusinessProcessDTO {
 
     public BusinessProcessDTO(PoslovniProces process, NaucniRad publication) {
         this(process);
-        this.publicationTitle = publication.getNaslovnaStrana().getNaslov();
+        this.publicationTitle = publication.getNaslovnaStrana().getNaslov().getValue();
     }
 
     public String getId() {

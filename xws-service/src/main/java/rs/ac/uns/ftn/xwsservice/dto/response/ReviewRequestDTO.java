@@ -18,7 +18,7 @@ public class ReviewRequestDTO {
 
     public ReviewRequestDTO(PoslovniProces process, NaucniRad publication, String reviewStatus) {
         this.processId = process.getId();
-        this.title = publication.getNaslovnaStrana().getNaslov();
+        this.title = publication.getNaslovnaStrana().getNaslov().getValue();
         this.publicationStatus = process.getStatusRada().toString();
         this.publicationPhase = process.getFaza().toString();
         this.reviewStatus = reviewStatus;

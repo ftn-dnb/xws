@@ -6,7 +6,7 @@
 //
 
 
-package rs.ac.uns.ftn.xwsservice.model;
+package rs.ac.uns.ftn.xswservice.model;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
@@ -14,37 +14,31 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for EnumStatusRada.
+ * <p>Java class for EnumFaza.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="EnumStatusRada">
+ * &lt;simpleType name="EnumFaza">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="Obrisan"/>
- *     &lt;enumeration value="Prihvacen"/>
- *     &lt;enumeration value="Odbijen"/>
- *     &lt;enumeration value="UProcesu"/>
+ *     &lt;enumeration value="ZaReviziju"/>
+ *     &lt;enumeration value="ZaRecenziju"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "EnumStatusRada")
+@XmlType(name = "EnumFaza")
 @XmlEnum
-public enum EnumStatusRada {
+public enum EnumFaza {
 
-    @XmlEnumValue("Obrisan")
-    OBRISAN("Obrisan"),
-    @XmlEnumValue("Prihvacen")
-    PRIHVACEN("Prihvacen"),
-    @XmlEnumValue("Odbijen")
-    ODBIJEN("Odbijen"),
-    @XmlEnumValue("UProcesu")
-    U_PROCESU("UProcesu");
+    @XmlEnumValue("ZaReviziju")
+    ZA_REVIZIJU("ZaReviziju"),
+    @XmlEnumValue("ZaRecenziju")
+    ZA_RECENZIJU("ZaRecenziju");
     private final String value;
 
-    EnumStatusRada(String v) {
+    EnumFaza(String v) {
         value = v;
     }
 
@@ -52,8 +46,8 @@ public enum EnumStatusRada {
         return value;
     }
 
-    public static EnumStatusRada fromValue(String v) {
-        for (EnumStatusRada c: EnumStatusRada.values()) {
+    public static EnumFaza fromValue(String v) {
+        for (EnumFaza c: EnumFaza.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

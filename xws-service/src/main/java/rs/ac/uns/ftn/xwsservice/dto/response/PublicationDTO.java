@@ -4,6 +4,7 @@ import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PublicationDTO {
 
@@ -25,9 +26,9 @@ public class PublicationDTO {
 
     public PublicationDTO(NaucniRad pub) {
         this.id = pub.getId();
-        this.title = pub.getNaslovnaStrana().getNaslov();
+        this.title = pub.getNaslovnaStrana().getNaslov().getValue();
         this.textAbstract = pub.getAbstrakt();
-        this.keywords = pub.getKljucneReci().getKljucnaRec();
+        this.keywords = pub.getKljucneReci().getKljucnaRec().stream().map(keyword -> keyword.getValue()).collect(Collectors.toList());
         this.xmlFilePath = "http://localhost:8080/api/publications/public/xml/" + id;
         this.htmlFilePath = "http://localhost:8080/api/publications/public/html/" + id;
         this.pdfFilePath = "http://localhost:8080/api/publications/public/pdf/" + id;

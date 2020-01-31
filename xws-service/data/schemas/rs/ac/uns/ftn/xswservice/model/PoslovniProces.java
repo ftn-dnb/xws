@@ -6,7 +6,7 @@
 //
 
 
-package rs.ac.uns.ftn.xwsservice.model;
+package rs.ac.uns.ftn.xswservice.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +75,7 @@ public class PoslovniProces {
     @XmlSchemaType(name = "string")
     protected EnumStatusRada statusRada;
     @XmlElement(name = "Recenzenti", required = true)
-    protected Recenzenti recenzenti;
+    protected PoslovniProces.Recenzenti recenzenti;
     @XmlAttribute(name = "id")
     protected String id;
 
@@ -180,10 +180,10 @@ public class PoslovniProces {
      * 
      * @return
      *     possible object is
-     *     {@link Recenzenti }
+     *     {@link PoslovniProces.Recenzenti }
      *     
      */
-    public Recenzenti getRecenzenti() {
+    public PoslovniProces.Recenzenti getRecenzenti() {
         return recenzenti;
     }
 
@@ -192,10 +192,10 @@ public class PoslovniProces {
      * 
      * @param value
      *     allowed object is
-     *     {@link Recenzenti }
+     *     {@link PoslovniProces.Recenzenti }
      *     
      */
-    public void setRecenzenti(Recenzenti value) {
+    public void setRecenzenti(PoslovniProces.Recenzenti value) {
         this.recenzenti = value;
     }
 

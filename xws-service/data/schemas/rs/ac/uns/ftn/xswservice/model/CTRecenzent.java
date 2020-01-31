@@ -6,7 +6,7 @@
 //
 
 
-package rs.ac.uns.ftn.xwsservice.model;
+package rs.ac.uns.ftn.xswservice.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +62,7 @@ public class CTRecenzent {
     @XmlSchemaType(name = "string")
     protected EnumStatusRecenziranja status;
     @XmlElement(name = "Recenzije", required = true)
-    protected Recenzije recenzije;
+    protected CTRecenzent.Recenzije recenzije;
 
     /**
      * Gets the value of the recenzentID property.
@@ -117,10 +117,10 @@ public class CTRecenzent {
      * 
      * @return
      *     possible object is
-     *     {@link Recenzije }
+     *     {@link CTRecenzent.Recenzije }
      *     
      */
-    public Recenzije getRecenzije() {
+    public CTRecenzent.Recenzije getRecenzije() {
         return recenzije;
     }
 
@@ -129,10 +129,10 @@ public class CTRecenzent {
      * 
      * @param value
      *     allowed object is
-     *     {@link Recenzije }
+     *     {@link CTRecenzent.Recenzije }
      *     
      */
-    public void setRecenzije(Recenzije value) {
+    public void setRecenzije(CTRecenzent.Recenzije value) {
         this.recenzije = value;
     }
 
