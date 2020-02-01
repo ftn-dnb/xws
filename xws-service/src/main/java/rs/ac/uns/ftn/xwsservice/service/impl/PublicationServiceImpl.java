@@ -116,14 +116,14 @@ public class PublicationServiceImpl implements PublicationService {
         String xslfoAnonymousOutputFilePath = publicationAnonymousXslfoOutputFolderPath + pubId;
         xslfoService.transform(publicationXmlData, publicationAnonymousXslfoFilePath, xslfoAnonymousOutputFilePath);
 
-//        //MetaDataExtraction
-//        //rdf
-//        String rdfTransformationOutputFilePath = publicationRDFXsltOutputFolderPath + pubId + ".rdf";
-//        xsltService.transformRDF(publicationRepo.findById(pubId), publicationXsltRDFFilePath, rdfTransformationOutputFilePath);
-//        //grddl
-//        String resultMeta = metadataExtractorService.extractMetadataToRdf(new FileInputStream(new File(rdfTransformationOutputFilePath)));
-//        //upload
-//        metadataService.metadataWrite(resultMeta);
+        //MetaDataExtraction
+        //rdf
+        String rdfTransformationOutputFilePath = publicationRDFXsltOutputFolderPath + pubId + ".rdf";
+        xsltService.transformRDF(publicationRepo.findById(pubId), publicationXsltRDFFilePath, rdfTransformationOutputFilePath);
+        //grddl
+        String resultMeta = metadataExtractorService.extractMetadataToRdf(new FileInputStream(new File(rdfTransformationOutputFilePath)));
+        //upload
+        metadataService.metadataWrite(resultMeta);
         return processId;
     }
 
