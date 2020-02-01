@@ -8,10 +8,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.xwsservice.dto.response.BusinessProcessDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.ReviewRequestDTO;
+import rs.ac.uns.ftn.xwsservice.dto.response.ReviewerDTO;
 import rs.ac.uns.ftn.xwsservice.mappers.BusinessProcessMapper;
+import rs.ac.uns.ftn.xwsservice.mappers.UserMapper;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRecenziranja;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
+import rs.ac.uns.ftn.xwsservice.model.User;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
 
 import java.util.List;
@@ -46,6 +49,13 @@ public class BusinessProcessController {
     public ResponseEntity addReviewers(@PathVariable String processId, @RequestBody List<String> users) throws Exception {
         businessProcessService.addReviewersToProcess(processId, users);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/recommend-reviewers/{processId}")
+    @PreAuthorize("hasRole('ROLE_EDITOR')")
+    public ResponseEntity<List<ReviewerDTO>> recommendReviewers(@PathVariable String processId) throws Exception {
+        List<ReviewerDTO> reviewers = businessProcessService.recommendReviewers(processId);
+        return new ResponseEntity<>(reviewers, HttpStatus.OK);
     }
 
     @GetMapping("/my-review-requests")

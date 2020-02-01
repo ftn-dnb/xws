@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.xwsservice.dto.response.BusinessProcessDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.ReviewRequestDTO;
+import rs.ac.uns.ftn.xwsservice.dto.response.ReviewerDTO;
 import rs.ac.uns.ftn.xwsservice.exception.ApiRequestException;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.*;
@@ -12,10 +13,10 @@ import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
 import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
+import rs.ac.uns.ftn.xwsservice.utils.Sorting;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BusinessProcessServiceImpl implements BusinessProcessService {
@@ -110,6 +111,10 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
         for (String userId : users) {
             User user = userRepository.findById(Long.valueOf(userId)).get();
 
+            if (checkIfReviewerIsAlreadyAdded(userId, reviewers)) {
+                throw new ApiRequestException("User with ID " + userId + " is already reviewer on this publication.");
+            }
+
             // TODO: Poslati mejl korisniku da je prihvati/odbije recenziranje ovog rada (procesa)
             CTRecenzent reviewer = new CTRecenzent();
             reviewer.setStatus(EnumStatusRecenziranja.CEKANJE);
@@ -128,6 +133,15 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
         }
 
         return true;
+    }
+
+    private boolean checkIfReviewerIsAlreadyAdded(String userId, List<CTRecenzent> reviewers) {
+        for (CTRecenzent reviewer : reviewers) {
+            if (reviewer.getRecenzentID().equals(userId))
+                return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -206,4 +220,68 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
                 .stream().filter(r -> r.getRecenzentID().equals(userId))
                 .findFirst().get().getStatus();
     }
+
+    @Override
+    public List<ReviewerDTO> recommendReviewers(String processId) throws Exception {
+        PoslovniProces process = this.getProcess(processId);
+        NaucniRad publication = publicationRepo.findObjectById(process.getNaucniRadId());
+
+        List<String> keywords = publication.getKljucneReci().getKljucnaRec()
+                .stream().map(keyword -> keyword.getValue()).collect(Collectors.toList());
+
+        Map<String, List<String>> usersKeywords = new HashMap<>(); // Key is user id, and values are list of all users keywords
+
+        List<NaucniRad> allPublications = publicationRepo.findAll();
+
+        for (NaucniRad pub : allPublications) {
+            // Ignore publication for which we are recommending reviewers
+            if (pub.getId().equals(process.getNaucniRadId()))
+                continue;
+
+            String authorId = pub.getNaslovnaStrana().getAutori().getAutor().get(0).getId();
+
+            // Ignore author that added this publication
+            if (publication.getNaslovnaStrana().getAutori().getAutor().get(0).getId().equals(authorId))
+                continue;
+
+            List<String> pubKeywords = pub.getKljucneReci().getKljucnaRec()
+                    .stream().map(keyword -> keyword.getValue()).collect(Collectors.toList());
+
+            if (usersKeywords.containsKey(authorId)) {
+                usersKeywords.get(authorId).addAll(pubKeywords);
+            } else {
+                usersKeywords.put(authorId, new ArrayList<>(pubKeywords));
+            }
+        }
+
+        List<ReviewerDTO> recommendedReviewers = this.findBestReviewers(usersKeywords, keywords);
+
+        return recommendedReviewers;
+    }
+
+    private List<ReviewerDTO> findBestReviewers(Map<String, List<String>> authorsKeywords, List<String> pubKeywords) {
+        HashMap<String, Integer> numOfUsersKeywords = new HashMap<>(); // Key is user id, value is number of keywords that are the same as in pubKeywords
+
+        for (Map.Entry<String, List<String>> entry : authorsKeywords.entrySet()) {
+            int keywordCounter = 0;
+
+            for (String keyword : entry.getValue()) {
+                if (pubKeywords.contains(keyword))
+                    ++keywordCounter;
+            }
+
+            numOfUsersKeywords.put(entry.getKey(), keywordCounter);
+        }
+
+        List<ReviewerDTO> reviewers = new ArrayList<>();
+        HashMap<String, Integer> sorted = Sorting.sortByValue(numOfUsersKeywords);
+
+        sorted.forEach((userId, score) -> {
+            User user = userRepository.findById(Long.valueOf(userId)).get();
+            reviewers.add(new ReviewerDTO(user, score));
+        });
+
+        return reviewers;
+    }
+
 }
