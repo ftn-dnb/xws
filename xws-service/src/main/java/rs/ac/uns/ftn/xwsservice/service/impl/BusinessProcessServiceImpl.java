@@ -111,6 +111,10 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
         for (String userId : users) {
             User user = userRepository.findById(Long.valueOf(userId)).get();
 
+            if (checkIfReviewerIsAlreadyAdded(userId, reviewers)) {
+                throw new ApiRequestException("User with ID " + userId + " is already reviewer on this publication.");
+            }
+
             // TODO: Poslati mejl korisniku da je prihvati/odbije recenziranje ovog rada (procesa)
             CTRecenzent reviewer = new CTRecenzent();
             reviewer.setStatus(EnumStatusRecenziranja.CEKANJE);
@@ -129,6 +133,15 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
         }
 
         return true;
+    }
+
+    private boolean checkIfReviewerIsAlreadyAdded(String userId, List<CTRecenzent> reviewers) {
+        for (CTRecenzent reviewer : reviewers) {
+            if (reviewer.getRecenzentID().equals(userId))
+                return true;
+        }
+
+        return false;
     }
 
     @Override
