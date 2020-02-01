@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PoslovniProces xmlns="http://www.ftn.uns.ac.rs/xws/tim5"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.ftn.uns.ac.rs/xws/tim5 file:/E:/dev/xws-project/xws-service/data/schemas/poslovni_proces.xsd">
+    <NaucniRadId>NaucniRadId0</NaucniRadId>
+    <PropratnoPismoId>PropratnoPismoId0</PropratnoPismoId>
+    <Faza>ZaReviziju</Faza>
+    <StatusRada>Obrisan</StatusRada>
+    <Recenzenti>
+        <RecenzentID>RecenzentID0</RecenzentID>
+        <RecenzentID>RecenzentID1</RecenzentID>
+    </Recenzenti>
+</PoslovniProces>
