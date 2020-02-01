@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.xwsservice.mappers;
 
+import rs.ac.uns.ftn.xwsservice.dto.response.ReviewerDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.UserDTO;
 import rs.ac.uns.ftn.xwsservice.dto.request.UserRegistrationDTO;
 import rs.ac.uns.ftn.xwsservice.model.User;
@@ -30,5 +31,9 @@ public class UserMapper {
         user.setPassword("");
 
         return user;
+    }
+
+    public static List<ReviewerDTO> toReviewerDtoList(List<User> users) {
+        return users.stream().map(ReviewerDTO::new).collect(Collectors.toList());
     }
 }

@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.xwsservice.service;
 
 import rs.ac.uns.ftn.xwsservice.dto.response.BusinessProcessDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.ReviewRequestDTO;
+import rs.ac.uns.ftn.xwsservice.dto.response.ReviewerDTO;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRecenziranja;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
@@ -21,4 +22,5 @@ public interface BusinessProcessService {
     void changeProcessPhase(String processId, String phase) throws Exception;
     void changeProcessStatus(String processId, EnumStatusRada status) throws Exception;
     List<ReviewRequestDTO> getMyReviewRequests() throws Exception;
+    List<ReviewerDTO> recommendReviewers(String processId) throws Exception;
 }

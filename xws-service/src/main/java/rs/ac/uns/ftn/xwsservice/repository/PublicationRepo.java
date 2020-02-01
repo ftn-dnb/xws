@@ -11,7 +11,6 @@ import org.xmldb.api.modules.XMLResource;
 import rs.ac.uns.ftn.xwsservice.exist.ExistRetrieve;
 import rs.ac.uns.ftn.xwsservice.exist.ExistSave;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
-import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 import rs.ac.uns.ftn.xwsservice.service.MarshallerService;
 import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
 
@@ -125,4 +124,28 @@ public class PublicationRepo {
         return pubs;
     }
 
+    public List<NaucniRad> findAll() throws Exception {
+        String xPathSelector = "//NaucniRad";
+        ResourceSet resultSet = ExistRetrieve.executeXPathExpression(collectionId, xPathSelector, TARGET_NAMESPACE);
+        if (resultSet == null)
+            return null;
+
+        ResourceIterator i = resultSet.getIterator();
+        XMLResource res = null;
+        List<NaucniRad> publications = new ArrayList<>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            publications.add((NaucniRad) unmarshallerService.unmarshal(res.getContent().toString()));
+        }
+
+        if (res != null)
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+
+        return publications;
+    }
 }
