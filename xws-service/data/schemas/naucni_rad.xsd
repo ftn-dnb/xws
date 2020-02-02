@@ -74,6 +74,7 @@
                                         <xs:element maxOccurs="unbounded" name="Autor"
                                             type="CTAutor"/>
                                     </xs:sequence>
+                                    <xs:anyAttribute processContents="lax"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>

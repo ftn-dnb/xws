@@ -1,6 +1,7 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:nr ="http://www.ftn.uns.ac.rs/xws/tim5"
-                xmlns:sh="https://schema.org">
+				xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+                xmlns:sh="https://schema.org/">
 
     <xsl:output method="xml" indent="yes"/>
 	
@@ -27,13 +28,13 @@
 	</xsl:template>
 	
 	<xsl:template match="//nr:DatumPrijema">
-		<DatumPrijema property="sh:dateCreated" datatype="sh:Date" content="{.}">
+		<DatumPrijema property="sh:dateCreated" datatype="xsd:date" content="{.}">
 			 <xsl:apply-templates select="node()|@*"/>
 		</DatumPrijema>
 	</xsl:template>
 	
 	<xsl:template match="//nr:DatumPrihvatanja">
-		<DatumPrihvatanja property="sh:datePublished" datatype="sh:Date" content="{.}">
+		<DatumPrihvatanja property="sh:datePublished" datatype="xsd:date" content="{.}">
 			 <xsl:apply-templates select="node()|@*"/>
 		</DatumPrihvatanja>
 	</xsl:template>
@@ -62,12 +63,25 @@
 			<xsl:value-of select="."/>
 		</xsl:for-each>
 	</xsl:variable>
-	
+
 	<xsl:template match="//nr:KljucneReci">
 		<KljucneReci property="sh:keywords" datatype="sh:Text" content="{$KljucneReci}">
 			 <xsl:apply-templates select="node()|@*"/>
 		</KljucneReci>
 	</xsl:template>
-	
-	
+
+	<xsl:variable name="Autori">
+		<xsl:for-each select="//nr:NaslovnaStrana/nr:Autori/nr:Autor">
+			<xsl:if test="position() != 1">,</xsl:if>
+			<xsl:value-of select="nr:Ime"/>
+			<xsl:value-of select="nr:Prezime"/>
+		</xsl:for-each>
+	</xsl:variable>
+
+	<xsl:template match="//nr:Autori">
+		<Autori property="sh:additionalName" datatype="sh:Text" content="{$Autori}">
+			<xsl:apply-templates select="node()|@*"/>
+		</Autori>
+	</xsl:template>
+
 </xsl:stylesheet>

@@ -15,4 +15,5 @@ public interface PublicationService {
     List<NaucniRad> filterPublicationsByText(String text) throws Exception;
     String getRdfMetadata(String id) throws Exception;
     String getJsonMetadata(String id) throws Exception;
+    List<String> filterPublicationByStatus(List<String> result) throws Exception;
 }

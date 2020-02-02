@@ -1,0 +1,23 @@
+PREFIX schema: <https://schema.org/> 
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT * from <http://localhost:5533/fuseki/NaucniRadovi/data/naucniRadovi/metadata> 
+WHERE { 
+  ?rad  schema:keywords ?kljucneReci .
+  ?rad  schema:headline ?naslov .
+  ?rad  schema:inLanguage ?jezik .
+  ?rad  schema:version  ?verzija . 
+  ?rad  schema:genre ?tipRada .
+  ?rad  schema:additionalName ?autor .
+  ?rad  schema:datePublished ?datumPrihvatanja .
+  ?rad  schema:dateCreated ?datumSlanja .
+  FILTER(CONTAINS(UCASE(str(?kljucneReci)), UCASE("%1$s"))
+    && CONTAINS(UCASE(str(?naslov)), UCASE("%2$s"))
+    && CONTAINS(UCASE(str(?jezik)), UCASE("%3$s"))
+    && CONTAINS(UCASE(str(?tipRada)), UCASE("%4$s"))
+    && (CONTAINS(UCASE(str(?autor)), UCASE("%5$s") ) || CONTAINS(UCASE(str(?autor)), UCASE("%6$s") ) )
+    && (?datumPrihvatanja >=  "%7$s"^^xsd:date) ##start date prihvatanja (GODINA-MESEC-DAN)
+    && (?datumPrihvatanja <=  "%8$s"^^xsd:date) ##end date prihvatanja
+    && (?datumSlanja >=  "%9$s"^^xsd:date)
+    && (?datumSlanja <=  "%10$s"^^xsd:date)
+  ).
+}
