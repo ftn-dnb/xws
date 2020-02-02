@@ -225,4 +225,18 @@ public class PublicationServiceImpl implements PublicationService {
         String result = metadataExtractorService.extractMetadataToJson(xmlPublication);
         return result;
     }
+
+    @Override
+    public List<String> filterPublicationByStatus(List<String> result) throws Exception {
+        List<String> finalResult = new ArrayList<>();
+
+        for (String id:
+             result) {
+            PoslovniProces p = businessProcessRepository.findByPublicationId(id);
+            if (p.getStatusRada() == EnumStatusRada.PRIHVACEN){
+                finalResult.add(id);
+            }
+        }
+        return finalResult;
+    }
 }

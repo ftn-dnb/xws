@@ -9,13 +9,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.xwsservice.dto.request.FilterPubsDTO;
+import rs.ac.uns.ftn.xwsservice.dto.request.SearchMetadataDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.PublicationDTO;
 import rs.ac.uns.ftn.xwsservice.mappers.PublicationMapper;
 import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
 import rs.ac.uns.ftn.xwsservice.service.FileService;
 import rs.ac.uns.ftn.xwsservice.service.PublicationService;
+import rs.ac.uns.ftn.xwsservice.service.impl.MetadataServiceImpl;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,6 +27,9 @@ public class PublicationController {
 
     @Autowired
     private PublicationService publicationService;
+
+    @Autowired
+    private MetadataServiceImpl metadataService;
 
     @Autowired
     private FileService fileService;
@@ -125,5 +131,17 @@ public class PublicationController {
     @GetMapping(path = "/public/metadata/json/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getPublicationMetadataJsonFormat(@PathVariable String id) throws Exception {
         return new ResponseEntity<>(publicationService.getJsonMetadata(id), HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/public/search")
+    public ResponseEntity<String> selectMetadata(@RequestBody SearchMetadataDTO dto)throws  Exception{
+        List<String> selectResult = metadataService.metaDataSelect(dto);
+        List<String> finalResult = publicationService.filterPublicationByStatus(selectResult);
+        List<NaucniRad> papers = new ArrayList<>();
+        for(String paperId: finalResult){
+            NaucniRad publication = publicationService.findPublicationById(paperId);
+            papers.add(publication);
+        }
+        return new ResponseEntity(PublicationMapper.toDtoList(papers), HttpStatus.OK);
     }
 }
