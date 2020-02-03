@@ -104,7 +104,7 @@
                 <xs:element name="Poglavlja">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="Poglavlje" type="CTPoglavlje"/>
+                            <xs:element name="Poglavlje" type="CTPoglavlje" maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -129,7 +129,16 @@
         </xs:sequence>
     </xs:complexType>
     <xs:complexType mixed="true" name="CTPasus">
-        <xs:sequence maxOccurs="unbounded">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="Tekst">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Sadrzaj" type="xs:string"/>
+                        <xs:element name="IdReference" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="id" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="Slika">
                 <xs:complexType>
                     <xs:sequence>
@@ -157,7 +166,7 @@
             </xs:element>
             <xs:element name="Lista">
                 <xs:complexType>
-                    <xs:sequence>
+                    <xs:sequence maxOccurs="unbounded">
                         <xs:element name="Stavka" type="xs:string"/>
                     </xs:sequence>
                     <xs:attribute default="neuredjena" name="Vrsta">
@@ -171,16 +180,7 @@
                     <xs:attribute name="id" type="xs:string"/>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="Tekst">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="Sadrzaj" type="xs:string"/>
-                        <xs:element name="IdReference" type="xs:string"/>
-                    </xs:sequence>
-                    <xs:attribute name="id" type="xs:string"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
+        </xs:choice>
         <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
     <xs:complexType name="CTReferenca">
