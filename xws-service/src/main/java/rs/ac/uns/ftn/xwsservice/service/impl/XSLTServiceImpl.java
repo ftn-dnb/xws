@@ -29,6 +29,10 @@ public class XSLTServiceImpl implements XSLTService {
             throw new OperationFailedException("Error while creating XSLT transformer object.");
         }
 
+        transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
+
         Source text = new StreamSource(new StringReader(xmlData));
 
         if (!outputFilePath.endsWith(".html"))

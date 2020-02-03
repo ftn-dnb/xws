@@ -36,8 +36,8 @@ public class TransformationController {
 
     @PostMapping("/public")
     public ResponseEntity transformations(@RequestBody String xmlData) throws Exception {
-        xslfoService.transform(xmlData, xslfoFile, xslfooutput + "346768a7-4801-496e-a74c-c82dff327268");
-        xsltService.transform(xmlData, publicationXsltFilePath, publicationXsltOutputFolderPath + "346768a7-4801-496e-a74c-c82dff327268");
+        xslfoService.transform(xmlData, xslfoFile, xslfooutput + "rezultat");
+        xsltService.transform(xmlData, publicationXsltFilePath, publicationXsltOutputFolderPath + "rezultat");
         return ResponseEntity.ok().build();
     }
 }
