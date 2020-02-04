@@ -43,9 +43,13 @@
                 </td>
 
                 <td>
-                    <button mat-button (click)="onDeletePublication(publication.id)">
+                    <button *ngIf="!publication.deleted" mat-button (click)="onDeletePublication(publication.id)">
                         <mat-icon>cancel</mat-icon>
                     </button>
+
+                    <span *ngIf="publication.deleted">
+                        Deleted
+                    </span>
                 </td>
             </tr>
         </tbody>

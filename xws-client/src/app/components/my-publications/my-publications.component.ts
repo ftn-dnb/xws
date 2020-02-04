@@ -32,8 +32,13 @@ export class MyPublicationsComponent implements OnInit {
     });
   }
 
-  onDeletePublication(publicationId: number): void {
-    console.log("Delete pub with id " + publicationId);
+  onDeletePublication(publicationId: string): void {
+    this.publicationsService.deletePublication(publicationId).subscribe(data => {
+      this.toastr.success('Publication has been successfully canceled.');
+      this.getPublications();
+    }, error => {
+      this.toastr.error('Error while canceling publication.');
+    });
   }
 
   onClickAddNewPublication(): void {

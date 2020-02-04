@@ -11,6 +11,7 @@ export const API_PUBLICATION_ALL = API_BASE + '/api/publications/public/all';
 export const API_MY_PUBLICATIONS = API_BASE + '/api/publications/by-user';
 export const API_SEARCH_PUBLICATIONS = API_BASE + '/api/publications/public/filter';
 export const API_ADD_PUBLICATION = API_BASE + '/api/publications';
+export const API_DELETE_PUBLICATION = API_BASE + '/api/publications';
 
 // Business process
 export const API_BUSINESS_PROCESSES = API_BASE + '/api/process';
