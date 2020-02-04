@@ -5,7 +5,53 @@
                 version="2.0">
 
 
+
+
     <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Pasus/nr:Tabela">
+    <table border="1">
+        <xsl:for-each select="nr:Red">
+            <tr>
+                <xsl:for-each select="nr:Celija">
+                    <td>
+                        <xsl:value-of select="."/>
+                    </td>
+                </xsl:for-each>
+            </tr>
+        </xsl:for-each>
+    </table>
+</xsl:template>
+
+    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Pasus/nr:Slika">
+        <div class="slika">
+            <xsl:element name="img">
+                <xsl:attribute name="src">data:image/png;base64, <xsl:value-of select="nr:Sadrzaj"/>
+                </xsl:attribute>
+            </xsl:element>
+            <p><xsl:value-of select="nr:Naziv"/></p>
+        </div>
+    </xsl:template>
+
+    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Pasus/nr:Lista">
+        <xsl:choose>
+            <xsl:when test="@Vrsta='uredjena'">
+                <ol>
+                    <xsl:for-each select="nr:Stavka">
+                        <li><xsl:value-of select="."/></li>
+                    </xsl:for-each>
+                </ol>
+            </xsl:when>
+            <xsl:otherwise>
+                <ul>
+                    <xsl:for-each select="nr:Stavka">
+                        <li><xsl:value-of select="."/></li>
+                    </xsl:for-each>
+                </ul>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+
+    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Poglavlje/nr:Pasus/nr:Tabela">
         <table border="1">
             <xsl:for-each select="nr:Red">
                 <tr>
@@ -19,7 +65,7 @@
         </table>
     </xsl:template>
 
-    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Pasus/nr:Slika">
+    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Poglavlje/nr:Pasus/nr:Slika">
         <div class="slika">
             <xsl:element name="img">
                 <xsl:attribute name="src">data:image/png;base64, <xsl:value-of select="nr:Sadrzaj"/>
@@ -29,21 +75,40 @@
         </div>
     </xsl:template>
 
-    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Pasus/nr:Lista">
-            <xsl:if test="@Vrsta='uredjena'">
+    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Poglavlje/nr:Pasus/nr:Lista">
+        <xsl:choose>
+            <xsl:when test="@Vrsta='uredjena'">
                 <ol>
                     <xsl:for-each select="nr:Stavka">
                         <li><xsl:value-of select="."/></li>
                     </xsl:for-each>
                 </ol>
-            </xsl:if>
-            <xsl:if test="@Vrsta='neuredjena'">
+            </xsl:when>
+            <xsl:otherwise>
                 <ul>
                     <xsl:for-each select="nr:Stavka">
                         <li><xsl:value-of select="."/></li>
                     </xsl:for-each>
                 </ul>
-            </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Poglavlje">
+        <h3><xsl:value-of select="nr:Naslov"/></h3>
+        <xsl:for-each select="nr:Pasus">
+            <p><xsl:apply-templates select="."/></p>
+        </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Pasus/nr:Tekst">
+        <xsl:value-of select="nr:Sadrzaj"/>
+        <xsl:if test="nr:IdReference != ''">[<xsl:value-of select="nr:IdReference"/>]</xsl:if>
+    </xsl:template>
+
+    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Poglavlje/nr:Pasus/nr:Tekst">
+        <xsl:value-of select="nr:Sadrzaj"/>
+        <xsl:if test="nr:IdReference != ''">[<xsl:value-of select="nr:IdReference"/>]</xsl:if>
     </xsl:template>
 
     <xsl:template match="/">
@@ -106,12 +171,12 @@
                         <xsl:value-of select="."/>
                     </xsl:for-each>
                 </p>
-                <h2><xsl:value-of select="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Naslov"/></h2>
-                <xsl:for-each select="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Pasus">
-                    <p>
-                        <xsl:apply-templates select="."/>
-                    </p>
+
+                <xsl:for-each select="nr:NaucniRad/nr:Poglavlja">
+                    <h2><xsl:value-of select="nr:Poglavlje/nr:Naslov"/></h2>
+                    <p><xsl:apply-templates select="."/></p>
                 </xsl:for-each>
+
                 <h2>References</h2>
                 <ol>
                     <xsl:for-each select="nr:NaucniRad/nr:Reference/nr:Referenca">
