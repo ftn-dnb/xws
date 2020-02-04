@@ -20,6 +20,7 @@ public class PublicationDTO {
     private String metadataJsonPath;
     private List<String> authors;
     private List<ReferenceDTO> references;
+    private boolean deleted;
 
     public PublicationDTO() {
     }
@@ -34,6 +35,7 @@ public class PublicationDTO {
         this.pdfFilePath = "http://localhost:8080/api/publications/public/pdf/" + id;
         this.metadataJsonPath = "http://localhost:8080/api/publications/public/metadata/json/" + id;
         this.metadataRdfPath = "http://localhost:8080/api/publications/public/metadata/rdf/" + id;
+        this.deleted = pub.isObrisan();
 
         this.authors = new ArrayList<>();
         pub.getNaslovnaStrana().getAutori().getAutor().forEach(author -> this.authors.add(author.getIme() + " " + author.getPrezime()));
@@ -42,7 +44,6 @@ public class PublicationDTO {
         pub.getReference().getReferenca().forEach(reference -> this.references.add(new ReferenceDTO(reference)));
 
         // TODO: dodati putanju ka cover letteru, ali treba prvo naci koji je letter za ovaj naucni rad
-        // TODO: dodati da flag da se zna da li je rad obrisan ili ne
     }
 
     public String getTitle() {
@@ -139,5 +140,13 @@ public class PublicationDTO {
 
     public void setReferences(List<ReferenceDTO> references) {
         this.references = references;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

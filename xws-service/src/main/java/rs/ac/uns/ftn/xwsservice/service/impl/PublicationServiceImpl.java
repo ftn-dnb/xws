@@ -181,7 +181,11 @@ public class PublicationServiceImpl implements PublicationService {
 
         PoslovniProces process = businessProcessService.getProcessByPublicationId(id);
 
-        // TODO: Treba dodati proveru da li je trenutni korisnik autor ovog rada, da nebi neko drugi brisao tudje radove
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (!publication.getNaslovnaStrana().getAutori().getAutor().get(0).getId().equals(loggedUser.getId().toString())) {
+            throw new ApiRequestException("You can't delete this publication");
+        }
 
         if (process == null) {
             throw new ResourceNotFoundException("Business process for publication with ID " + id + "doesn't exist");
