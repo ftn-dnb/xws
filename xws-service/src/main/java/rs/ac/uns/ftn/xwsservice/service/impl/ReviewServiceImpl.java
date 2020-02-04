@@ -1,8 +1,10 @@
 package rs.ac.uns.ftn.xwsservice.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.*;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
@@ -25,8 +27,16 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private UnmarshallerService unmarshallerService;
 
+    @Autowired
+    private DOMParserImpl domParser;
+
+    @Value("${xsd.path.review}")
+    private String reviewXmlSchemaPath;
+
     @Override
     public String addReview(String xmlData, String processId) throws Exception {
+        Document document = domParser.isXmlDataValid(xmlData, reviewXmlSchemaPath);
+
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         String reviewId = UUID.randomUUID().toString();
