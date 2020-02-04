@@ -9,9 +9,14 @@ public class ReviewDTO {
 
     private String id;
     private String preporuka;
+    private String htmlFilePath;
+    private String pdfFilePath;
+    private UserDTO user;
     private List<CTKomentar> komentari;
 
-    public ReviewDTO() {}
+    public ReviewDTO() {
+
+    }
 
     public ReviewDTO(Recenzija recenzija) {
         this.id = recenzija.getId();
@@ -25,6 +30,8 @@ public class ReviewDTO {
 
     public void setId(String id) {
         this.id = id;
+        this.htmlFilePath = "http://localhost:8080/api/reviews/public/html/" + id;
+        this.pdfFilePath = "http://localhost:8080/api/reviews/public/pdf/" + id;
     }
 
     public String getPreporuka() {
@@ -41,5 +48,29 @@ public class ReviewDTO {
 
     public void setKomentari(List<CTKomentar> komentari) {
         this.komentari = komentari;
+    }
+
+    public String getHtmlFilePath() {
+        return htmlFilePath;
+    }
+
+    public void setHtmlFilePath(String htmlFilePath) {
+        this.htmlFilePath = htmlFilePath;
+    }
+
+    public String getPdfFilePath() {
+        return pdfFilePath;
+    }
+
+    public void setPdfFilePath(String pdfFilePath) {
+        this.pdfFilePath = pdfFilePath;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 }

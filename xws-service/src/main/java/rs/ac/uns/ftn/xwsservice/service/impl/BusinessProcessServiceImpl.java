@@ -173,14 +173,15 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
     @Override
     public void changeProcessPhase(String processId, String phase) throws Exception {
-        String processXmlData = businessProcessRepository.findById(processId);
+        PoslovniProces proces = businessProcessRepository.findObjectById(processId);
 
-        if (processXmlData == null) {
+        if (proces == null) {
             throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
         }
 
-        EnumFaza newProcessPhase = EnumFaza.valueOf(phase);
-        // TODO: Kada se uradi update metoda baze podataka ovde treba promeniti fazu koja je pristigla sa frontenda
+        EnumFaza newProcessPhase = EnumFaza.fromValue(phase);
+        proces.setFaza(newProcessPhase);
+        businessProcessRepository.saveObject(proces);
     }
 
     @Override

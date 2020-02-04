@@ -12,13 +12,16 @@ import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_c
 export class BusinessProcessDetailsComponent implements OnInit {
 
   private processId: string = '';
-  process = {};
+  process: any = {};
   possibleReviewers: any[] = [];
   choosenReviewers: any[] = [];
+  reviews: any[] = [];
 
-  constructor(private businessProcessService: BusinessProcessService, 
-              private toastr: ToastrService, 
-              private activatedRoute: ActivatedRoute) { 
+  selectedPhase = 'ZaReviziju';
+
+  constructor(private businessProcessService: BusinessProcessService,
+              private toastr: ToastrService,
+              private activatedRoute: ActivatedRoute) {
     this.processId = this.activatedRoute.snapshot.params['id'];
   }
 
@@ -31,6 +34,7 @@ export class BusinessProcessDetailsComponent implements OnInit {
     this.businessProcessService.getProcess(this.processId).subscribe(data => {
       console.log(data);
       this.process = data;
+      this.getReviews(this.process.id);
     }, error => {
       this.toastr.error('There was an error while getting the data for business process');
     });
@@ -42,6 +46,18 @@ export class BusinessProcessDetailsComponent implements OnInit {
     }, error => {
       this.toastr.error('There was an error while making reviewer recommendation.');
     });
+  }
+
+  private getReviews(processId) {
+    this.businessProcessService.getReviewsByProcessId(processId).subscribe(
+      (data) => {
+        this.reviews = data;
+        console.log(this.reviews);
+      },
+      (error) => {
+        this.toastr.error('There was an error while retreiving reviews.');
+      }
+    );
   }
 
   addReviewerToList(id: string): void {
@@ -63,7 +79,7 @@ export class BusinessProcessDetailsComponent implements OnInit {
       this.toastr.warning('Please choose at least 1 reviewer.');
       return;
     }
-    
+
     const userIds: string[] = this.choosenReviewers.map(reviewer => reviewer.id);
 
     this.businessProcessService.addReviewers(this.processId, userIds).subscribe(data => {
@@ -71,5 +87,16 @@ export class BusinessProcessDetailsComponent implements OnInit {
     }, error => {
       this.toastr.error('Error while adding reviewers to the business process.');
     });
+  }
+
+  changePhase() {
+    this.businessProcessService.changePhase(this.process.id, this.selectedPhase).subscribe(
+      (data) => {
+        this.toastr.success('Successfuly changed.');
+      },
+      (error) => {
+        this.toastr.error('Failure while changing.');
+      }
+    );
   }
 }

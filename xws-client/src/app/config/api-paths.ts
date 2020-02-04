@@ -28,3 +28,6 @@ export const API_SHOW_PDF_PUBLICATION = API_BASE + '/api/publications/public/pdf
 export const API_SHOW_XML_PUBLICATION = API_BASE + '/api/publications/public/xml';
 
 export const API_ADD_REVIEW = API_BASE + '/api/review';
+export const API_GET_REVIEW_PROCESS_ID = API_BASE + '/api/review/process/';
+
+export const API_CHANGE_PHASE = API_BASE + '/api/process/change-phase/';

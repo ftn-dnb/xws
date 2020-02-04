@@ -184,6 +184,9 @@ public class PoslovniProces {
      *     
      */
     public Recenzenti getRecenzenti() {
+        if (recenzenti == null) {
+            recenzenti =  new Recenzenti();
+        }
         return recenzenti;
     }
 

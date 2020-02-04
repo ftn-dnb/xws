@@ -10,6 +10,8 @@ import rs.ac.uns.ftn.xwsservice.dto.response.ReviewDTO;
 import rs.ac.uns.ftn.xwsservice.model.Recenzija;
 import rs.ac.uns.ftn.xwsservice.service.ReviewService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/review")
 public class ReviewController {
@@ -21,6 +23,12 @@ public class ReviewController {
     public ResponseEntity<ReviewDTO> getReviewById(@PathVariable String id) throws Exception {
         Recenzija recenzija = reviewService.getReviewObjectById(id);
         return new ResponseEntity<>(new ReviewDTO(recenzija), HttpStatus.OK);
+    }
+
+    @GetMapping("/process/{id}")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByProcessId(@PathVariable String id) throws Exception {
+        List<ReviewDTO> recenzije = reviewService.getReviewsByProcessId(id);
+        return new ResponseEntity<>(recenzije, HttpStatus.OK);
     }
 
     @PostMapping

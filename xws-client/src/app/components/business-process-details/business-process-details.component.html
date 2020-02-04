@@ -1,36 +1,72 @@
 <div class="container">
-    <h1>TODO: implementirati ovo do kraja</h1>
 
+    <h1>Reviewer recommendation</h1>
 
-    <h3>Reviewer recommendation</h3>
-    
-    <h4>Possible reviewers:</h4>
+    <h3>Possible reviewers:</h3>
     <ol>
         <li *ngFor="let reviewer of possibleReviewers">
             <div>
                 <button mat-button (click)="addReviewerToList(reviewer.id)">
                     <mat-icon>add</mat-icon>
                 </button>
-                
+
                 <strong>Score: </strong>{{reviewer.score}}, <strong>Author: </strong>{{reviewer.name}}
             </div>
         </li>
     </ol>
 
-    <h4>You have choosen these reviewers:</h4>
+    <h3>You have choosen these reviewers:</h3>
     <ol>
         <li *ngFor="let reviewer of choosenReviewers">
             <button mat-button (click)="removeReviewerFromList(reviewer.id)">
                 <mat-icon>remove</mat-icon>
             </button>
-            
+
             <strong>Score: </strong>{{reviewer.score}}, <strong>Author: </strong>{{reviewer.name}}
         </li>
     </ol>
-    
+
     <button mat-raised-button color="primary" (click)="addReviewersToProcess()">
         <mat-icon>add</mat-icon>
         <span>Add reviewers</span>
     </button>
 
+
+    <h1 style="margin-top: 100px;">Submitted reviews</h1>
+
+    <table class="table" id="table">
+      <thead>
+          <tr>
+              <th>Author</th>
+              <th>Review</th>
+              <th>Recommendation</th>
+              <th>Number of comments</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let review of reviews">
+              <td>{{review.user.firstName}} {{review.user.lastName}}</td>
+              <td>
+                  <a target="_blank" rel="noopener noreferrer" href="{{review.publicationPdfFilePath}}">PDF</a>&nbsp;
+                  <a target="_blank" rel="noopener noreferrer" href="{{review.publicationHtmlFilePath}}">HTML</a>
+              </td>
+              <td>{{review.preporuka}}</td>
+              <td>{{review.komentari.length}}</td>
+          </tr>
+      </tbody>
+  </table>
+
+  <div class="editor-actions">
+    <mat-form-field>
+      <mat-label>Select seating type</mat-label>
+      <mat-select [(value)]="selectedPhase">
+        <mat-option value="ZaReviziju">Za reviziju</mat-option>
+        <mat-option value="ZaRecenziju">Za recenziju</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="btn-settings" (click)="changePhase()">
+      <mat-icon class="icon">publish</mat-icon>
+      <span>  Change phase</span>
+    </button>
+  </div>
 </div>
