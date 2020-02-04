@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { API_BUSINESS_PROCESSES, API_SHOW_MY_REVIEW_REQUESTS, API_ACCEPT_REVIEW_REQUEST, API_DECLINE_REVIEW_REQUEST, API_ACCEPT_PUBLICATION, API_DECLINE_PUBLICATION, API_RECOMMEND_REVIEWERS, API_ADD_REVIEWERS } from './../config/api-paths';
+import {tap} from 'rxjs/operators';
+import { API_BUSINESS_PROCESSES, API_SHOW_MY_REVIEW_REQUESTS, API_ACCEPT_REVIEW_REQUEST, API_DECLINE_REVIEW_REQUEST, API_ACCEPT_PUBLICATION, API_DECLINE_PUBLICATION, API_RECOMMEND_REVIEWERS, API_ADD_REVIEWERS, API_ADD_REVIEW } from './../config/api-paths';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Injectable } from '@angular/core';
 })
 export class BusinessProcessService {
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
   getAllProcesses(): Observable<any> {
@@ -20,7 +21,9 @@ export class BusinessProcessService {
   }
 
   getMyReviewRequests(): Observable<any> {
-    return this.http.get(API_SHOW_MY_REVIEW_REQUESTS);
+    return this.http.get(API_SHOW_MY_REVIEW_REQUESTS).pipe(
+      tap(data => console.log(data))
+    );
   }
 
   acceptReviewRequest(id: string): Observable<any> {
@@ -45,5 +48,9 @@ export class BusinessProcessService {
 
   addReviewers(processId: string, userIds: string[]): Observable<any> {
     return this.http.put(`${API_ADD_REVIEWERS}/${processId}`, userIds);
+  }
+
+  addReview(id: string, xml: string): Observable<any> {
+    return this.http.post(API_ADD_REVIEW, {xmlData: xml, processId: id});
   }
 }

@@ -34,8 +34,10 @@
                     </div>
 
                     <div *ngIf="request.reviewStatus == 'PRIHVACEN'">
-                        <!-- TODO: Smisliti nacin kako ce se slati recenzije  -->
-                        Accepted -> TODO actions
+                      <button mat-button (click)="onSubmitReview(request.processId)">
+                        <mat-icon>check_circle</mat-icon>
+                        <span>Submit review</span>
+                      </button>
                     </div>
 
                     <div *ngIf="request.reviewStatus == 'ODBIJEN'">

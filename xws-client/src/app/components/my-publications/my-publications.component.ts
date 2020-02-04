@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PublicationsService } from './../../services/publications.service';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { PublicationDialogComponent } from './dialog/publication-dialog/publication-dialog.component';
 
 @Component({
   selector: 'app-my-publications',
@@ -15,8 +17,8 @@ export class MyPublicationsComponent implements OnInit {
 
   constructor(private publicationsService: PublicationsService,
               private toastr: ToastrService,
-              private router: Router) { 
-  }
+              private router: Router,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getPublications();
@@ -35,6 +37,20 @@ export class MyPublicationsComponent implements OnInit {
   }
 
   onClickAddNewPublication(): void {
-    this.router.navigate([ADD_PUBLICATION_PATH]);
+    //this.router.navigate([ADD_PUBLICATION_PATH]);
+    let dialogRef = this.dialog.open(PublicationDialogComponent, {data: {}});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.publicationsService.addPublication(result).subscribe(
+          (data) => {
+            this.getPublications();
+          },
+          (error) => {
+            this.getPublications();
+            this.toastr.error('There was an error while adding your publications');
+          }
+        );
+      }
+    });
   }
 }

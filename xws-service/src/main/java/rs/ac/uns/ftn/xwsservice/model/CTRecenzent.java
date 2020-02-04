@@ -121,6 +121,9 @@ public class CTRecenzent {
      *     
      */
     public Recenzije getRecenzije() {
+        if (recenzije == null) {
+            recenzije = new Recenzije();
+        }
         return recenzije;
     }
 
