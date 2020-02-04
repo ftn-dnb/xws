@@ -21,7 +21,7 @@ import { BusinessProcessDetailsComponent } from './components/business-process-d
 import { AddPublicationComponent } from './components/add-publication/add-publication.component';
 import { ReviewRequestsComponent } from './components/review-requests/review-requests.component';
 import { ReviewDialogComponent } from './components/review-requests/dialog/review-dialog/review-dialog.component';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogModule, MatSelectModule } from '@angular/material';
 import { PublicationDialogComponent } from './components/my-publications/dialog/publication-dialog/publication-dialog.component';
 
 @NgModule({
@@ -42,6 +42,7 @@ import { PublicationDialogComponent } from './components/my-publications/dialog/
     PublicationDialogComponent,
   ],
   imports: [
+    MatSelectModule,
     MatDialogModule,
     BrowserModule,
     AppRoutingModule,

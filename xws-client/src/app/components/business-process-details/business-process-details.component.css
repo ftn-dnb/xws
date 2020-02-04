@@ -4,3 +4,38 @@
     align-items: center;
     justify-content: center;
 }
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.table {
+  background: white;
+  border: 1px black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 20px;
+}
+
+.table td, th {
+  padding: 10px;
+}
+
+.editor-actions {
+  width: 60%;
+  margin-top: 40px;
+  padding: 10px;
+}
+
+.edit-phase {
+  width: 50%;
+  height: 200px;
+  float: left;
+}
+
+.edit-status {
+  margin-left: 15%;
+  height: 200px;
+}

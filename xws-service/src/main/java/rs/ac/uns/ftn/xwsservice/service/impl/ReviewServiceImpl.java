@@ -5,13 +5,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import rs.ac.uns.ftn.xwsservice.dto.response.ReviewDTO;
+import rs.ac.uns.ftn.xwsservice.dto.response.UserDTO;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.*;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.repository.ReviewRepository;
+import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
 import rs.ac.uns.ftn.xwsservice.service.ReviewService;
 import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
+import rs.ac.uns.ftn.xwsservice.utils.ReviewIdUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +28,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     private BusinessProcessRepository businessProcessRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UnmarshallerService unmarshallerService;
@@ -40,7 +48,9 @@ public class ReviewServiceImpl implements ReviewService {
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         String reviewId = UUID.randomUUID().toString();
-        String id = reviewRepository.save(xmlData, reviewId);
+        String updatedXmlData = ReviewIdUtil.addReviewId(xmlData, reviewId);
+
+        String id = reviewRepository.save(updatedXmlData, reviewId);
 
         PoslovniProces proces = businessProcessRepository.findObjectById(processId);
         CTRecenzent chosen = null;
@@ -63,6 +73,27 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ResourceNotFoundException("Publication with ID " + id + " doesn't exist.");
         }
         return xml;
+    }
+
+    @Override
+    public List<ReviewDTO> getReviewsByProcessId(String id) throws Exception {
+        ArrayList<ReviewDTO> reviews = new ArrayList<>();
+
+        PoslovniProces process = businessProcessRepository.findObjectById(id);
+        for (CTRecenzent recenzent : process.getRecenzenti().getRecenzent()) {
+            User user = userRepository.findById(Long.parseLong(recenzent.getRecenzentID())).get();
+            for (String idRecenzija : recenzent.getRecenzije().getRecenzijaID()) {
+                Recenzija recenzija = reviewRepository.findObjectById(idRecenzija);
+                ReviewDTO dto = new ReviewDTO();
+                dto.setUser(new UserDTO(user));
+                dto.setPreporuka(recenzija.getPreporuka());
+                dto.setId(recenzija.getId());
+                dto.setKomentari(recenzija.getKomentar());
+                reviews.add(dto);
+            }
+        }
+
+        return reviews;
     }
 
     @Override

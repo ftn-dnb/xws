@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import {tap} from 'rxjs/operators';
-import { API_BUSINESS_PROCESSES, API_SHOW_MY_REVIEW_REQUESTS, API_ACCEPT_REVIEW_REQUEST, API_DECLINE_REVIEW_REQUEST, API_ACCEPT_PUBLICATION, API_DECLINE_PUBLICATION, API_RECOMMEND_REVIEWERS, API_ADD_REVIEWERS, API_ADD_REVIEW } from './../config/api-paths';
+import { API_BUSINESS_PROCESSES, API_SHOW_MY_REVIEW_REQUESTS, API_ACCEPT_REVIEW_REQUEST, API_DECLINE_REVIEW_REQUEST, API_ACCEPT_PUBLICATION, API_DECLINE_PUBLICATION, API_RECOMMEND_REVIEWERS, API_ADD_REVIEWERS, API_ADD_REVIEW, API_GET_REVIEW_PROCESS_ID, API_CHANGE_PHASE } from './../config/api-paths';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -52,5 +52,13 @@ export class BusinessProcessService {
 
   addReview(id: string, xml: string): Observable<any> {
     return this.http.post(API_ADD_REVIEW, {xmlData: xml, processId: id});
+  }
+
+  getReviewsByProcessId(id: string): Observable<any> {
+    return this.http.get(API_GET_REVIEW_PROCESS_ID + id);
+  }
+
+  changePhase(processId: string, phaseChange: string): Observable<any> {
+    return this.http.put(API_CHANGE_PHASE + processId, phaseChange);
   }
 }
