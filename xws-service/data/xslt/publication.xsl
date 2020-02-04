@@ -101,6 +101,10 @@
         </xsl:for-each>
     </xsl:template>
 
+    <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Naslov">
+        <h2><xsl:value-of select="."/></h2>
+    </xsl:template>
+
     <xsl:template match="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje/nr:Pasus/nr:Tekst">
         <xsl:value-of select="nr:Sadrzaj"/>
         <xsl:if test="nr:IdReference != ''">[<xsl:value-of select="nr:IdReference"/>]</xsl:if>
@@ -173,7 +177,6 @@
                 </p>
 
                 <xsl:for-each select="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje">
-                    <h2><xsl:value-of select="nr:Naslov"/></h2>
                     <p><xsl:apply-templates select="."/> </p>
                 </xsl:for-each>
 
