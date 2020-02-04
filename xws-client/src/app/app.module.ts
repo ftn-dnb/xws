@@ -20,6 +20,9 @@ import { BusinessProcessComponent } from './components/business-process/business
 import { BusinessProcessDetailsComponent } from './components/business-process-details/business-process-details.component';
 import { AddPublicationComponent } from './components/add-publication/add-publication.component';
 import { ReviewRequestsComponent } from './components/review-requests/review-requests.component';
+import { ReviewDialogComponent } from './components/review-requests/dialog/review-dialog/review-dialog.component';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material';
+import { PublicationDialogComponent } from './components/my-publications/dialog/publication-dialog/publication-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +38,11 @@ import { ReviewRequestsComponent } from './components/review-requests/review-req
     BusinessProcessDetailsComponent,
     AddPublicationComponent,
     ReviewRequestsComponent,
+    ReviewDialogComponent,
+    PublicationDialogComponent,
   ],
   imports: [
+    MatDialogModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -48,6 +54,10 @@ import { ReviewRequestsComponent } from './components/review-requests/review-req
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true },
+    { provide: MAT_DIALOG_DATA, useValue: {}}
+  ],
+  entryComponents: [
+    ReviewDialogComponent, PublicationDialogComponent
   ],
   bootstrap: [AppComponent]
 })

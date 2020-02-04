@@ -1,4 +1,4 @@
-import { API_MY_PUBLICATIONS, API_SEARCH_PUBLICATIONS, API_PUBLICATION, API_PUBLICATION_ALL } from './../config/api-paths';
+import { API_MY_PUBLICATIONS, API_SEARCH_PUBLICATIONS, API_PUBLICATION, API_PUBLICATION_ALL, API_ADD_PUBLICATION } from './../config/api-paths';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -25,5 +25,9 @@ export class PublicationsService {
 
   searchPublications(searchObject: any): Observable<any> {
     return this.http.post(API_SEARCH_PUBLICATIONS, searchObject);
+  }
+
+  addPublication(xmlData: string): Observable<any> {
+    return this.http.post(API_ADD_PUBLICATION, xmlData);
   }
 }

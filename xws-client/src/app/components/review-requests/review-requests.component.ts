@@ -1,6 +1,8 @@
 import { ToastrService } from 'ngx-toastr';
 import { BusinessProcessService } from './../../services/business-process.service';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ReviewDialogComponent } from './dialog/review-dialog/review-dialog.component';
 
 @Component({
   selector: 'app-review-requests',
@@ -12,8 +14,8 @@ export class ReviewRequestsComponent implements OnInit {
   requests: any[] = [];
 
   constructor(private businessProcessService: BusinessProcessService,
-              private toastr: ToastrService) { 
-  }
+              private toastr: ToastrService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getRequests();
@@ -42,6 +44,20 @@ export class ReviewRequestsComponent implements OnInit {
       this.toastr.success('You declined review request');
     }, error => {
       this.toastr.error('Error while declining review request');
+    });
+  }
+
+  onSubmitReview(processId: string): void {
+    const dialogRef = this.dialog.open(ReviewDialogComponent, {data: {}});
+    dialogRef.afterClosed().subscribe(result => {
+      this.businessProcessService.addReview(processId, result).subscribe(
+        (data) => {
+          this.toastr.success('Review successfuly added.');
+        },
+        (error) => {
+          this.toastr.error(error);
+        }
+      );
     });
   }
 }

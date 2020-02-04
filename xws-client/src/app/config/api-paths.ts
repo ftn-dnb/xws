@@ -10,6 +10,7 @@ export const API_PUBLICATION = API_BASE + '/api/publications/public';
 export const API_PUBLICATION_ALL = API_BASE + '/api/publications/public/all';
 export const API_MY_PUBLICATIONS = API_BASE + '/api/publications/by-user';
 export const API_SEARCH_PUBLICATIONS = API_BASE + '/api/publications/public/filter';
+export const API_ADD_PUBLICATION = API_BASE + '/api/publications';
 
 // Business process
 export const API_BUSINESS_PROCESSES = API_BASE + '/api/process';
@@ -25,3 +26,5 @@ export const API_ADD_REVIEWERS = API_BASE + '/api/process/add-reviewers';
 export const API_SHOW_HTML_PUBLICATION = API_BASE + '/api/publications/public/html';
 export const API_SHOW_PDF_PUBLICATION = API_BASE + '/api/publications/public/pdf';
 export const API_SHOW_XML_PUBLICATION = API_BASE + '/api/publications/public/xml';
+
+export const API_ADD_REVIEW = API_BASE + '/api/review';
