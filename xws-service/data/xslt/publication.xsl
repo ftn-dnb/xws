@@ -172,9 +172,9 @@
                     </xsl:for-each>
                 </p>
 
-                <xsl:for-each select="nr:NaucniRad/nr:Poglavlja">
-                    <h2><xsl:value-of select="nr:Poglavlje/nr:Naslov"/></h2>
-                    <p><xsl:apply-templates select="."/></p>
+                <xsl:for-each select="nr:NaucniRad/nr:Poglavlja/nr:Poglavlje">
+                    <h2><xsl:value-of select="nr:Naslov"/></h2>
+                    <p><xsl:apply-templates select="."/> </p>
                 </xsl:for-each>
 
                 <h2>References</h2>
