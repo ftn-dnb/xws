@@ -13,7 +13,7 @@ public class DOMParserConfiguration {
     @Bean
     public DocumentBuilderFactory documentBuilderFactory() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setValidating(true);
+        factory.setValidating(false);
         factory.setNamespaceAware(true);
         factory.setIgnoringComments(true);
 

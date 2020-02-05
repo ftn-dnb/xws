@@ -87,17 +87,17 @@ public class PublicationServiceImpl implements PublicationService {
     @Override
     public String addPublication(String publicationXmlData) throws Exception {
         Document document = domParser.isXmlDataValid(publicationXmlData, publicationSchemaPath);
-
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String pubId = UUID.randomUUID().toString();
 
         String updatedXml = PublicationIdUtil.addAuthorId(PublicationIdUtil.addPublicationId(publicationXmlData, pubId), loggedUser.getId().toString());
 
+        updatedXml = PublicationIdUtil.addDates(updatedXml);
+
         String id = publicationRepo.save(updatedXml, pubId);
         NaucniRad rad = publicationRepo.findObjectById(id);
         //TODO: da li na ovaj nacin setovati i id???
         rad.setObrisan(false);
-
         publicationRepo.saveObject(rad);
 
         String processId = businessProcessService.createNewProcess(id);
