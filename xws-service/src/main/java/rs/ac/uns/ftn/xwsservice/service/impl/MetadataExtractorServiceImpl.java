@@ -107,6 +107,10 @@ public class MetadataExtractorServiceImpl implements MetadataExtractorService {
         return rdfXmlResult;
     }
 
+
+    /**
+     * UNUSED
+     */
     @Override
     public String extractMetadataToJson(String xmlData) {
         String rdfXml = this.extractMetadataToRdf(xmlData);

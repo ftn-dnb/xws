@@ -14,6 +14,8 @@ import rs.ac.uns.ftn.xwsservice.model.User;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
 import rs.ac.uns.ftn.xwsservice.service.*;
+import rs.ac.uns.ftn.xwsservice.utils.FileReader;
+import rs.ac.uns.ftn.xwsservice.utils.JSONConverter;
 import rs.ac.uns.ftn.xwsservice.utils.PublicationIdUtil;
 
 import java.io.File;
@@ -210,7 +212,6 @@ public class PublicationServiceImpl implements PublicationService {
         return id;
     }
 
-    // PROVERITI SVRHU OVE F-je
     @Override
     public String getRdfMetadata(String id) throws Exception {
         String xmlPublication = publicationRepo.findById(id);
@@ -219,21 +220,17 @@ public class PublicationServiceImpl implements PublicationService {
             throw new ResourceNotFoundException("Publication with ID " + id + " doesn't exist.");
         }
 
-        String result = metadataExtractorService.extractMetadataToRdf(xmlPublication);
-        //String result = "Ne radi";
+        String rdfFilePath = publicationRDFXsltOutputFolderPath + id + ".rdf";
+        String resultMetaFilePath = metadataExtractorService.extractMetadataToRdf(new FileInputStream(new File(rdfFilePath)), id);
+        String result = FileReader.readFromFile(resultMetaFilePath);
+
         return result;
     }
 
     @Override
     public String getJsonMetadata(String id) throws Exception {
-        String xmlPublication = publicationRepo.findById(id);
-
-        if (xmlPublication == null) {
-            throw new ResourceNotFoundException("Publication with ID " + id + " doesn't exist.");
-        }
-
-        String result = metadataExtractorService.extractMetadataToJson(xmlPublication);
-        return result;
+        String rdfXml = this.getRdfMetadata(id);
+        return JSONConverter.xmlToJson(rdfXml);
     }
 
     @Override

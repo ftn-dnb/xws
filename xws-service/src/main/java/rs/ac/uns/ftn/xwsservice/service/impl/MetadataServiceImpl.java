@@ -1,12 +1,10 @@
 package rs.ac.uns.ftn.xwsservice.service.impl;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.RDFNode;
-import org.junit.Before;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.xwsservice.dto.request.SearchMetadataDTO;
