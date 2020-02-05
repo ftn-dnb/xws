@@ -10,10 +10,14 @@ import rs.ac.uns.ftn.xwsservice.exception.OperationFailedException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.StringReader;
+
+import static org.apache.xerces.jaxp.JAXPConstants.JAXP_SCHEMA_LANGUAGE;
 
 @Service
 public class DOMParserImpl {
@@ -37,6 +41,9 @@ public class DOMParserImpl {
         try {
             Schema xmlSchema = this.loadXmlSchema(xmlSchemaFilePath);
             documentBuilderFactory.setSchema(xmlSchema);
+
+            Validator validator = xmlSchema.newValidator();
+            validator.validate(new StreamSource(new StringReader(xmlData)));
 
             DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
             Document document = builder.parse(new InputSource(new StringReader(xmlData)));

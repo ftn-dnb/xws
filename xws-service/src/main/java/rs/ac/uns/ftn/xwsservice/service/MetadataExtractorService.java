@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 public interface MetadataExtractorService {
 
-    String extractMetadataToRdf(InputStream in);
+    String extractMetadataToRdf(InputStream in, String id);
     String extractMetadataToJson(String xmlData);
     String extractMetadataToRdf(String xmlData);
 }
