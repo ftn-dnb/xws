@@ -13,7 +13,7 @@ import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
 import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
-import rs.ac.uns.ftn.xwsservice.utils.PublicationIdUtil;
+import rs.ac.uns.ftn.xwsservice.service.MailSenderService;
 import rs.ac.uns.ftn.xwsservice.utils.Sorting;
 
 import java.util.*;
@@ -30,6 +30,10 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MailSenderService mailSenderService;
+
 
     @Override
     public List<PoslovniProces> getAllProcesses() throws Exception {
@@ -116,11 +120,12 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
                 throw new ApiRequestException("User with ID " + userId + " is already reviewer on this publication.");
             }
 
-            // TODO: Poslati mejl korisniku da je prihvati/odbije recenziranje ovog rada (procesa)
             CTRecenzent reviewer = new CTRecenzent();
             reviewer.setStatus(EnumStatusRecenziranja.CEKANJE);
             reviewer.setRecenzentID(userId);
             reviewers.add(reviewer);
+
+            mailSenderService.sendRequestForReviewer(user, process);
         }
 
         businessProcessRepository.saveObject(process);
@@ -187,6 +192,11 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
         EnumFaza newProcessPhase = EnumFaza.fromValue(phase);
         proces.setFaza(newProcessPhase);
         businessProcessRepository.saveObject(proces);
+
+        if (newProcessPhase.equals(EnumFaza.ZA_RECENZIJU))
+            mailSenderService.sendChangePhaseToReview(proces);
+        else if (newProcessPhase.equals(EnumFaza.ZA_REVIZIJU))
+            mailSenderService.sendChangePhaseToRevise(proces);
     }
 
     @Override
@@ -203,6 +213,7 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
         process.setStatusRada(status);
         businessProcessRepository.saveObject(process);
+        mailSenderService.sendProcessChangeStatus(process);
     }
 
     @Override
