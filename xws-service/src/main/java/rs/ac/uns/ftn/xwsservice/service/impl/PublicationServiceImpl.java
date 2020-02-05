@@ -83,6 +83,9 @@ public class PublicationServiceImpl implements PublicationService {
     @Autowired
     private MetadataService metadataService;
 
+    @Autowired
+    private MailSenderService mailSenderService;
+
     @Override
     public String addPublication(String publicationXmlData) throws Exception {
         Document document = domParser.isXmlDataValid(publicationXmlData, publicationSchemaPath);
@@ -152,6 +155,7 @@ public class PublicationServiceImpl implements PublicationService {
         // String id = publicationRepo.save(publicationXmlData, publicationId);
         String id = publicationRepo.saveObject(publication);
         this.publicationTransformations(publicationId, publicationXmlData);
+        mailSenderService.sendReviseAddedToReviewers(process);
 
         return id;
     }

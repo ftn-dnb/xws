@@ -13,6 +13,7 @@ import rs.ac.uns.ftn.xwsservice.model.*;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.repository.ReviewRepository;
 import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
+import rs.ac.uns.ftn.xwsservice.service.MailSenderService;
 import rs.ac.uns.ftn.xwsservice.service.ReviewService;
 import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
 import rs.ac.uns.ftn.xwsservice.utils.ReviewIdUtil;
@@ -39,6 +40,9 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private DOMParserImpl domParser;
 
+    @Autowired
+    private MailSenderService mailSenderService;
+
     @Value("${xsd.path.review}")
     private String reviewXmlSchemaPath;
 
@@ -47,12 +51,9 @@ public class ReviewServiceImpl implements ReviewService {
         Document document = domParser.isXmlDataValid(xmlData, reviewXmlSchemaPath);
 
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         String reviewId = UUID.randomUUID().toString();
         String updatedXmlData = ReviewIdUtil.addReviewId(xmlData, reviewId);
-
         String id = reviewRepository.save(updatedXmlData, reviewId);
-
         PoslovniProces proces = businessProcessRepository.findObjectById(processId);
 
         if (!proces.getStatusRada().equals(EnumStatusRada.U_PROCESU)) {
@@ -77,6 +78,8 @@ public class ReviewServiceImpl implements ReviewService {
         chosen.getRecenzije().getRecenzijaID().add(id);
 
         businessProcessRepository.saveObject(proces);
+        mailSenderService.sendReviewAddedToAuthor(proces);
+
         return id;
     }
 
