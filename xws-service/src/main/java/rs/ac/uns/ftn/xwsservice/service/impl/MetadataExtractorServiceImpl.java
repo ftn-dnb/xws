@@ -26,7 +26,7 @@ public class MetadataExtractorServiceImpl implements MetadataExtractorService {
     private String grddlOutputFolder;
 
     @Override
-    public String extractMetadataToRdf(InputStream in) {
+    public String extractMetadataToRdf(InputStream in, String id) {
         StreamSource transformSource = new StreamSource(new File(grddlXslTransformationFilePath));
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer grddlTransformer = null;
@@ -41,7 +41,7 @@ public class MetadataExtractorServiceImpl implements MetadataExtractorService {
         grddlTransformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
         grddlTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
-        String outputFilePath = this.grddlOutputFolder + UUID.randomUUID().toString() + ".xml";
+        String outputFilePath = this.grddlOutputFolder + id + ".xml";
 
         //StreamSource source = new StreamSource(new ByteArrayInputStream(xmlData.getBytes(StandardCharsets.UTF_8)));
         StreamSource source = new StreamSource(in);
