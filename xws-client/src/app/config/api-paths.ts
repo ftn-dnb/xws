@@ -12,6 +12,7 @@ export const API_MY_PUBLICATIONS = API_BASE + '/api/publications/by-user';
 export const API_SEARCH_PUBLICATIONS = API_BASE + '/api/publications/public/filter';
 export const API_ADD_PUBLICATION = API_BASE + '/api/publications';
 export const API_DELETE_PUBLICATION = API_BASE + '/api/publications';
+export const API_REVISION = API_BASE + '/api/publications/revision/';
 
 // Business process
 export const API_BUSINESS_PROCESSES = API_BASE + '/api/process';
@@ -22,6 +23,7 @@ export const API_ACCEPT_PUBLICATION = API_BASE + '/api/process/accept-publicatio
 export const API_DECLINE_PUBLICATION = API_BASE + '/api/process/decline-publication';
 export const API_RECOMMEND_REVIEWERS = API_BASE + '/api/process/recommend-reviewers';
 export const API_ADD_REVIEWERS = API_BASE + '/api/process/add-reviewers';
+export const API_GET_PROCESS_BY_PUB_ID = API_BASE + '/api/process/publication/';
 
 // Show publications URLs
 export const API_SHOW_HTML_PUBLICATION = API_BASE + '/api/publications/public/html';

@@ -128,6 +128,12 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
+    public String addRevision(String publicationId, String publicationXmlData) throws Exception {
+        String id = publicationRepo.save(publicationXmlData, publicationId);
+        return id;
+    }
+
+    @Override
     public List<NaucniRad> getAllPublications() throws Exception {
         ArrayList<PoslovniProces> processes = new ArrayList<>(businessProcessService.getAllProcesses());
         ArrayList<NaucniRad> publications = new ArrayList<>();

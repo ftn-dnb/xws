@@ -15,6 +15,7 @@ import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
 import rs.ac.uns.ftn.xwsservice.model.EnumStatusRecenziranja;
 import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 import rs.ac.uns.ftn.xwsservice.model.User;
+import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
 
 import java.util.List;
@@ -37,6 +38,12 @@ public class BusinessProcessController {
     @PreAuthorize("hasRole('ROLE_EDITOR')")
     public ResponseEntity<BusinessProcessDTO> getProcess(@PathVariable String id) throws Exception {
         PoslovniProces process = businessProcessService.getProcess(id);
+        return new ResponseEntity<>(BusinessProcessMapper.toDto(process), HttpStatus.OK);
+    }
+
+    @GetMapping("/publication/{id}")
+    public ResponseEntity<BusinessProcessDTO> getProcessByPublicationId(@PathVariable String id) throws Exception {
+        PoslovniProces process = businessProcessService.getProcessByPublicationId(id);
         return new ResponseEntity<>(BusinessProcessMapper.toDto(process), HttpStatus.OK);
     }
 
