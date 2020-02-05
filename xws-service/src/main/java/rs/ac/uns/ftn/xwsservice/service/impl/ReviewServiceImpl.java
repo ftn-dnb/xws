@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import rs.ac.uns.ftn.xwsservice.dto.response.ReviewDTO;
 import rs.ac.uns.ftn.xwsservice.dto.response.UserDTO;
+import rs.ac.uns.ftn.xwsservice.exception.ApiRequestException;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.xwsservice.model.*;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
@@ -53,11 +54,24 @@ public class ReviewServiceImpl implements ReviewService {
         String id = reviewRepository.save(updatedXmlData, reviewId);
 
         PoslovniProces proces = businessProcessRepository.findObjectById(processId);
+
+        if (!proces.getStatusRada().equals(EnumStatusRada.U_PROCESU)) {
+            throw new ApiRequestException("This publication is no longer in process.");
+        }
+
+        if (!proces.getFaza().equals(EnumFaza.ZA_RECENZIJU)) {
+            throw new ApiRequestException("This publication is not in 'for review' phase.");
+        }
+
         CTRecenzent chosen = null;
         for (CTRecenzent recenzent : proces.getRecenzenti().getRecenzent()) {
             if (recenzent.getRecenzentID().equals(loggedUser.getId().toString())) {
                 chosen = recenzent;
             }
+        }
+
+        if (chosen == null) {
+            throw new ApiRequestException("You can't review this publication");
         }
 
         chosen.getRecenzije().getRecenzijaID().add(id);

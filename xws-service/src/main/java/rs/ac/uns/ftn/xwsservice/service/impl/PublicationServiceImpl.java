@@ -139,7 +139,7 @@ public class PublicationServiceImpl implements PublicationService {
         publicationXmlData = PublicationIdUtil.addDates(updatedXml);
 
         if (!process.getStatusRada().equals(EnumStatusRada.U_PROCESU)) {
-            throw new ApiRequestException("You can't add a revision for this publication");
+            throw new ApiRequestException("This publication is no longer in process.");
         }
 
         if (!process.getFaza().equals(EnumFaza.ZA_REVIZIJU)) {

@@ -180,6 +180,10 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
             throw new ResourceNotFoundException("Process with ID " + processId + " doesn't exist.");
         }
 
+        if (!proces.getStatusRada().equals(EnumStatusRada.U_PROCESU)) {
+            throw new ApiRequestException("You can't change process phase.");
+        }
+
         EnumFaza newProcessPhase = EnumFaza.fromValue(phase);
         proces.setFaza(newProcessPhase);
         businessProcessRepository.saveObject(proces);

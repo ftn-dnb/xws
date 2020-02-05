@@ -35,9 +35,13 @@
                 <td>{{process.publicationStatus}}</td>
 
                 <td>
-                    <button mat-button (click)="onClickSeeMore(process.id)">
+                    <button *ngIf="process.publicationStatus == 'UProcesu'" mat-button (click)="onClickSeeMore(process.id)">
                         <mat-icon>edit</mat-icon>
                     </button>
+
+                    <div *ngIf="process.publicationStatus != 'UProcesu'">
+                        /
+                    </div>
                 </td>
                 <td>
                     <div *ngIf="process.publicationStatus == 'UProcesu'">
