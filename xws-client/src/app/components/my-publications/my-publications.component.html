@@ -53,9 +53,13 @@
                     </span>
                 </td>
                 <td>
-                  <button mat-button (click)="onPublicationRevision(publication.id)">
+                  <button *ngIf="publication.process.processPhase == 'ZaReviziju'" mat-button (click)="onPublicationRevision(publication.id)">
                     <mat-icon>publish</mat-icon>
                   </button>
+
+                  <span *ngIf="publication.process.processPhase != 'ZaReviziju'">
+                      No action
+                  </span>
                 </td>
             </tr>
         </tbody>

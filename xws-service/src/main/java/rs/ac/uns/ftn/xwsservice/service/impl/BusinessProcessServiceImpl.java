@@ -13,6 +13,7 @@ import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
 import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
 import rs.ac.uns.ftn.xwsservice.service.BusinessProcessService;
+import rs.ac.uns.ftn.xwsservice.utils.PublicationIdUtil;
 import rs.ac.uns.ftn.xwsservice.utils.Sorting;
 
 import java.util.*;
@@ -70,7 +71,7 @@ public class BusinessProcessServiceImpl implements BusinessProcessService {
 
         PoslovniProces process = new PoslovniProces();
         process.setId(processId);
-        process.setFaza(EnumFaza.ZA_REVIZIJU);
+        process.setFaza(EnumFaza.ZA_RECENZIJU);
         process.setStatusRada(EnumStatusRada.U_PROCESU);
         process.setNaucniRadId(publicationId);
 

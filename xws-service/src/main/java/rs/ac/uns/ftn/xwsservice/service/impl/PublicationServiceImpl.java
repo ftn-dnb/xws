@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import rs.ac.uns.ftn.xwsservice.exception.ApiRequestException;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
-import rs.ac.uns.ftn.xwsservice.model.EnumStatusRada;
-import rs.ac.uns.ftn.xwsservice.model.NaucniRad;
-import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
-import rs.ac.uns.ftn.xwsservice.model.User;
+import rs.ac.uns.ftn.xwsservice.model.*;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.repository.PublicationRepo;
 import rs.ac.uns.ftn.xwsservice.service.*;
@@ -98,12 +95,16 @@ public class PublicationServiceImpl implements PublicationService {
 
         String id = publicationRepo.save(updatedXml, pubId);
         NaucniRad rad = publicationRepo.findObjectById(id);
-        //TODO: da li na ovaj nacin setovati i id???
         rad.setObrisan(false);
         publicationRepo.saveObject(rad);
 
         String processId = businessProcessService.createNewProcess(id);
+        this.publicationTransformations(pubId, publicationXmlData);
 
+        return processId;
+    }
+
+    private void publicationTransformations(String pubId, String publicationXmlData) throws Exception {
         // Normal transformations
         String xsltOutputFilePath = publicationXsltOutputFolderPath + pubId;
         xsltService.transform(publicationXmlData, publicationXsltFilePath, xsltOutputFilePath);
@@ -126,12 +127,32 @@ public class PublicationServiceImpl implements PublicationService {
         String resultMeta = metadataExtractorService.extractMetadataToRdf(new FileInputStream(new File(rdfTransformationOutputFilePath)), pubId);
         //upload
         metadataService.metadataWrite(resultMeta);
-        return processId;
     }
 
     @Override
     public String addRevision(String publicationId, String publicationXmlData) throws Exception {
-        String id = publicationRepo.save(publicationXmlData, publicationId);
+        Document document = domParser.isXmlDataValid(publicationXmlData, publicationSchemaPath);
+        PoslovniProces process = businessProcessRepository.findByPublicationId(publicationId);
+
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String updatedXml = PublicationIdUtil.addAuthorId(PublicationIdUtil.addPublicationId(publicationXmlData, publicationId), loggedUser.getId().toString());
+        publicationXmlData = PublicationIdUtil.addDates(updatedXml);
+
+        if (!process.getStatusRada().equals(EnumStatusRada.U_PROCESU)) {
+            throw new ApiRequestException("You can't add a revision for this publication");
+        }
+
+        if (!process.getFaza().equals(EnumFaza.ZA_REVIZIJU)) {
+            throw new ApiRequestException("This publication is not 'in revision' phase.");
+        }
+
+        NaucniRad publication = (NaucniRad) unmarshallerService.unmarshal(publicationXmlData);
+        publication.setObrisan(false);
+
+        // String id = publicationRepo.save(publicationXmlData, publicationId);
+        String id = publicationRepo.saveObject(publication);
+        this.publicationTransformations(publicationId, publicationXmlData);
+
         return id;
     }
 
