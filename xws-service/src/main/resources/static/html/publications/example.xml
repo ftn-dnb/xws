@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nr="http://www.ftn.uns.ac.rs/xws/tim5">
+    <head>
+        <title>Publication</title>
+        <style type="text/css">
+            body {
+            margin-top:20px;
+            margin-bottom:20px;
+            font-family: comic-sans;
+            margin-left:100px;
+            margin-right:100px;
+            }
+            table{
+            text-align:center;
+            margin-left:auto;
+            margin-right:auto;
+            }
+            h1 {
+            text-align:center;
+            }
+            .slika img{
+            display: block;
+            margin-left:auto;
+            margin-right:auto;
+            }
+            .slika p {
+            text-align:center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>DRUGA</h1>
+        <table border="1">
+            <tr>
+                <td>
+                    <table border="1">
+                        <tr>
+                            <td>Ime0 </td>
+                        </tr>
+                        <tr>
+                            <td>Prezime0</td>
+                        </tr>
+                        <tr>
+                            <td>a@a.a</td>
+                        </tr>
+                        <tr>
+                            <td>Naziv0</td>
+                        </tr>
+                        <tr>
+                            <td>ORCID:0000-0000-0000-0000</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table border="1">
+                        <tr>
+                            <td>Ime1 </td>
+                        </tr>
+                        <tr>
+                            <td>Prezime1</td>
+                        </tr>
+                        <tr>
+                            <td>a@a.a</td>
+                        </tr>
+                        <tr>
+                            <td>Naziv1</td>
+                        </tr>
+                        <tr>
+                            <td>ORCID:0000-0000-0000-0000</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p>
+            <i>
+                <b>Abstract:</b>
+            </i>Abstrakt0</p>
+        <p>
+            Keywords:
+            KljucnaRec0,KljucnaRec1,KljucnaRec2,KljucnaRec3</p>
+        <p>
+            <h2>Naslov1</h2>
+
+            Sadrzaj0[IdReference0]
+            <table border="1">
+                <tr>
+                    <td>Celija0</td>
+                    <td>Celija1</td>
+                </tr>
+                <tr>
+                    <td>Celija2</td>
+                    <td>Celija3</td>
+                </tr>
+            </table>
+
+
+            <ul>
+                <li>Stavka0</li>
+                <li>Stavka1</li>
+            </ul>
+            <div class="slika">
+                <img src="data:image/png;base64, ZGVmYXVsdA=="/>
+                <p>Naziv2</p>
+            </div>
+
+        </p>
+        <p>
+            <h2>Naslov2</h2>
+
+            <div class="slika">
+                <img src="data:image/png;base64, ZGVmYXVsdA=="/>
+                <p>Naziv3</p>
+            </div>
+            <table border="1">
+                <tr>
+                    <td>Celija4</td>
+                    <td>Celija5</td>
+                </tr>
+                <tr>
+                    <td>Celija6</td>
+                    <td>Celija7</td>
+                </tr>
+            </table>
+
+
+            <div class="slika">
+                <img src="data:image/png;base64, ZGVmYXVsdA=="/>
+                <p>Naziv4</p>
+            </div>
+            <ul>
+                <li>Stavka2</li>
+                <li>Stavka3</li>
+            </ul>
+
+        </p>
+        <h2>References</h2>
+        <ol>
+            <li>NazivRada0
+                (Autor0,Autor1)
+                <a href="URLRada0">link</a>
+            </li>
+            <li>NazivRada1
+                (Autor2,Autor3)
+                <a href="URLRada1">link</a>
+            </li>
+        </ol>
+    </body>
+</html>

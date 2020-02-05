@@ -1,0 +1,26 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+    <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/xws/tim5/naucni-radovi/a01d12d8-2ba3-4536-a727-1b5c982d9965">
+        <sh:dateCreated xmlns:sh="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2020-02-05</sh:dateCreated>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/xws/tim5/naucni-radovi/a01d12d8-2ba3-4536-a727-1b5c982d9965">
+        <sh:datePublished xmlns:sh="https://schema.org/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/xws/tim5/naucni-radovi/a01d12d8-2ba3-4536-a727-1b5c982d9965">
+        <sh:genre xmlns:sh="https://schema.org/" rdf:datatype="https://schema.org/Text">naucni-rad</sh:genre>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/xws/tim5/naucni-radovi/a01d12d8-2ba3-4536-a727-1b5c982d9965">
+        <sh:version xmlns:sh="https://schema.org/" rdf:datatype="https://schema.org/Number">1</sh:version>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/xws/tim5/naucni-radovi/a01d12d8-2ba3-4536-a727-1b5c982d9965">
+        <sh:inLanguage xmlns:sh="https://schema.org/" rdf:datatype="https://schema.org/Text">Jezik0</sh:inLanguage>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/xws/tim5/naucni-radovi/a01d12d8-2ba3-4536-a727-1b5c982d9965">
+        <sh:headline xmlns:sh="https://schema.org/" rdf:datatype="https://schema.org/Text">dzejnin rad222</sh:headline>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/xws/tim5/naucni-radovi/a01d12d8-2ba3-4536-a727-1b5c982d9965">
+        <sh:additionalName xmlns:sh="https://schema.org/" rdf:datatype="https://schema.org/Text">Ime0Prezime0,Ime1Prezime1</sh:additionalName>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/xws/tim5/naucni-radovi/a01d12d8-2ba3-4536-a727-1b5c982d9965">
+        <sh:keywords xmlns:sh="https://schema.org/" rdf:datatype="https://schema.org/Text">KljucnaRec0,KljucnaRec1,KljucnaRec2,KljucnaRec3</sh:keywords>
+    </rdf:Description>
+</rdf:RDF>

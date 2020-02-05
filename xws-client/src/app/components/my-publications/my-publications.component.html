@@ -13,9 +13,7 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>XML</th>
-                <th>HTML</th>
-                <th>PDF</th>
+                <th>Publication</th>
                 <th>Cover letter</th>
                 <th>Metadata</th>
                 <th>Delete</th>
@@ -26,16 +24,13 @@
             <tr *ngFor="let publication of publications">
                 <td>{{publication.title}}</td>
                 <td>
-                    <a target="_blank" rel="noopener noreferrer" href="{{publication.xmlFilePath}}">See XML</a>
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.xmlFilePath}}">XML</a>&nbsp;
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.htmlFilePath}}">HTML</a>&nbsp;
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.pdfFilePath}}">PDF</a>
                 </td>
                 <td>
-                    <a target="_blank" rel="noopener noreferrer" href="{{publication.htmlFilePath}}">See HTML</a>
-                </td>
-                <td>
-                    <a target="_blank" rel="noopener noreferrer" href="{{publication.pdfFilePath}}">See PDF</a>
-                </td>
-                <td>
-                    <a target="_blank" rel="noopener noreferrer" href="{{publication.coverLetterFilePath}}">See letter</a>
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.process.coverLetterPdfFilePath}}">PDF</a>&nbsp;
+                    <a target="_blank" rel="noopener noreferrer" href="{{publication.process.coverLetterHtmlFilePath}}">HTML</a>
                 </td>
 
                 <td>
@@ -53,11 +48,11 @@
                     </span>
                 </td>
                 <td>
-                  <button *ngIf="publication.process.processPhase == 'ZaReviziju'" mat-button (click)="onPublicationRevision(publication.id)">
+                  <button *ngIf="publication.process.processPhase == 'ZaReviziju' && !publication.deleted" mat-button (click)="onPublicationRevision(publication.id)">
                     <mat-icon>publish</mat-icon>
                   </button>
 
-                  <span *ngIf="publication.process.processPhase != 'ZaReviziju'">
+                  <span *ngIf="publication.process.processPhase != 'ZaReviziju' || publication.deleted">
                       No action
                   </span>
                 </td>
