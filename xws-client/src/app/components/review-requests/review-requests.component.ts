@@ -47,17 +47,36 @@ export class ReviewRequestsComponent implements OnInit {
     });
   }
 
+  checkRevision(processId: string) {
+    let cond = true;
+    for (let request of this.requests) {
+      if (request.processId === processId) {
+        if (request.publicationPhase === 'ZA_REVIZIJU') {
+          cond = false;
+          break;
+        }
+      }
+    }
+    return cond;
+  }
+
   onSubmitReview(processId: string): void {
+    if (!this.checkRevision(processId)) {
+      this.toastr.error('Process is not under review.');
+      return;
+    }
     const dialogRef = this.dialog.open(ReviewDialogComponent, {data: {}});
     dialogRef.afterClosed().subscribe(result => {
-      this.businessProcessService.addReview(processId, result).subscribe(
-        (data) => {
-          this.toastr.success('Review successfuly added.');
-        },
-        (error) => {
-          this.toastr.error(error);
-        }
-      );
+      if (result) {
+        this.businessProcessService.addReview(processId, result).subscribe(
+          (data) => {
+            this.toastr.success('Review successfuly added.');
+          },
+          (error) => {
+            this.toastr.error(error);
+          }
+        );
+      }
     });
   }
 }

@@ -144,4 +144,11 @@ public class PublicationController {
         }
         return new ResponseEntity(PublicationMapper.toDtoList(papers), HttpStatus.OK);
     }
+
+    @PutMapping(path = "/revision/{id}")
+    public ResponseEntity<String> addRevision(@PathVariable String id, @RequestBody String xmlData) throws Exception {
+        String publicationId = publicationService.addRevision(id, xmlData);
+        return new ResponseEntity<>(publicationId, HttpStatus.OK);
+    }
+
 }
