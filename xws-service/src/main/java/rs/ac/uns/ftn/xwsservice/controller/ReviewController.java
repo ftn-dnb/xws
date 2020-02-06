@@ -28,6 +28,12 @@ public class ReviewController {
     @Value("${xslfo.path.output-folder.reviews}")
     private String reviewsOutputPdfFolder;
 
+    @Value("${xslt.path.output-folder.reviews.merged}")
+    private String reviewMergedOutputHtmlFolder;
+
+    @Value("${xslfo.path.output-folder.reviews.merged}")
+    private String reviewMergedOutputPdfFolder;
+
     @Autowired
     private FileService fileService;
 
@@ -70,6 +76,27 @@ public class ReviewController {
     @GetMapping(path = "/public/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> getReviewHtml(@PathVariable String id) {
         String path = reviewsOutputHtmlFolder + id;
+        return new ResponseEntity<>(fileService.readHtmlFile(path), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/public/merged/pdf/{processId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> getMergedReviewsPdf(@PathVariable String processId) {
+        String path = reviewMergedOutputPdfFolder + processId;
+        ByteArrayInputStream bis = fileService.readPdfFile(path);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=review-" + processId + ".pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
+
+    @GetMapping(path = "/public/merged/html/{processId}", produces = MediaType.TEXT_HTML_VALUE)
+    public ResponseEntity<String> getMergedReviews(@PathVariable String processId) {
+        String path = reviewMergedOutputHtmlFolder + processId;
         return new ResponseEntity<>(fileService.readHtmlFile(path), HttpStatus.OK);
     }
 }
