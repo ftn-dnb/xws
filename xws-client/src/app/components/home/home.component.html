@@ -10,8 +10,68 @@
             <mat-icon matPrefix class="icon">search</mat-icon>
             <input matInput type="text" placeholder="Search text..." #filterInput />
         </mat-form-field>
-
+        
         <button mat-raised-button color="primary" (click)="onSearch()">
+            <span>Search</span>
+        </button>
+
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="Keywords" #filterRec />
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="Title" #filterNaslov />
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="Language" #filterJezik />
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="Paper version" #filterVerzija />
+            </mat-form-field>
+        </div>
+        
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="Paper type" #filterTip />
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="Author name" #filterAutor />
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="Start date created" #filterDatumSStart />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="End date created" #filterDatumSEnd />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="Start date published" #filterDatumPStart />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">search</mat-icon>
+                <input matInput type="text" placeholder="End date published" #filterDatumPEnd />
+            </mat-form-field>
+        </div>
+        
+        <button mat-raised-button color="primary" (click)="onSearchAdvanced()">
             <span>Search</span>
         </button>
     </div>

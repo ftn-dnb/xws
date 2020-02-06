@@ -15,6 +15,7 @@ export const API_DELETE_PUBLICATION = API_BASE + '/api/publications';
 export const API_REVISION = API_BASE + '/api/publications/revision/';
 export const API_COVER_LETTER = API_BASE + '/api/coverLetters/for-publication/';
 export const API_COVER_LETTER_SUBMIT = API_BASE + '/api/coverLetters/submit-letter/';
+export const API_METADATA_SEARCH = API_BASE + '/api/publications/public/search';
 
 // Business process
 export const API_BUSINESS_PROCESSES = API_BASE + '/api/process';
