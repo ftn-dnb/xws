@@ -5,8 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import rs.ac.uns.ftn.xwsservice.exception.ResourceNotFoundException;
+import rs.ac.uns.ftn.xwsservice.model.CTRecenzent;
+import rs.ac.uns.ftn.xwsservice.model.PoslovniProces;
 import rs.ac.uns.ftn.xwsservice.model.PropratnoPismo;
+import rs.ac.uns.ftn.xwsservice.model.User;
 import rs.ac.uns.ftn.xwsservice.repository.CoverLetterRepo;
+import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
 import rs.ac.uns.ftn.xwsservice.service.*;
 import rs.ac.uns.ftn.xwsservice.utils.CoverLetterIdUtil;
 
@@ -48,6 +52,12 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     @Autowired
     private BusinessProcessService businessProcessService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private MailSenderService mailSenderService;
+
     @Override
     public String addCoverLetter(String coverLetterXmlData) throws Exception {
         Document document = domParser.isXmlDataValid(coverLetterXmlData, this.coverLetterSchemaPath);
@@ -72,6 +82,18 @@ public class CoverLetterServiceImpl implements CoverLetterService {
         businessProcessService.addCoverLetterForPublication(processId, coverLetterId);
         return coverLetterId;
     }
+
+    @Override
+    public String submitCoverLetterForPublication(String processId, String coverLetterXmlData) throws Exception {
+        String coverLetterId = this.addCoverLetter(coverLetterXmlData);
+        PoslovniProces proces = businessProcessService.getProcess(processId);
+        for (CTRecenzent recenzent : proces.getRecenzenti().getRecenzent()) {
+            User user = userRepository.findById(Long.parseLong(recenzent.getRecenzentID())).get();
+            mailSenderService.sendMail(user, proces.getNaucniRadId(), coverLetterId);
+        }
+        return coverLetterId;
+    }
+
 
     @Override
     public String findCoverLetterXmlById(String id) throws Exception {

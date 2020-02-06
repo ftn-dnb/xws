@@ -90,6 +90,42 @@ export class MyPublicationsComponent implements OnInit {
     return cond;
   }
 
+  onCoverLetterAdd(publicationId: string) {
+    console.log('add');
+    let dialogRef = this.dialog.open(PublicationDialogComponent, {data: {}});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.publicationsService.addCoverLetter(publicationId, result).subscribe(
+          (data) => {
+            this.getPublications();
+          },
+          (error) => {
+            this.getPublications();
+            this.toastr.error('There was an error while adding your revision');
+          }
+        );
+      }
+    });
+  }
+
+  onCoverLetterSubmit(publicationId: string) {
+    console.log('submit');
+    let dialogRef = this.dialog.open(PublicationDialogComponent, {data: {}});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.publicationsService.submitCoverLetter(publicationId, result).subscribe(
+          (data) => {
+            this.getPublications();
+          },
+          (error) => {
+            this.getPublications();
+            this.toastr.error('There was an error while adding your revision');
+          }
+        );
+      }
+    });
+  }
+
   onPublicationRevision(publicationId: string) {
     if (!this.checkRevision(publicationId)) {
       this.toastr.error('Publication is not for revision yet.');
