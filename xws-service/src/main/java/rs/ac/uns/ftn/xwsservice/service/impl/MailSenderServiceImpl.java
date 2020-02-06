@@ -53,6 +53,22 @@ public class MailSenderServiceImpl implements MailSenderService {
 
     @Async
     @Override
+    public void sendMail(User user, String publicationId, String coverLetterId) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setSubject("Cover letter submitted");
+        message.setFrom("XWS-Tim05");
+        message.setTo(user.getEmail());
+
+        message.setText("Links:\n" + "http://localhost:8080/api/publications/public/html/" + publicationId
+                                   + "\nhttp://localhost:8080/api/publications/public/pdf/" + publicationId
+                                   + "\n\nhttp://localhost:8080/api/coverLetters/public/html/" + coverLetterId
+                                   + "\nhttp://localhost:8080/api/coverLetters/public/pdf/" + coverLetterId);
+
+        mailSender.send(message);
+    }
+
+    @Override
     public void sendAccountActivatedMail(User user) {
         SimpleMailMessage message = new SimpleMailMessage();
 

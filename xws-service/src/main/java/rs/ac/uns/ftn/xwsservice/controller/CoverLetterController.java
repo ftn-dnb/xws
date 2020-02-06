@@ -44,6 +44,12 @@ public class CoverLetterController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping(path = "/submit-letter/{processId}")
+    public ResponseEntity submitCoverLetterForPublication(@PathVariable String processId, @RequestBody String xmlCoverLetter) throws Exception {
+        coverLetterService.submitCoverLetterForPublication(processId, xmlCoverLetter);
+        return ResponseEntity.ok().build();
+    }
+
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<CoverLetterDTO> getCoverLetterById(@PathVariable String id) throws Exception {

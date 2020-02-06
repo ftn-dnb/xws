@@ -7,6 +7,7 @@ import rs.ac.uns.ftn.xwsservice.model.User;
 public interface MailSenderService {
 
     void sendRegistrationMail(ConfirmationToken token);
+    void sendMail(User user, String publicationId, String coverLetterId);
     void sendAccountActivatedMail(User user);
     void sendRequestForReviewer(User user, PoslovniProces process) throws Exception;
     void sendProcessChangeStatus(PoslovniProces process) throws Exception;
