@@ -94,7 +94,7 @@ public class MetadataServiceImpl implements MetadataService {
             sparqlQuery = String.format(readFile(querySelectPath, StandardCharsets.UTF_8),
                    dto.getKeyword(),dto.getTitle(),dto.getLanguage(),dto.getType(),
                     dto.getAutor1(), dto.getAutor2(),
-                    dto.getStartDatePublished(),dto.getEndDatePublished(),dto.getStartDatePublished(),
+                    dto.getStartDatePublished(),dto.getEndDatePublished(),dto.getStartDateCreated(),
                     dto.getEndDateCreated());
         }catch (IOException e){
 
