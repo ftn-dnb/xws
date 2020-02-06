@@ -13,9 +13,7 @@ import rs.ac.uns.ftn.xwsservice.model.*;
 import rs.ac.uns.ftn.xwsservice.repository.BusinessProcessRepository;
 import rs.ac.uns.ftn.xwsservice.repository.ReviewRepository;
 import rs.ac.uns.ftn.xwsservice.repository.UserRepository;
-import rs.ac.uns.ftn.xwsservice.service.MailSenderService;
-import rs.ac.uns.ftn.xwsservice.service.ReviewService;
-import rs.ac.uns.ftn.xwsservice.service.UnmarshallerService;
+import rs.ac.uns.ftn.xwsservice.service.*;
 import rs.ac.uns.ftn.xwsservice.utils.ReviewIdUtil;
 
 import java.util.ArrayList;
@@ -43,8 +41,39 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private MailSenderService mailSenderService;
 
+    @Autowired
+    private XSLTService xsltService;
+
+    @Autowired
+    private XSLFOService xslfoService;
+
     @Value("${xsd.path.review}")
     private String reviewXmlSchemaPath;
+
+    @Value("${xslfo.path.review}")
+    private String xslfoTransformationPath;
+
+    @Value("${xslt.path.review}")
+    private String xsltTransformationPath;
+
+    @Value("${xslfo.path.review.merged}")
+    private String xslfoTransformationPathMerged;
+
+    @Value("${xslt.path.review.merged}")
+    private String xsltTransformationPathMerged;
+
+    @Value("${xslt.path.output-folder.reviews}")
+    private String xsltReviewOutputFolderPath;
+
+    @Value("${xslfo.path.output-folder.reviews}")
+    private String xslfoReviewOutputFolderPath;
+
+    @Value("${xslt.path.output-folder.reviews.merged}")
+    private String xsltReviewOutputFolderPathMerged;
+
+    @Value("${xslfo.path.output-folder.reviews.merged}")
+    private String xslfoReviewOutputFolderPathMerged;
+
 
     @Override
     public String addReview(String xmlData, String processId) throws Exception {
@@ -80,7 +109,47 @@ public class ReviewServiceImpl implements ReviewService {
         businessProcessRepository.saveObject(proces);
         mailSenderService.sendReviewAddedToAuthor(proces);
 
+        this.createTransformationsForReview(xmlData, reviewId);
+        this.createTransformationsForMergedReviews(processId);
+
         return id;
+    }
+
+    private void createTransformationsForReview(String xmlData, String reviewId) throws Exception {
+        String xsltOutputFilePath = xsltReviewOutputFolderPath + reviewId;
+        xsltService.transform(xmlData, xsltTransformationPath, xsltOutputFilePath);
+
+        String xslfoOutputFilePath = xslfoReviewOutputFolderPath + reviewId;
+        xslfoService.transform(xmlData, xslfoTransformationPath, xslfoOutputFilePath);
+    }
+
+    private void createTransformationsForMergedReviews(String processId) throws Exception {
+        PoslovniProces process = businessProcessRepository.findObjectById(processId);
+
+        StringBuilder xmlData = new StringBuilder();
+        xmlData.append("<Recenzije>");
+
+        for (CTRecenzent reviewer : process.getRecenzenti().getRecenzent()) {
+            if (reviewer.getRecenzije() == null)
+                continue;;
+
+            for (String reviewId : reviewer.getRecenzije().getRecenzijaID()) {
+                String reviewXmlData = reviewRepository.findById(reviewId);
+
+                if (reviewXmlData == null)
+                    continue;
+
+                xmlData.append(reviewXmlData);
+            }
+        }
+
+        xmlData.append("</Recenzije>");
+
+        String xsltOutputFilePath = xsltReviewOutputFolderPathMerged + processId;
+        xsltService.transform(xmlData.toString(), xsltTransformationPathMerged, xsltOutputFilePath);
+
+        String xslfoOutputFilePath = xslfoReviewOutputFolderPathMerged + processId;
+        xslfoService.transform(xmlData.toString(), xslfoTransformationPathMerged, xslfoOutputFilePath);
     }
 
     @Override

@@ -22,6 +22,8 @@ public class ReviewDTO {
         this.id = recenzija.getId();
         this.preporuka = recenzija.getPreporuka();
         this.komentari = recenzija.getKomentar();
+        this.htmlFilePath = "http://localhost:8080/api/review/public/html/" + id;
+        this.pdfFilePath = "http://localhost:8080/api/review/public/pdf/" + id;
     }
 
     public String getId() {
@@ -30,8 +32,8 @@ public class ReviewDTO {
 
     public void setId(String id) {
         this.id = id;
-        this.htmlFilePath = "http://localhost:8080/api/reviews/public/html/" + id;
-        this.pdfFilePath = "http://localhost:8080/api/reviews/public/pdf/" + id;
+        this.htmlFilePath = "http://localhost:8080/api/review/public/html/" + id;
+        this.pdfFilePath = "http://localhost:8080/api/review/public/pdf/" + id;
     }
 
     public String getPreporuka() {
