@@ -47,14 +47,21 @@
           <tr *ngFor="let review of reviews">
               <td>{{review.user.firstName}} {{review.user.lastName}}</td>
               <td>
-                  <a target="_blank" rel="noopener noreferrer" href="{{review.publicationPdfFilePath}}">PDF</a>&nbsp;
-                  <a target="_blank" rel="noopener noreferrer" href="{{review.publicationHtmlFilePath}}">HTML</a>
+                  <a target="_blank" rel="noopener noreferrer" href="{{review.pdfFilePath}}">PDF</a>&nbsp;
+                  <a target="_blank" rel="noopener noreferrer" href="{{review.htmlFilePath}}">HTML</a>
               </td>
               <td>{{review.preporuka}}</td>
               <td>{{review.komentari.length}}</td>
           </tr>
       </tbody>
   </table>
+
+  <div>
+      <br />
+      <h2>Merged reviews</h2>
+      <a target="_blank" rel="noopener noreferrer" href="http://localhost:8080/api/review/public/merged/pdf/{{process.id}}">PDF</a>&nbsp;
+      <a target="_blank" rel="noopener noreferrer" href="http://localhost:8080/api/review/public/merged/html/{{process.id}}">HTML</a>
+  </div>
 
   <div class="editor-actions">
     <mat-form-field>

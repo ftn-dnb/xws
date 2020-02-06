@@ -172,7 +172,8 @@ public class MailSenderServiceImpl implements MailSenderService {
 
         this.sendMail("Revise phase for: " + publicationTitle, author.getEmail(),
                 "Process phase for " + publicationTitle + " has been changed. Now you can add your revision." +
-                        " See all reviews here: http://localhost:8080/");
+                        " See all reviews here: http://localhost:8080/api/review/public/merged/pdf/" + process.getId() +
+                "\n http://localhost:8080/api/review/public/merged/html/" + process.getId());
     }
 
     @Async
