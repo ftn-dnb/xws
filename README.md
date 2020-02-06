@@ -7,6 +7,10 @@ Tim 05
 * David Stanojević SW 41/2016
 * Nemanja Miković SW 68/2016
 
+## Demo
+
+https://drive.google.com/drive/folders/1Z-KqRf42BVhQu-R0sA6Ivj4pL66GX3iT
+
 # Uputstvo za pokretanje projekta
 
 Skinuti [MySQL](https://www.mysql.com/), [eXist](http://exist-db.org/exist/apps/homepage/index.html), [TomEE plus](http://tomee.apache.org/download-ng.html) i [Jena Fuseki SPARQL server](https://jena.apache.org/download/index.cgi#apache-jena-fuseki).
