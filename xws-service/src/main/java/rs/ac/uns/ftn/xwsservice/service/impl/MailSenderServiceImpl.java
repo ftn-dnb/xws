@@ -60,8 +60,8 @@ public class MailSenderServiceImpl implements MailSenderService {
         message.setFrom("XWS-Tim05");
         message.setTo(user.getEmail());
 
-        message.setText("Links:\n" + "http://localhost:8080/api/publications/public/html/" + publicationId
-                                   + "\nhttp://localhost:8080/api/publications/public/pdf/" + publicationId
+        message.setText("Links:\n" + "http://localhost:8080/api/publications/public/anonymous/html/" + publicationId
+                                   + "\nhttp://localhost:8080/api/publications/public/anonymous/pdf/" + publicationId
                                    + "\n\nhttp://localhost:8080/api/coverLetters/public/html/" + coverLetterId
                                    + "\nhttp://localhost:8080/api/coverLetters/public/pdf/" + coverLetterId);
 
